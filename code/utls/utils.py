@@ -6,7 +6,6 @@ Created on Sun Sep 20 13:25:52 2020
 """
 
 import numpy as np
-import scipy as sp
 
 def hankel(X, delays, spacing=1):
     '''
@@ -16,9 +15,20 @@ def hankel(X, delays, spacing=1):
     :param spacing: multiple of sample time between to samples
     :return: hankel matrix
     '''
-    height, width = X.shape
+    
+    height = 0
+    width = 0
+    if X.ndim == 1:
+        height = 1
+        width = len(X)
+        X.shape = (1, width)
+    else:
+        height, width = X.shape
+    
+    
     hankel_shape = (height * delays,
                     width - spacing * (delays - 1))
+    print(hankel_shape)
     H = np.zeros(hankel_shape)
     for i in range(delays):
         idxs = np.arange(spacing * i, width - spacing * (delays - 1 - i))
@@ -35,7 +45,7 @@ def trunc_svd(X, mode, s_thresh):
     :param s_thresh: Threshold below which to discard singular values or rank
     :return: truncated SVD
     '''
-    U, s, Vh = sp.linalg.svd(X, full_matrices=False)
+    U, s, Vh = np.linalg.svd(X, full_matrices=False)
     
     rank = 0
     if mode == 'value':
@@ -53,22 +63,17 @@ def trunc_svd(X, mode, s_thresh):
             
     U_ = U[:, :rank]
     s_ = s[:rank]
-    Vh_ = Vh[:rank, :]
+    Vh_ = Vh[:rank]
         
     return U_, s_, Vh_, U, s, Vh
 
 
-def sort_eig(A, evs=0, which='LM'):
+def sort_eig(A):
     '''
     Computes eigenvalues and eigenvectors of A and sorts them in decreasing lexicographic order.
 
-    :param evs: number of eigenvalues/eigenvectors
     :return:    sorted eigenvalues and eigenvectors
     '''
-    n = A.shape[0]
-    if 0 < evs < n:
-        d, W = sp.sparse.linalg.eigs(A, evs, which=which)
-    else:
-        d, W = sp.linalg.eig(A)
+    d, W = np.linalg.eig(A)
     ind = d.argsort()[::-1] # [::-1] reverses the list of indices
     return d[ind], W[:, ind]

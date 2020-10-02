@@ -41,14 +41,12 @@ def simulate_lorenz(dt, timesteps, x0=None, sigma=10., rho=28., beta=8/3, tau=1.
     
     t = [0.0]
     x = [x0]
-    y = [f(0.0,x0)]
     while r.successful() and len(x) < timesteps:
         r.integrate(r.t + dt)
         x.append(np.real(r.y))
         t.append(r.t)
-        y.append(f(r.t, np.real(r.y)))
         
-    timeseries = {'X': np.array(x).T, 'Y': np.array(y).T, 't': np.array(t)}
+    timeseries = {'X': np.array(x).T, 't': np.array(t)}
 
     return timeseries     
         
