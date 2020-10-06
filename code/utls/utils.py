@@ -7,15 +7,27 @@ Created on Sun Sep 20 13:25:52 2020
 
 import numpy as np
 
-def hankel(X, delays, spacing=1):
-    '''
-    Computes hankel matrix of X
-
-    :param delays: number of delay coordinates
-    :param spacing: multiple of sample time between to samples
-    :return: hankel matrix
+def hankel(X, delays, spacing):
     '''
     
+
+    Parameters
+    ----------
+    X : array
+        data matrix.
+    delays : int
+        number of delay coordinates
+    spacing : int, optional
+            space between to samples.
+
+    Returns
+    -------
+    H : array
+        hankel matrix.
+
+    '''
+    
+    # extract data matrix dimensions
     height = 0
     width = 0
     if X.ndim == 1:
@@ -25,10 +37,11 @@ def hankel(X, delays, spacing=1):
     else:
         height, width = X.shape
     
-    
+    # compute hankel shape
     hankel_shape = (height * delays,
                     width - spacing * (delays - 1))
-    print(hankel_shape)
+
+    # compute hankel matrix
     H = np.zeros(hankel_shape)
     for i in range(delays):
         idxs = np.arange(spacing * i, width - spacing * (delays - 1 - i))
@@ -39,14 +52,43 @@ def hankel(X, delays, spacing=1):
 
 def trunc_svd(X, mode, s_thresh):
     '''
-    Computes truncated SVD of X
+    
 
-    :param mode: truncation mode 'value' or 'rank'
-    :param s_thresh: Threshold below which to discard singular values or rank
-    :return: truncated SVD
+    Parameters
+    ----------
+    X : array
+        data matrix.
+    mode : string
+        truncation mode.
+    s_thresh : double
+        threshold below which to discard singular values. The default is 1e-10..
+
+    Raises
+    ------
+    ValueError
+        DESCRIPTION.
+
+    Returns
+    -------
+    U_ : array
+        truncated left singular vectors.
+    s_ : array
+        truncated singular values.
+    Vh_ : array
+        truncated right singular vectors.
+    U : array
+        left singular vectors.
+    s : array
+        singular values.
+    Vh : array
+        right singular vectors.
+
     '''
+    
+    # compute svd of X
     U, s, Vh = np.linalg.svd(X, full_matrices=False)
     
+    # determine truncation rank by threshold
     rank = 0
     if mode == 'value':
         if 0 > s_thresh:
@@ -60,7 +102,8 @@ def trunc_svd(X, mode, s_thresh):
         rank = s.size
     else:
         raise ValueError('Mode has to be value, rank or none.')
-            
+    
+    # truncate 
     U_ = U[:, :rank]
     s_ = s[:rank]
     Vh_ = Vh[:rank]
@@ -70,10 +113,34 @@ def trunc_svd(X, mode, s_thresh):
 
 def sort_eig(A):
     '''
-    Computes eigenvalues and eigenvectors of A and sorts them in decreasing lexicographic order.
+    
 
-    :return:    sorted eigenvalues and eigenvectors
+    Parameters
+    ----------
+    A : array
+        matrix.
+
+    Returns
+    -------
+    d_sort : array
+        sorted eigen values of A.
+    W_sort : array
+        sorted eigen vectors of A.
+
     '''
+    
+    # compute eigen values and vectors of A
     d, W = np.linalg.eig(A)
+    
+    # compute sorted indexes
     ind = d.argsort()[::-1] # [::-1] reverses the list of indices
-    return d[ind], W[:, ind]
+    
+    # sort eigen values and vectors
+    d_sort = d[ind]
+    W_sort = W[:, ind]
+    
+    return d_sort, W_sort
+
+
+
+
