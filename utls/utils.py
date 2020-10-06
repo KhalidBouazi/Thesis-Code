@@ -141,6 +141,14 @@ def sort_eig(A):
     
     return d_sort, W_sort
 
+def diff(X, dt, rank):
+    dX = []
+    for i in range(2,len(X)-3):
+        for k in range(rank):
+            dX[i-2,k] = 1/(12*dt) * (-X(i+2,k) + 8*X(i+1,k) - 8*X(i-1,k) + X(i-2,k))
+            
+    return dX
+        
 
 
 

@@ -56,6 +56,7 @@ def compare_orig_delay_coords(X, Vh, dims=None):
     ax1.plot(*X[dims,:])
     ax2.plot(*Vh[dims,:])
     
+    plt.tight_layout()
     plt.show()
     
 def plot_norm_singular_values(s):
@@ -69,9 +70,14 @@ def plot_norm_singular_values(s):
     plt.xlabel('Rang')
     plt.ylabel('Normierter Singulärwert')
     
+    plt.tight_layout()
     plt.show()
     
-def compare_orig_recon_timeseries(t, X, X_, dims=None):
+def compare_orig_recon_timeseries(t, X, X_, dims=None, overlay=False):
+    
+    # shorten, because X_ may be time-delayed and shorter than X
+    t = t[range(X_.shape[1])]
+    X = X[:,range(X_.shape[1])]
     
     # set dimensions to be plotted
     if dims == None:
@@ -81,13 +87,61 @@ def compare_orig_recon_timeseries(t, X, X_, dims=None):
         
     fig = plt.figure()
     
-    for i in range(len(dims)):
-        ax = fig.add_subplot(len(dims),1,i+1)
-        ax.plot(t,X[dims[i],:])
-        ax.plot(t,X_[dims[i],:])
-        ax.set_xlabel('Zeit in s')
-        ax.set_ylabel('x'+str(i+1))
+    if not overlay:
+        for i in range(2*len(dims)):
+            j = int(np.floor(i/2))
+            ax = fig.add_subplot(len(dims),2,i+1)
+            if np.mod(i,2) == 0:
+                ax.plot(t,X[dims[j],:],'tab:blue')
+                ax.set_ylabel('x'+str(j+1))
+            else:
+                ax.plot(t,X_[dims[j],:],'tab:orange')
+                ax.set_ylabel('z'+str(j+1))
+            ax.set_xlabel('Zeit in s')
+    else:
+        for i in range(len(dims)):
+            ax = fig.add_subplot(len(dims),1,i+1)
+            ax.plot(t,X[dims[i],:])
+            ax.plot(t,X_[dims[i],:])
+            ax.set_xlabel('Zeit in s')
+            ax.legend(['x'+str(i+1), 'z'+str(i+1)], loc='upper right')
     
+    plt.tight_layout()
+    plt.show()
+    
+    
+def plot_prediction(t_train, x_train, t_test, x_test, x_pred):
+    
+    plt.figure()
+    
+    plt.plot(t_train, x_train, color='#666666', linewidth=3)
+    plt.plot(t_test, x_test, '--', color='#666666', alpha=0.8, linewidth=3)
+    plt.plot(t_test, x_pred, '--', color='red', alpha=0.8, linewidth=3)
+    
+    plt.tight_layout()
+    plt.show()
+    
+    
+def show_matrix_pattern(A):
+    
+    plt.figure()
+    
+    plt.imshow(np.real(A), interpolation='nearest', cmap=plt.get_cmap('bwr'))
+    plt.axis('off')
+    plt.colorbar()
+    plt.clim([-10,10])
+    
+    plt.tight_layout()
+    plt.show()
+    
+
+def plot_mode_amplitudes(omega, b):
+    
+    plt.figure()
+    
+    plt.plot(omega, np.abs(b), 'o:', color='red', linewidth=2)
+    
+    plt.tight_layout()
     plt.show()
     
 # def plot_intermittent_force(t, x):

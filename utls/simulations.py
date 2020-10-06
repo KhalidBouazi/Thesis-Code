@@ -115,7 +115,7 @@ def vanderpol_oscillator(mu, tau):
     
     return f
 
-def simulate_system(system, dt, timesteps, x0=None, params=None):
+def simulate_system(system, dt, timesteps, x0=None, params=None, train_split=0.8):
     '''
     
 
@@ -152,8 +152,12 @@ def simulate_system(system, dt, timesteps, x0=None, params=None):
     # simulate
     t_end = dt*timesteps
     sol = solve_ivp(fun, [0, t_end], x0, t_eval=np.linspace(0, t_end, timesteps+1))
-        
-    time_series = {'X': sol.y, 't': sol.t}
+    
+    # split data in train and test data
+    train_idx = range(0,int(train_split*timesteps))
+    test_idx = range(int(train_split*timesteps),timesteps+1)
+    
+    time_series = {'X_train': sol.y[:,train_idx], 'X_test': sol.y[:,test_idx], 't_train': sol.t[train_idx], 't_test': sol.t[test_idx]}
 
     return time_series     
 

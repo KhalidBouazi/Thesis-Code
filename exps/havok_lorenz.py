@@ -15,19 +15,21 @@ delays = 100
 # simulate system
 # lorenz, duffing_oscillator, rössler, vanderpol_oscillator
 time_series = simulations.simulate_system('lorenz',dt=dt, timesteps=timesteps)
-t = time_series['t']
-X = time_series['X']
-X_ = X[0,:]
+t_train = time_series['t_train']
+X_train = time_series['X_train']
+t_test = time_series['t_test']
+X_test = time_series['X_test']
+X_ = X_train[0,:]
 
 # run algorithm
 havok = algorithms.HAVOK()
-havok.fit(X_, dt, delays=delays, trunc_mode='rank', s_thresh=5)
-#Xr = havok.reconstruct(t)
+havok.fit(X_, dt, delays=delays, trunc_mode='rank', s_thresh=15)
 Vh = havok.Vh_
 
 # show plots
-plots.compare_orig_delay_coords(X, Vh)
+#plots.compare_orig_delay_coords(X_train, Vh)
 
-plots.plot_norm_singular_values(havok.s)
+#plots.plot_norm_singular_values(havok.s)
 
-#plots.compare_orig_recon_timeseries(t, X, Xr)
+#plots.compare_orig_recon_timeseries(t_train, X_train, Vh)
+

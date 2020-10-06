@@ -71,6 +71,7 @@ class DMD:
         V = Vh.conj().T
         S_inv = np.diag(1/s_)
         A = Uh_ @ Y @ V_ @ S_inv
+        A_c = (A - np.eye(A.shape[0])) / dt
         
         # compute eigen values and vectors of A
         d, W = utils.sort_eig(A)
@@ -106,6 +107,7 @@ class DMD:
         self.V = V
         # best fit matrix, eigen values and vectors, modes and amplitudes
         self.A = A
+        self.A_c = A_c
         self.d = d
         self.omega = omega
         self.W = W
