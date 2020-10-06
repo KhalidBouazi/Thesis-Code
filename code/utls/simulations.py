@@ -183,27 +183,27 @@ def get_system_params(system, params):
     if system == 'lorenz':
         
         if params == None:
-            params = [lorenz(]sigma=10., rho=28., beta=8/3, tau=1.]
+            params = [10., 28., 8/3, 1.]
         elif len(params) != 4:
             raise ValueError('Check your system parameters. You need {sigma, rho, beta, tau}.')
             
     elif system == 'duffing_oscillator':
         
         if params == None:
-            params = [alpha=1., beta=1, gamma=0., delta=0., omega=1., tau=1.]
+            params = [1., 1, 0., 0., 1., 1.]
         elif len(params) != 6:
             raise ValueError('Check your system parameters. You need {alpha, beta, gamma, delta, omega, tau}.')
             
     elif system == 'rössler': 
         
         if params == None:
-           params = [a=0.2, b=0.2, c=5.7, tau=1.]
+           params = [0.2, 0.2, 5.7, 1.]
         elif len(params) != 4:
             raise ValueError('Check your system parameters. You need {a, b, c, tau}.')
             
     elif system == 'vanderpol_oscillator':
         if params == None:
-            params = [mu=10., tau=1.]
+            params = [10., 1.]
         elif len(params) != 2:
             raise ValueError('Check your system parameters. You need {mu, tau}.')
             

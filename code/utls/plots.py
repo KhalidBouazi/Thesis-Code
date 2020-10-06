@@ -17,9 +17,6 @@ def compare_orig_delay_coords(X, Vh, dims=None):
     else:
         dims = np.sort(dims)
     
-    ax1_labels = ['x1','x2','x3']
-    ax2_labels = ['v1','v2','v3']
-    
     fig = plt.figure(figsize=plt.figaspect(0.5))
     ax1 = None
     ax2 = None
@@ -27,22 +24,22 @@ def compare_orig_delay_coords(X, Vh, dims=None):
     if len(dims) == 3:
         ax1 = fig.add_subplot(121, projection='3d')
         ax2 = fig.add_subplot(122, projection='3d')
-        ax1.set_xlabel(ax1_labels[dims[0]])
-        ax1.set_ylabel(ax1_labels[dims[1]])
-        ax1.set_zlabel(ax1_labels[dims[2]])
-        ax2.set_xlabel(ax2_labels[dims[0]])
-        ax2.set_ylabel(ax2_labels[dims[1]])
-        ax2.set_zlabel(ax2_labels[dims[2]])
+        ax1.set_xlabel('x1')
+        ax1.set_ylabel('x2')
+        ax1.set_zlabel('x3')
+        ax2.set_xlabel('v1')
+        ax2.set_ylabel('v2')
+        ax2.set_zlabel('v3')
         ax1.set_zticks([])
         ax2.set_zticks([])
         
     elif len(dims) == 2:
         ax1 = fig.add_subplot(121)
         ax2 = fig.add_subplot(122)
-        ax1.set_xlabel(ax1_labels[dims[0]])
-        ax1.set_ylabel(ax1_labels[dims[1]])
-        ax2.set_xlabel(ax2_labels[dims[0]])
-        ax2.set_ylabel(ax2_labels[dims[1]])
+        ax1.set_xlabel('x1')
+        ax1.set_ylabel('x2')
+        ax2.set_xlabel('v1')
+        ax2.set_ylabel('v2')
         
     else:
         raise ValueError('Number of dimensions to plot should be 2 or 3.')
