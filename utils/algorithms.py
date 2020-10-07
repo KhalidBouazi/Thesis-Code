@@ -6,7 +6,7 @@ Created on Wed Sep 30 15:31:53 2020
 """
 
 import numpy as np
-from utls import utils
+from utils import tools
 
 
 class DMD:
@@ -56,14 +56,14 @@ class DMD:
         ''' === start algorithm === '''
         # compute hankel matrix
         if delays > 1:
-            M = utils.hankel(M, delays, spacing)
+            M = tools.hankel(M, delays, spacing)
         
         # compute right and left snapshot matrices
         X = M[:,:-1]
         Y = M[:,1:]
 
         # compute svd of X
-        U_, s_, Vh_, U, s, Vh = utils.trunc_svd(X, mode=trunc_mode, s_thresh=s_thresh)
+        U_, s_, Vh_, U, s, Vh = tools.trunc_svd(X, mode=trunc_mode, s_thresh=s_thresh)
     
         # compute best fit matrix A
         Uh_ = U_.conj().T
@@ -74,7 +74,7 @@ class DMD:
         A_c = (A - np.eye(A.shape[0]))/dt
         
         # compute eigen values and vectors of A
-        d, W = utils.sort_eig(A)
+        d, W = tools.sort_eig(A)
         D_inv = np.diag(1/d)
         
         # compute modes of A
@@ -180,10 +180,10 @@ class HAVOK:
         
         ''' === start algorithm === '''
         # compute hankel matrix H
-        H = utils.hankel(M, delays, spacing) 
+        H = tools.hankel(M, delays, spacing) 
     
         # compute svd of H
-        U_, s_, Vh_, U, s, Vh = utils.trunc_svd(H, mode=trunc_mode, s_thresh=s_thresh)
+        U_, s_, Vh_, U, s, Vh = tools.trunc_svd(H, mode=trunc_mode, s_thresh=s_thresh)
         V_ = Vh_.conj().T
         V = Vh.conj().T
         

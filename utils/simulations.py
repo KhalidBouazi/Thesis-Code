@@ -7,7 +7,7 @@ Created on Sun Sep 20 16:21:23 2020
 
 import numpy as np
 from scipy.integrate import solve_ivp
-from utls import systems
+from utils import systems
 
 def simulate_system(system, dt, timesteps, x0=None, params=None, train_split=0.8):
     '''
@@ -111,6 +111,20 @@ def get_system_params(system, params):
         elif len(params) != 1:
             raise ValueError('Check your system parameters. You need {l}.')
     
+    elif system == 'doubletank':
+        if params == None:
+            Ai = (0.14**2)*np.pi/4
+            params = [Ai, Ai, 21.8e-6, 41e-6]
+        elif len(params) != 4:
+            raise ValueError('Check your system parameters. You need {A1, A2, q1, q2}.')
+            
+    elif system == 'trippletank':
+        if params == None:
+            Ai = (0.14**2)*np.pi/4
+            params = [Ai, Ai, Ai, 21.8e-6, 41e-6, 21.8e-6]
+        elif len(params) != 6:
+            raise ValueError('Check your system parameters. You need {A1, A2, A3, q1, q2, q3}.')
+    
     else:
         raise ValueError('There is no system ' + system + '.')
         
@@ -148,6 +162,12 @@ def get_system_fun(system, params):
         
     elif system == 'pendulum':
         fun = systems.pendulum(*params)
+        
+    elif system == 'doubletank':
+        fun = systems.doubletank(*params)
+        
+    elif system == 'trippletank':
+        fun = systems.trippletank(*params)
         
     return fun
 
@@ -203,7 +223,19 @@ def get_initial_value(system, x0):
             x0 = [np.pi/4, 0.]
         elif len(x0) != 2:
             raise ValueError('Check your initial value. You need dimension 2.')
+     
+    elif system == 'doubletank':
+        if x0 is None:
+            x0 = [.5, .3]
+        elif len(x0) != 2:
+            raise ValueError('Check your initial value. You need dimension 2.')
             
+    elif system == 'trippletank':
+        if x0 is None:
+            x0 = [.5, .3, .6]
+        elif len(x0) != 3:
+            raise ValueError('Check your initial value. You need dimension 3.')
+    
     return x0
         
         

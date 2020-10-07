@@ -5,7 +5,7 @@ Created on Wed Sep 30 17:41:55 2020
 @author: bouaz
 """
 
-from utls import algorithms,simulations,plots
+from utils import algorithms,simulations,plots
 
 # options
 dt = 0.001
@@ -13,8 +13,8 @@ timesteps = 100000
 delays = 128
 
 # simulate system
-# lorenz, duffing, rössler, vanderpol
-time_series = simulations.simulate_system('vanderpol',dt=dt, timesteps=timesteps)
+# lorenz, duffing, rössler, vanderpol, pendulum, doubletank, trippletank
+time_series = simulations.simulate_system('lorenz',dt=dt, timesteps=timesteps)
 t_train = time_series['t_train']
 X_train = time_series['X_train']
 t_test = time_series['t_test']

@@ -162,7 +162,10 @@ def plot_mode_amplitudes(omega, b):
     
     plt.figure()
     
-    plt.plot(omega, np.abs(b), 'o:', color='red', linewidth=2)
+    idxs = np.argsort(np.imag(omega))
+    idxs = idxs[int(np.ceil(idxs.size/2)):]
+    print(idxs)
+    plt.plot(np.imag(omega[idxs]), np.abs(b[idxs]), 'o:', color='red', linewidth=2)
     
     plt.tight_layout()
     plt.show()

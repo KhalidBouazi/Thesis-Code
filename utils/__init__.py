@@ -7,6 +7,6 @@ Created on Sun Sep 20 16:17:41 2020
 
 from .simulations import *
 from .algorithms import *
-from .utils import *
+from .tools import *
 from .plots import *
 from .systems import *
