@@ -13,8 +13,8 @@ timesteps = 100000
 delays = 128
 
 # simulate system
-# lorenz, duffing_oscillator, rössler, vanderpol_oscillator
-time_series = simulations.simulate_system('vanderpol_oscillator',dt=dt, timesteps=timesteps)
+# lorenz, duffing, rössler, vanderpol
+time_series = simulations.simulate_system('vanderpol',dt=dt, timesteps=timesteps)
 t_train = time_series['t_train']
 X_train = time_series['X_train']
 t_test = time_series['t_test']
@@ -33,4 +33,6 @@ Vh = dmd.Vh_
 
 #plots.compare_orig_recon_timeseries(t_train, X_train, X_pred, overlay=True)
 
-plots.plot_prediction(t_train, X_train[0,:], t_test, X_test[0,:], X_pred[0,:])
+#plots.plot_prediction(t_train, X_train[0,:], t_test, X_test[0,:], X_pred[0,:])
+
+plots.plot_mode_amplitudes(dmd.omega, dmd.b)

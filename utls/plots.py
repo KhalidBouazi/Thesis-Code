@@ -56,7 +56,7 @@ def compare_orig_delay_coords(X, Vh, dims=None):
     ax1.plot(*X[dims,:])
     ax2.plot(*Vh[dims,:])
     
-    plt.tight_layout()
+    #plt.tight_layout()
     plt.show()
     
 def plot_norm_singular_values(s):
@@ -105,6 +105,29 @@ def compare_orig_recon_timeseries(t, X, X_, dims=None, overlay=False):
             ax.plot(t,X_[dims[i],:])
             ax.set_xlabel('Zeit in s')
             ax.legend(['x'+str(i+1), 'z'+str(i+1)], loc='upper right')
+    
+    plt.tight_layout()
+    plt.show()
+    
+
+def plot_recon_timeseries(t, X_, dims=None):
+    
+    # shorten, because X_ may be time-delayed and shorter than X
+    t = t[range(X_.shape[1])]
+    
+    # set dimensions to be plotted
+    if dims == None:
+        dims = range(X_.shape[0])
+    else:    
+        dims = np.sort(dims)
+        
+    fig = plt.figure()
+    
+    for i in range(len(dims)):
+        ax = fig.add_subplot(len(dims),1,i+1)
+        ax.plot(t,X_[dims[i],:])
+        ax.set_xlabel('Zeit in s')
+        ax.set_ylabel('z'+str(i+1))
     
     plt.tight_layout()
     plt.show()

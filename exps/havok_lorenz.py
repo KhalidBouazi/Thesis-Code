@@ -13,8 +13,8 @@ timesteps = 100000
 delays = 100
 
 # simulate system
-# lorenz, duffing_oscillator, rössler, vanderpol_oscillator
-time_series = simulations.simulate_system('lorenz',dt=dt, timesteps=timesteps)
+# lorenz, duffing, rössler, vanderpol, pendulum
+time_series = simulations.simulate_system('lorenz', dt=dt, timesteps=timesteps)
 t_train = time_series['t_train']
 X_train = time_series['X_train']
 t_test = time_series['t_test']
@@ -32,4 +32,6 @@ Vh = havok.Vh_
 #plots.plot_norm_singular_values(havok.s)
 
 #plots.compare_orig_recon_timeseries(t_train, X_train, Vh)
+
+#plots.plot_recon_timeseries(t_train, Vh, dims=[0,1,2])
 

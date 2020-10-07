@@ -7,113 +7,7 @@ Created on Sun Sep 20 16:21:23 2020
 
 import numpy as np
 from scipy.integrate import solve_ivp
-
-def lorenz(sigma, rho, beta, tau):
-    '''
-    
-
-    Parameters
-    ----------
-    sigma : double
-        DESCRIPTION.
-    rho : double
-        DESCRIPTION.
-    beta : double
-        DESCRIPTION.
-    tau : double
-        DESCRIPTION.
-
-    Returns
-    -------
-    f : TYPE
-        DESCRIPTION.
-
-    '''
-    f = lambda t,x: [sigma*(x[1] - x[0])/tau,
-                     (x[0]*(rho - x[2]) - x[1])/tau,
-                     (x[0]*x[1] - beta*x[2])/tau]
-
-    return f
-
-def duffing_oscillator(alpha, beta, gamma, delta, omega, tau):
-    '''
-    
-
-    Parameters
-    ----------
-    alpha : double
-        DESCRIPTION.
-    beta : double
-        DESCRIPTION.
-    gamma : double
-        DESCRIPTION.
-    delta : double
-        DESCRIPTION.
-    omega : double
-        DESCRIPTION.
-    tau : double
-        DESCRIPTION.
-
-    Returns
-    -------
-    f : array
-        differential equation.
-
-    '''
-    f = lambda t,x : [x[1]/tau,
-                      (-delta*x[1] - alpha*x[0] - beta*x[0]**3 + gamma*np.cos(x[2]))/tau,
-                      omega]
-
-    return f
-
-def rössler(a, b, c, tau):
-    '''
-    
-
-    Parameters
-    ----------
-    a : double
-        DESCRIPTION.
-    b : double
-        DESCRIPTION.
-    c : double
-        DESCRIPTION.
-    tau : double
-        DESCRIPTION.
-
-    Returns
-    -------
-    f : array
-        differential equation.
-
-    '''
-    f = lambda t,x : [(-x[1] - x[2])/tau,
-                      (x[0] + a*x[1])/tau,
-                      (b + x[2]*(x[0] - c))/tau]
-
-    return f
-
-def vanderpol_oscillator(mu, tau):
-    '''
-    
-
-    Parameters
-    ----------
-    mu : double
-        DESCRIPTION.
-    tau : double
-        DESCRIPTION.
-
-    Returns
-    -------
-    f : array
-        differential equation.
-
-    '''
-    f = lambda t,x : [x[1]/tau,
-                      (mu*(1-x[0]**2)*x[1] - x[0])/tau] # + beta*u
-    
-    return f
+from utls import systems
 
 def simulate_system(system, dt, timesteps, x0=None, params=None, train_split=0.8):
     '''
@@ -191,12 +85,12 @@ def get_system_params(system, params):
         elif len(params) != 4:
             raise ValueError('Check your system parameters. You need {sigma, rho, beta, tau}.')
             
-    elif system == 'duffing_oscillator':
+    elif system == 'duffing':
         
         if params == None:
-            params = [1., 1, 0., 0., 1., 1.]
+            params = [1., 1, 0., 1., 1.]
         elif len(params) != 6:
-            raise ValueError('Check your system parameters. You need {alpha, beta, gamma, delta, omega, tau}.')
+            raise ValueError('Check your system parameters. You need {alpha, beta, delta, omega, tau}.')
             
     elif system == 'rössler': 
         
@@ -205,12 +99,21 @@ def get_system_params(system, params):
         elif len(params) != 4:
             raise ValueError('Check your system parameters. You need {a, b, c, tau}.')
             
-    elif system == 'vanderpol_oscillator':
+    elif system == 'vanderpol':
         if params == None:
-            params = [10., 1.]
+            params = [5., 1.]
         elif len(params) != 2:
             raise ValueError('Check your system parameters. You need {mu, tau}.')
-            
+    
+    elif system == 'pendulum':
+        if params == None:
+            params = [1]
+        elif len(params) != 1:
+            raise ValueError('Check your system parameters. You need {l}.')
+    
+    else:
+        raise ValueError('There is no system ' + system + '.')
+        
     return params
 
 def get_system_fun(system, params):
@@ -231,22 +134,21 @@ def get_system_fun(system, params):
 
     '''
     
-    if system == 'lorenz':
-        
-        fun = lorenz(*params)
+    if system == 'lorenz':  
+        fun = systems.lorenz(*params)
             
-    elif system == 'duffing_oscillator':
-        
-        fun = duffing_oscillator(*params)
+    elif system == 'duffing':
+        fun = systems.duffing(*params)
             
     elif system == 'rössler': 
-        
-        fun = rössler(*params)
+        fun = systems.rössler(*params)
       
-    elif system == 'vanderpol_oscillator':
-
-        fun = vanderpol_oscillator(*params)
-            
+    elif system == 'vanderpol':
+        fun = systems.vanderpol(*params)
+        
+    elif system == 'pendulum':
+        fun = systems.pendulum(*params)
+        
     return fun
 
 def get_initial_value(system, x0):
@@ -273,30 +175,32 @@ def get_initial_value(system, x0):
     '''
     
     if system == 'lorenz':
-        
         if x0 is None:
             x0 = [-8, 7, 27]
         elif len(x0) != 3:
             raise ValueError('Check your initial value. You need dimension 3.')
             
-    elif system == 'duffing_oscillator':
-        
+    elif system == 'duffing':
         if x0 is None:
-            x0 = [1., 0., 0.]
+            x0 = [1., 0.]
         elif len(x0) != 3:
-            raise ValueError('Check your initial value. You need dimension 3.')
+            raise ValueError('Check your initial value. You need dimension 2.')
             
     elif system == 'rössler': 
-        
         if x0 is None:
             x0 = [0, 10, 0]
         elif len(x0) != 3:
             raise ValueError('Check your initial value. You need dimension 3.')
             
-    elif system == 'vanderpol_oscillator':
-
+    elif system == 'vanderpol':
         if x0 is None:
-            x0 = [2.,0.]
+            x0 = [2., 0.]
+        elif len(x0) != 2:
+            raise ValueError('Check your initial value. You need dimension 2.')
+            
+    elif system == 'pendulum':
+        if x0 is None:
+            x0 = [np.pi/4, 0.]
         elif len(x0) != 2:
             raise ValueError('Check your initial value. You need dimension 2.')
             

@@ -71,7 +71,7 @@ class DMD:
         V = Vh.conj().T
         S_inv = np.diag(1/s_)
         A = Uh_ @ Y @ V_ @ S_inv
-        A_c = (A - np.eye(A.shape[0])) / dt
+        A_c = (A - np.eye(A.shape[0]))/dt
         
         # compute eigen values and vectors of A
         d, W = utils.sort_eig(A)
@@ -83,13 +83,17 @@ class DMD:
         elif alg_mode == 'standard':
             Phi = U_ @ W
         else:
-            raise ValueError('Only exact and standard DMD available.')
+            raise ValueError('Only exact and standard DMD available.')  
             
         # compute continuous-time eigenvalues of A
         omega = np.log(d)/dt
+        omega = np.imag(omega)*1j
         
         # compute mode amplitudes
         b = np.linalg.lstsq(Phi, M[:,0], rcond=None)[0]
+
+        # in case of delay embedding just use first rows of modes
+        Phi = Phi[:self.M.shape[0]]  
         
         ''' === save output === '''
         # snapshot matrices
@@ -129,10 +133,13 @@ class DMD:
             signal.
 
         '''
-        x = np.zeros((self.Phi.shape[0], len(t)))
+        
+        dynamics = np.zeros((len(self.omega), len(t)))
         for i in range(len(t)):
-            x[:,i] = self.Phi @ np.exp(np.diag(self.omega*t[i])) @ self.b
-
+            dynamics[:,i] = np.diag(np.exp(self.omega*t[i])) @ self.b 
+                
+        x = self.Phi @ dynamics
+        
         return x
         
 
