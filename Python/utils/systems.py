@@ -7,6 +7,10 @@ Created on Wed Oct  7 13:10:38 2020
 
 import numpy as np
 
+# constants
+g = 9.81
+
+# system equations
 def lorenz(sigma, rho, beta, tau):
     '''
     
@@ -24,15 +28,15 @@ def lorenz(sigma, rho, beta, tau):
 
     Returns
     -------
-    f : TYPE
+    dx : array
         DESCRIPTION.
 
     '''
-    f = lambda t,x: [sigma*(x[1] - x[0])/tau,
+    dx = lambda t,x: [sigma*(x[1] - x[0])/tau,
                      (x[0]*(rho - x[2]) - x[1])/tau,
                      (x[0]*x[1] - beta*x[2])/tau]
 
-    return f
+    return dx
 
 def duffing(alpha, beta, delta, omega, tau):
     '''
@@ -55,14 +59,14 @@ def duffing(alpha, beta, delta, omega, tau):
 
     Returns
     -------
-    f : array
+    dx : array
         differential equation.
 
     '''
-    f = lambda t,x : [x[1]/tau,
+    dx = lambda t,x : [x[1]/tau,
                       (-delta*x[1] - alpha*x[0] - beta*x[0]**3)/tau]
 
-    return f
+    return dx
 
 def rössler(a, b, c, tau):
     '''
@@ -81,15 +85,15 @@ def rössler(a, b, c, tau):
 
     Returns
     -------
-    f : array
+    dx : array
         differential equation.
 
     '''
-    f = lambda t,x : [(-x[1] - x[2])/tau,
+    dx = lambda t,x : [(-x[1] - x[2])/tau,
                       (x[0] + a*x[1])/tau,
                       (b + x[2]*(x[0] - c))/tau]
 
-    return f
+    return dx
 
 def vanderpol(mu, tau):
     '''
@@ -104,14 +108,14 @@ def vanderpol(mu, tau):
 
     Returns
     -------
-    f : array
+    dx : array
         differential equation.
 
     '''
-    f = lambda t,x : [x[1]/tau,
+    dx = lambda t,x : [x[1]/tau,
                       (mu*(1-x[0]**2)*x[1] - x[0])/tau] # + beta*u
     
-    return f
+    return dx
 
 def pendulum(l):
     '''
@@ -124,16 +128,16 @@ def pendulum(l):
 
     Returns
     -------
-    f : array
+    dx : array
         differential equation.
 
     '''
-    f = lambda t, x : [x[1],
+    dx = lambda t, x : [x[1],
                        -9.81/l * np.sin(x[0])]
     
-    return f
+    return dx
 
-def doubletank(A1, A2, q1, q2):
+def doubletank(A1, A2, q1, q2, u):
     '''
     
 
@@ -147,21 +151,21 @@ def doubletank(A1, A2, q1, q2):
         DESCRIPTION.
     q2 : double
         DESCRIPTION.
+    u  : double
+        DESCRIPTION.
 
     Returns
     -------
-    f : array
+    dx : array
         differential equation.
 
     '''
-    g = 9.81
-    u = 0
-    f = lambda t, x : [(-q1*np.sqrt(2*g*(x[0] - x[1])) + u)/A1,
+    dx = lambda t, x : [(-q1*np.sqrt(2*g*(x[0] - x[1])) + u)/A1,
                        (q1*np.sqrt(2*g*(x[0] - x[1])) - q2*np.sqrt(2*g*x[1]))/A2]
 
-    return f
+    return dx
 
-def trippletank(A1, A2, A3, q1, q2, q3):
+def trippletank(A1, A2, A3, q1, q2, q3, u):
     '''
     
 
@@ -179,18 +183,17 @@ def trippletank(A1, A2, A3, q1, q2, q3):
         DESCRIPTION.
     q3 : double
         DESCRIPTION.
+    u  : array
+        DESCRIPTION.
 
     Returns
     -------
-    f : array
+    dx : array
         differential equation.
 
     '''
-    g = 9.81
-    u1 = 0
-    u2 = 0
-    f = lambda t, x : [(-q1*np.sqrt(2*g*(x[0] - x[1])) + u1)/A1,
+    dx = lambda t, x : [(-q1*np.sqrt(2*g*(x[0] - x[1])) + u[0])/A1,
                        (q1*np.sqrt(2*g*(x[0] - x[1])) + q3*np.sqrt(2*g*(x[2] - x[1])) - q2*np.sqrt(2*g*x[1]))/A2,
-                       (-q3*np.sqrt(2*g*(x[2] - x[1])) + u2)/A3]
+                       (-q3*np.sqrt(2*g*(x[2] - x[1])) + u[1])/A3]
 
-    return f
+    return dx

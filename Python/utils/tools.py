@@ -6,6 +6,7 @@ Created on Sun Sep 20 13:25:52 2020
 """
 
 import numpy as np
+import scipy as sp
 
 def hankel(X, delays, spacing):
     '''
@@ -28,18 +29,17 @@ def hankel(X, delays, spacing):
     '''
     
     # extract data matrix dimensions
-    height = 0
-    width = 0
     if X.ndim == 1:
-        height = 1
-        width = len(X)
-        X.shape = (1, width)
-    else:
-        height, width = X.shape
+        X.shape = (1, len(X))
     
+    height, width = X.shape
+
     # compute hankel shape
     hankel_shape = (height * delays,
                     width - spacing * (delays - 1))
+    
+    if hankel_shape[1] < 0:
+        raise ValueError('Cannot compute hankel matrix because of inappropriate delay and timestep dimensions')
 
     # compute hankel matrix
     H = np.zeros(hankel_shape)
@@ -86,7 +86,7 @@ def trunc_svd(X, mode, s_thresh):
     '''
     
     # compute svd of X
-    U, s, Vh = np.linalg.svd(X, full_matrices=False)
+    U, s, Vh = sp.linalg.svd(X, full_matrices=False)
     
     # determine truncation rank by threshold
     rank = 0
@@ -104,14 +104,14 @@ def trunc_svd(X, mode, s_thresh):
         raise ValueError('Mode has to be value, rank or none.')
     
     # truncate 
-    U_ = U[:, :rank]
+    U_ = U[:,:rank]
     s_ = s[:rank]
     Vh_ = Vh[:rank]
         
     return U_, s_, Vh_, U, s, Vh
 
 
-def sort_eig(A):
+def sort_eig(A, right=True):
     '''
     
 
@@ -130,16 +130,17 @@ def sort_eig(A):
     '''
     
     # compute eigen values and vectors of A
-    d, W = np.linalg.eig(A)
+    d, W = sp.linalg.eig(A, left=not right, right=right)
     
     # compute sorted indexes
     ind = d.argsort()[::-1] # [::-1] reverses the list of indices
     
     # sort eigen values and vectors
     d_sort = d[ind]
-    W_sort = W[:, ind]
+    W_sort = W[:,ind]
     
     return d_sort, W_sort
+
 
 def diff(X, dt, rank):
     dX = []
