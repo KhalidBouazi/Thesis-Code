@@ -1,5 +1,10 @@
+function config = simconfig()
+
 %% Add path to access all functions
 addpath(genpath('C:\Users\bouaz\Desktop\Thesis-Code\Matlab'));
+
+%% Set archive path
+config.archivepath = 'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\1_Daten\';
 
 %% Set latex as plot interpreter
 set(groot,'defaultTextInterpreter','latex');

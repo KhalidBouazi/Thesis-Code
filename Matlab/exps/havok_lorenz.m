@@ -1,7 +1,7 @@
 close all;
 
-%% Load simconfig for consistent plots
-simconfig;
+%% Run simconfig to set working directory, store archive path and set consistent plot settings
+config = simconfig();
 
 %% Set parameters
 system = 'lorenz';
@@ -24,4 +24,4 @@ delayphaseplot(V);
 input = struct('system',system,'timesteps',timesteps);
 data = struct('t',t,'measured',meas,'X',X);
 result = resultstruct({input,data,havok});
-saveresult(result);
+saveresult(result,config.archivepath);

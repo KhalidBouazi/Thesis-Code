@@ -1,7 +1,5 @@
 function extracteddata = fromarchive(specs,archivepath)
 
-extracteddata = [];
-
 %% Check if field 'algorithm' exists in specs
 if isfield(specs,'algorithm')
     algorithm = specs.algorithm;
@@ -15,7 +13,8 @@ if isfile(filename)
     m = matfile(filename);
     data = m.([algorithm 'data']);
 
-    % Extract archive data for specified input 
+    % Extract archive data for specified input
+ 
     f = fieldnames(specs);
     m = size(data,1);
     actpos = zeros(m,1);
@@ -31,8 +30,10 @@ if isfile(filename)
         pos = pos & actpos;
     end
     extracteddata = data(pos);
-end
-       
+    
+    else
+        
+
 end
     
     

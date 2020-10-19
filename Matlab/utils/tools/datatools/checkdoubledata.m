@@ -1,9 +1,10 @@
-function exists = checkdoubledata(result,filename)
+function exists = checkdoubledata(result,inputfieldnames,archivepath)
 
-if isfile(filename)
-    m = matfile(filename,'Writable',true);
-    data = m.([algorithm 'data']);
-    
-else
-    exists = false;
+exists = false;
+
+input = datastructbyfields(result,inputfieldnames);
+datafromarchive = fromarchive(input,archivepath);
+if ~isempty(datafromarchive)
+    exists = true;
+    disp('Double data: data already exists with this input. Data has not been added to archive.');
 end

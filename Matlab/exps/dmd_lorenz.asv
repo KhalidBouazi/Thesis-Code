@@ -1,6 +1,6 @@
 close all;
 
-%% Run simconfig to set working directory, store archive path and set consistent plot settings
+%% Run simconfig for archive path,consistent plots
 config = simconfig();
 
 %% Set parameters
@@ -34,4 +34,4 @@ input = struct('system',system,'timesteps',timesteps);
 data = struct('t',t,'measured',meas,'X',X);
 reconstruction = struct('Y_',Y_,'rmseY_',rmseY_);
 result = resultstruct({input,data,dmd,reconstruction});
-saveresult(result,config.archivepath);
+saveresult(result);
