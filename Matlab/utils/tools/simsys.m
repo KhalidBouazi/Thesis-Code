@@ -34,7 +34,8 @@ end
 tspan = (0:dt:dt*timesteps);
 
 %% Simulate system
-[t,X] = ode45(odefun,tspan,x0);
+options = odeset('RelTol',1e-12);
+[t,X] = ode45(odefun,tspan,x0,options);
 t = t';
 X = X';
 

@@ -1,44 +1,39 @@
-function [self,Phi,omega,b] = DMD(D, dt, rank, delays, spacing)
+function [self,Phi,omega,b] = DMD(Y, dt, rank, delays, spacing)
 
 %% Check function arguments
 if nargin < 2
-    error('Minimum number of inputs is 2.');
-elseif nargin < 3
-    rank = [];
-    delays = 1;
-    spacing = 1;
-elseif nargin < 4
-    delays = 0;
-    spacing = 1;
-elseif nargin < 5
+    error('Arguments: Minimum number of arguments is 2.');
+end
+if nargin < 5
     spacing = 1;
 end
+if nargin < 4
+    delays = 1;
+end
+if nargin < 3
+    rank = [];
+end
+
 
 %% Start algorithm
-M = hankmat(D,delays,spacing);
-
-X = M(:,1:end-1);
-Y = M(:,2:end);
+H = hankmat(Y,delays,spacing);
+X = H(:,1:end-1);
+Xp = H(:,2:end);
 
 [U,S,V] = truncsvd(X,rank);
-s = diag(S);
 
-Atilde = S\U'*Y*V;
-
-[W,d] = eigdec(Atilde);
-D = diag(d);
-
-Phi = Y*V/S*W/D;
-Phi = Phi(1:size(D,1),:);
-
-omega = log(d)/dt;
-
+Atilde = S\U'*Xp*V;
+[W,D] = eigdec(Atilde);
+Phi = Xp*V/S*W/D;
+Phi = Phi(1:size(Y,1),:);
+omega = log(diag(D))/dt;
 b = (W*D)\(S*V(1,:)');
 
 %% Save in- and output
-self.input = struct('D',D,'dt',dt,'rank',rank,'delays',delays,'spacing',spacing);
-self.data = struct('M',M,'X',X,'Y',Y);
-self.svd = struct('U',U,'s',s,'V',V);
-self.dmd = struct('Atilde',Atilde,'W',W,'d',d','Phi',Phi,'omega',omega,'b',b);
+
+self = struct('algorithm',"DMD",...
+              'Y',Y,'dt',dt,'rank',size(S,1),'delays',delays,'spacing',spacing,...
+              'H',H,'U',U,'s',diag(S),'V',V,'Atilde',Atilde,'W',W,'d',diag(D)',...
+              'Phi',Phi,'omega',omega,'b',b);
 
 end

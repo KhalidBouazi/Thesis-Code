@@ -1,12 +1,12 @@
-function [W,d] = eigdec(A)
+function [W,D] = eigdec(A)
 
 %% Compute eigenvalue decomposition
 [W,D] = eig(A);
-d = diag(D);
 
 %% Sort eigenvalues and vectors in descending order
-[d,sortIdx] = sort(d,'descend');
+[d,sortIdx] = sort(diag(D),'descend');
 W = W(:,sortIdx);
+D = diag(d);
 
 end
 
