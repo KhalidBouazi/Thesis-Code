@@ -8,7 +8,7 @@ system = 'lorenz';
 dt = 0.01;
 timesteps = 10000;
 rank = 10;
-delays = 50;
+delays = 20;
 
 %% Simulate lorenz system
 [t,X] = simsys(system,dt,timesteps);
@@ -21,10 +21,7 @@ delays = 50;
 delayphaseplot(V);
 
 %% Save results in directory
-date = datetime('now','TimeZone','local','Format','d-MMM-y');
-time = datetime('now','TimeZone','local','Format','HH:mm');
-
-input = struct('date',date,'time',time,'system',system,'timesteps',timesteps);
+input = struct('system',system,'timesteps',timesteps);
 data = struct('t',t,'measured',meas,'X',X);
-results = resultstruct(havok.algorithm,{input,data,havok});
-saveresults(results);
+result = resultstruct({input,data,havok});
+saveresult(result);

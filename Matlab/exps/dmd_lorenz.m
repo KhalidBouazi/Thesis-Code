@@ -29,13 +29,9 @@ reconstructplot(t,Y,Y_);
 singplot(dmd.s);
 %pgfplot(t,Y(1,:),'Ref',t,Y_(1,:),'Pred','lorenz_x1','lorenz_x1.tikz','C:\Users\bouaz\Desktop\Thesis-Tex\content\2_Ergebnisse\Plots');
 
-%% Save results in directory
-date = datetime('now','TimeZone','local','Format','d-MMM-y');
-time = datetime('now','TimeZone','local','Format','HH:mm:ss');
-
-input = struct('date',date,'time',time,'system',system,'timesteps',timesteps);
+%% Save result in directory
+input = struct('system',system,'timesteps',timesteps);
 data = struct('t',t,'measured',meas,'X',X);
 reconstruction = struct('Y_',Y_,'rmseY_',rmseY_);
-results = resultstruct(dmd.algorithm,{input,data,dmd,reconstruction});
-saveresults(results);
-
+result = resultstruct({input,data,dmd,reconstruction});
+saveresult(result);
