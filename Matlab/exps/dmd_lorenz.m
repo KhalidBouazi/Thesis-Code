@@ -8,7 +8,7 @@ system = 'lorenz';
 dt = 0.05;
 timesteps = 1000;
 rank = 15;
-delays = 100;
+delays = 50;
 
 %% Simulate lorenz system
 [t,X] = simsys(system,dt,timesteps);

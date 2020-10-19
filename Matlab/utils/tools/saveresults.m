@@ -2,15 +2,17 @@ function saveresults(results)
 
 algorithm = char(results.algorithm);
 
-%% Ask for saving confirmation
-answer = questdlg(['Möchtest du die Ergebnisse von ' algorithm ' speichern?'],'Ergebnisse speichern',...
-	'Ja','Nein','Nein');
+%% Open dialog for rating and note
+output = savedialog(algorithm);
 
 %% Define file for saving
 filename = ['C:\Users\bouaz\Desktop\Thesis-Tex\content\2_Ergebnisse\Daten\' algorithm '.mat'];
 
 %% Save results in specific folder and matfile
-if strcmp(answer,'Ja')
+if strcmp(output.confirm,'yes')
+    results.favorite = output.favorite;
+    results.note = output.note;
+    
     if isfile(filename)
         m = matfile(filename,'Writable',true);
         m.([algorithm 'data'])(end+1,:) = results;
