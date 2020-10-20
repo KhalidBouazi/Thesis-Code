@@ -1,5 +1,16 @@
-function E =  rmse(X,X_)
+function algstruct =  rmse(algstruct)
 
-E = sqrt(mean((X - X_).^2,2));
+%% Check obligatory and optional function arguments
+oblgfunargs = {'Y','Y_'};
+optfunargs = {};
+optargvals = {};
+algstruct = checkandfillfunargs(algstruct,oblgfunargs,optfunargs,optargvals);
+
+%% Run for every algorithm combination
+for i = 1:length(algstruct)
+
+    algstruct(i).rmseY_ = sqrt(mean((algstruct(i).Y - algstruct(i).Y_).^2,2));
+    
+end
 
 end

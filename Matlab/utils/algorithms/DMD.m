@@ -1,38 +1,43 @@
-function [self,Phi,omega,b] = DMD(Y, dt, rank, delays, spacing)
+function algstruct = DMD(algstruct)
 
-%% Check function arguments
-if nargin < 2
-    error('Arguments: Minimum number of arguments is 2.');
+%% Check obligatory and optional function arguments
+oblgfunargs = {'Y','dt'};
+optfunargs = {'rank','delays','spacing'};
+optargvals = {[],1,1};
+algstruct = checkandfillfunargs(algstruct,oblgfunargs,optfunargs,optargvals);
+
+%% Run for every algorithm combination
+for i = 1:length(algstruct)
+    
+    dispalgnr(i);
+
+    % Start algorithm
+    H = hankmat(algstruct(i).Y,algstruct(i).delays,algstruct(i).spacing);
+    X = H(:,1:end-1);
+    Xp = H(:,2:end);
+
+    [U,S,V] = truncsvd(X,algstruct(i).rank);
+
+    Atilde = S\U'*Xp*V;
+    [W,D] = eigdec(Atilde);
+    Phi = Xp*V/S*W/D;
+    Phi = Phi(1:size(algstruct(i).Y,1),:);
+    omega = log(diag(D))/algstruct(i).dt;
+    b = (W*D)\(S*V(1,:)');
+
+    % Save in algstruct(i)
+    algstruct(i).algorithm = "DMD";
+    algstruct(i).H = H;
+    algstruct(i).U = U;
+    algstruct(i).s = diag(S);
+    algstruct(i).V = V;
+    algstruct(i).Atilde = Atilde;
+    algstruct(i).W = W;
+    algstruct(i).d = diag(D);
+    algstruct(i).Phi = Phi;
+    algstruct(i).omega = omega;
+    algstruct(i).b = b;
+    
 end
-if nargin < 5
-    spacing = 1;
-end
-if nargin < 4
-    delays = 1;
-end
-if nargin < 3
-    rank = [];
-end
-
-
-%% Start algorithm
-H = hankmat(Y,delays,spacing);
-X = H(:,1:end-1);
-Xp = H(:,2:end);
-
-[U,S,V] = truncsvd(X,rank);
-
-Atilde = S\U'*Xp*V;
-[W,D] = eigdec(Atilde);
-Phi = Xp*V/S*W/D;
-Phi = Phi(1:size(Y,1),:);
-omega = log(diag(D))/dt;
-b = (W*D)\(S*V(1,:)');
-
-%% Save in- and output
-self = struct('algorithm','DMD',...
-              'Y',Y,'dt',dt,'rank',size(S,1),'delays',delays,'spacing',spacing,...
-              'H',H,'U',U,'s',diag(S),'V',V,'Atilde',Atilde,'W',W,'d',diag(D)',...
-              'Phi',Phi,'omega',omega,'b',b);
 
 end

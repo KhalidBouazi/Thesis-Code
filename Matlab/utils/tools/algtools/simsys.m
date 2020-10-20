@@ -1,42 +1,43 @@
-function [t,X] = simsys(sys,dt,timesteps,params,x0)
+function algstruct = simsys(algstruct)
 
-%% Check function arguments
-if nargin < 3
-    error('Minimum number of inputs is 3.');
-elseif nargin < 4
-    params = [];
-    x0 = [];
-elseif nargin < 5
-    x0 = [];
-end
+%% Check obligatory and optional function arguments
+oblgfunargs = {'system','dt','timesteps'};
+optfunargs = {'params','x0'};
+optargvals = {[],[]};
+algstruct = checkandfillfunargs(algstruct,oblgfunargs,optfunargs,optargvals);
+
+%% Define systems struct
+systems = struct('lorenz',@lorenz,'duffing',@duffing,'roessler',@roessler,...
+                 'vanderpol',@vanderpol,'pendulum',@pendulum,'doubletank',@doubletank,...
+                 'trippletank',@trippletank);
+
+%% Run for every algorithm combination
+for i = 1:length(algstruct)
     
-%% Extract system function and initial state
-switch sys
-    case 'lorenz'
-        [odefun,x0] = lorenz(params,x0);
-    case 'duffing'
-        [odefun,x0] = duffing(params,x0);
-    case 'roessler'
-        [odefun,x0] = roessler(params,x0);
-    case 'vanderpol'
-        [odefun,x0] = vanderpol(params,x0);
-    case 'pendulum'
-        [odefun,x0] = pendulum(params,x0);
-    case 'doubletank'
-        [odefun,x0] = doubletank(params,x0);
-    case 'trippletank'
-        [odefun,x0] = trippletank(params,x0);
-    otherwise
-        error('System: No such system available.');
+    % Extract system function and initial state
+    system = char(algstruct(i).system);
+    if isfield(systems,system)
+        fun = systems.(system);
+        [odefun,params,x0] = fun(algstruct(i).params,algstruct(i).x0);
+    else
+        error(['System: No system ' system ' available.']);
+    end
+
+    % Create timespan
+    tspan = (0:algstruct(i).dt:algstruct(i).dt*algstruct(i).timesteps);
+
+    % Simulate system
+    options = odeset('RelTol',1e-12);
+    [t,X] = ode45(odefun,tspan,x0,options);
+    t = t';
+    X = X';
+
+    % Save in algstruct(i)
+    algstruct(i).params = params;
+    algstruct(i).x0 = x0;
+    algstruct(i).t = t;
+    algstruct(i).X = X;
+    
 end
-
-%% Create timespan
-tspan = (0:dt:dt*timesteps);
-
-%% Simulate system
-options = odeset('RelTol',1e-12);
-[t,X] = ode45(odefun,tspan,x0,options);
-t = t';
-X = X';
 
 end

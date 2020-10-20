@@ -1,4 +1,4 @@
-function [odefun,x0] = duffing(params, x0)
+function [odefun,params,x0] = duffing(params, x0)
 
 %% Extract system parameters
 if isempty(params)

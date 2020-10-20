@@ -1,5 +1,14 @@
 function config = simconfig()
 
+%% Display algorithm start in command window
+disp('                            #######################################');
+disp('                            #                                     #');
+disp('                            #     Koopman Identification Tool     #');
+disp('                            #                                     #');
+disp('                            #        Algorithm started now        #');
+disp('                            #                                     #');
+disp('                            #######################################');
+
 %% Add path to access all functions
 addpath(genpath('C:\Users\bouaz\Desktop\Thesis-Code\Matlab'));
 

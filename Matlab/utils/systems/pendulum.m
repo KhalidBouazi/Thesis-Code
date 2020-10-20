@@ -1,4 +1,4 @@
-function [odefun,x0] = pendulum(params, x0)
+function [odefun,params,x0] = pendulum(params, x0)
 
 %% Extract system parameters
 if isempty(params)

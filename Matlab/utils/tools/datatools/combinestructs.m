@@ -1,4 +1,4 @@
-function result = resultstruct(structarray)
+function result = combinestructs(structarray)
          
 %% Commbine structs from structarray to result struct
 for i = 1:length(structarray)

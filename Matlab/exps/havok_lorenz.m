@@ -1,27 +1,26 @@
 close all;
 
-%% Run simconfig to set working directory, store archive path and set consistent plot settings
+%% Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
 %% Set parameters
-system = 'lorenz';
-dt = 0.01;
-timesteps = 10000;
-rank = 10;
-delays = 20;
+input.system = {'lorenz','lorenz'};
+input.dt = {0.01};
+input.timesteps = {10000};
+input.rank = {10};
+input.delays = {20};
+input.measured = {1,2};
+havok = combineinputs(input);
 
 %% Simulate lorenz system
-[t,X] = simsys(system,dt,timesteps);
-[meas,Y] = statemeas(X,1);
+havok = simsys(havok);
+havok = statemeas(havok);
 
 %% Compute HAVOK
-[havok,V] = HAVOK(Y,dt,rank,delays);
+havok = HAVOK(havok);
 
 %% Plot results
-delayphaseplot(V);
+%delayphaseplot(havok.V);
 
 %% Save results in directory
-input = struct('system',system,'timesteps',timesteps);
-data = struct('t',t,'measured',meas,'X',X);
-result = resultstruct({input,data,havok});
-saveresult(result,config.archivepath);
+saveresult(havok,config.archivepath);

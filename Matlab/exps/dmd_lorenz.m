@@ -1,37 +1,35 @@
 close all;
 
-%% Run simconfig to set working directory, store archive path and set consistent plot settings
+%% Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
 %% Set parameters
-system = 'lorenz';
-dt = 0.05;
-timesteps = 1000;
-rank = 15;
-delays = 30;
+input.system = {'lorenz'};
+input.dt = {0.05};
+input.timesteps = {1000};
+input.rank = {15,20,35};
+input.delays = {70};
+dmd = combineinputs(input);
 
 %% Simulate lorenz system
-[t,X] = simsys(system,dt,timesteps);
-[meas,Y] = statemeas(X,1:size(X,1));
+dmd = simsys(dmd);
+dmd = statemeas(dmd);
 
 %% Compute DMD
-[dmd,Phi,omega,b] = DMD(Y,dt,rank,delays);
+dmd = DMD(dmd);
 
 %% Reconstruct signal
-Y_ = reconstruct(Phi,omega,b,t);
+dmd = reconstruct(dmd);
+%dmd = predict(dmd); % TODO
 
 %% Calculate rmse
-rmseY_ = rmse(Y,Y_);
+dmd = rmse(dmd);
 
 %% Plot results
-eigplot(dmd.d,'discrete');
-reconstructplot(t,Y,Y_);
-singplot(dmd.s);
+% eigplot(dmd.d,'discrete');
+% reconstructplot(dmd.t,dmd.Y,dmd.Y_);
+% singplot(dmd.s);
 %pgfplot(t,Y(1,:),'Ref',t,Y_(1,:),'Pred','lorenz_x1','lorenz_x1.tikz','C:\Users\bouaz\Desktop\Thesis-Tex\content\2_Ergebnisse\Plots');
 
 %% Save result in directory
-input = struct('system',system,'timesteps',timesteps);
-data = struct('t',t,'measured',meas,'X',X);
-reconstruction = struct('Y_',Y_,'rmseY_',rmseY_);
-result = resultstruct({input,data,dmd,reconstruction});
-saveresult(result,config.archivepath);
+saveresult(dmd,config.archivepath);
