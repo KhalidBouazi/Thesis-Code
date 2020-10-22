@@ -1,0 +1,36 @@
+function conteigplot(result)
+
+%% Check obligatory and optional function arguments
+oblgfunargs = {'omega'};
+optfunargs = {};
+optargvals = {};
+result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
+
+%% Plot config
+AxesColor = [96, 96, 96]/255;
+AxesWidth = 2;
+PredEigColor = [0.6350, 0.0780, 0.1840];
+TrueEigColor = [0.4660, 0.6740, 0.1880];
+PredEigMarker = 'o';
+TrueEigMarker = 'x';
+    
+%% Start plotting
+omega = result.omega;
+realeig = real(omega);
+imageig = imag(omega);
+xlimit = [min(realeig),max(realeig)];
+ylimit = [min(imageig),max(imageig)];
+
+varstr = '$\omega$';
+plot(xlimit,[0 0],'Color',AxesColor,'LineWidth',AxesWidth);
+hold on;
+plot([0 0],ylimit,'Color',AxesColor,'LineWidth',AxesWidth);
+
+scatter(realeig,imageig,'MarkerEdgeColor',PredEigColor,'Marker',PredEigMarker);
+xlim(xlimit);
+ylim(ylimit);
+xlabel(strcat('Re(',varstr,')'));
+ylabel(strcat('Im(',varstr,')'));
+grid on;
+
+end
