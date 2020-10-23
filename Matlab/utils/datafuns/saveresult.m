@@ -1,11 +1,11 @@
-function saved = saveresult(result,config)
+function saved = saveresult(result,config,path)
 
 saved = false;
 
 algorithm = result.algorithm;
 
 %% Define file for saving
-filename = [config.archivepath algorithm '.mat'];
+filename = [path algorithm '.mat'];
 
 %% Extract cell array for input fieldnames
 if any(strcmp(config.algorithms,algorithm))
@@ -15,7 +15,7 @@ else
 end
 
 %% Check if data with same input already exists
-dataexists = checkdoubledata(result,inputfieldnames,config.archivepath);
+dataexists = checkdoubledata(result,inputfieldnames,path);
 
 %% Save result
 if ~dataexists

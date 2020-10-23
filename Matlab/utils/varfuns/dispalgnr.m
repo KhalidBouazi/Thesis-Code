@@ -1,7 +1,7 @@
 function dispalgnr(nr)
 
 disp('                            #######################################');
-disp(['                            #         Algorithm ' char(string(nr)) ' started.        #']);
+disp(['                            #         Algorithm ' num2str(nr) ' started.        #']);
 disp('                            #######################################');
 
 end

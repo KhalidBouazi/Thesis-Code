@@ -14,7 +14,7 @@ input.algorithm = {'HAVOK'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'lorenz','duffing','vanderpol','roessler','pendulum','doubletank','trippletank'};
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,7 +48,7 @@ input.delays = {20};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,2,3};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 havok = combineinputs(input);

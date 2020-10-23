@@ -14,7 +14,7 @@ input.algorithm = {'DMD'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'lorenz','duffing','vanderpol','roessler','pendulum','doubletank','trippletank'};
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

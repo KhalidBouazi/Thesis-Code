@@ -7,7 +7,7 @@ if length(arr) > 1
     end
     c(end) = ']';
 else
-    c = char(string(arr));
+    c = num2str(arr);
 end
 
 end
