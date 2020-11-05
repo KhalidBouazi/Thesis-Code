@@ -1,28 +1,29 @@
-function reconstructplot(t,X,X_)
+function reconstructplot(result)
 
-%% Check function arguments
-if nargin < 3
-    error('Arguments: Minimum number of arguments is 3.');
-end
+%% Check obligatory and optional function arguments
+oblgfunargs = {'Y','Y_'};
+optfunargs = {};
+optargvals = {};
+result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
 
 %% Plot config
-PredXColor = [0.6350, 0.0780, 0.1840];
-TrueXColor = [0.4660, 0.6740, 0.1880];
+PredYColor = [0.6350, 0.0780, 0.1840];
+TrueYColor = [0.4660, 0.6740, 0.1880];
 
 %% Start plotting
-m = size(X,1);
+m = size(result.Y,1);
 for i = 1:m
     subplot(m,1,i);
-    varstr = strcat('x_',num2str(i));
-    plot(t,X(i,:),'Color',TrueXColor);
+    varstr = strcat('x_{',num2str(i),'}');
+    plot(result.t,result.Y(i,:),'Color',TrueYColor);
     hold on;
-    plot(t,X_(i,:),'Color',PredXColor);
-    xlim([t(1) t(end)]);
+    plot(result.t,result.Y_(i,:),'Color',PredYColor);
+    xlim([result.t(1) result.t(end)]);
     ylabel(strcat('$',varstr,'$'));
     
     if i == 1
         legend('Ref','Pred');
-    elseif i == 3
+    elseif i == m
         xlabel('Zeit in s');
     end
 end

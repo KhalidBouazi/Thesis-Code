@@ -2,20 +2,27 @@ function algprocedure(algdata,config)
 
 for i = 1:length(algdata)
     
-    dispalgnr(i);
+    dispstep('algnum',i);
     
-    %% I. Simulate system
+    t = tic;
+    
+    % I. Simulate system
     algdata{i} = simsys(algdata{i},config);
+%     algdata{i}.Y = polyobserv(algdata{i}.Y,1);
     
-    %% II. Compute algorithm
-    algdata{i} = runalg(algdata{i});
+    % II. Compute algorithm
+    algdata{i} = runalg(algdata{i},config);
     
-    %% III. Evaluation
+    % III. Evaluation
     algdata{i} = evalalg(algdata{i},config);
+    
+    timeelapsed = toc(t);
+    
+    dispstep('time',timeelapsed);
     
 end
 
-%% V. Plot results in one figure
+% IV. Plot results in one figure
 plotalg(algdata,config);
 
 end

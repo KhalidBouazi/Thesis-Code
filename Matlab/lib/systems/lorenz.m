@@ -1,9 +1,9 @@
-function [odefun,params,x0] = lorenz(params,x0)
+function [odefun,params,x0] = lorenz(params, x0)
 
 %% Extract system parameters
 if isempty(params)
     params = [10; 28; 8/3];
-elseif length(x0) ~= 3
+elseif length(params) ~= 3
     error('System parameters: Check number of elements.'); 
 end
 

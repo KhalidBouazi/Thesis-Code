@@ -14,37 +14,42 @@ input.algorithm = {'DMD'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz','duffing','vanderpol','roessler','pendulum','doubletank','trippletank'};
+input.system = {'lorenz'};
 
 % params : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.params = {};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.x0 = {};
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.01,0.005};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {3000};
+input.timesteps = {6400};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {15};
+input.rank = {20};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {70};
+input.delays = {200};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% spacing : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.spacing = {[1,1],[1,10]};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

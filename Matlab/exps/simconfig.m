@@ -22,7 +22,10 @@ config.folderacr = struct('algorithm','alg','system','sys','params','p','x0','x0
     'dt','dt','timesteps','ts','rank','r','delays','d','spacing','sp','measured','m');
 
 %% Define algorithm names
-config.algorithms = {'DMD','HAVOK'};
+config.algorithms = {'DMD','HAVOK','HDMD','TEST'};
+
+%% Define algorithm functions struct
+config.algorithmfuns = struct('DMD',@DMD,'HAVOK',@HAVOK,'HDMD',@HDMD,'TEST',@TEST);
 
 %% Define system functions struct
 config.systemfuns = struct('lorenz',@lorenz,'duffing',@duffing,'roessler',@roessler,...
@@ -35,44 +38,78 @@ config.systemacr = struct('lorenz','LR','duffing','DF','roessler','RL',...
     'trippletank','TRLT');
                        
 %% Define plot functions struct
-config.plotfuns = struct('phase',@phaseplot,'phasebasis',@phasebasisplot,...
-    'disceig',@disceigplot,'conteig',@conteigplot,'sing',@singplot,...
-    'delayphase',@delayphaseplot,'reconstruct',@reconstructplot);
+config.plotfuns = struct('phase',@phaseplot,'disceig',@disceigplot,...
+    'conteig',@conteigplot,'sing',@singplot,'delayphase',@delayphaseplot,...
+    'phasebasis',@phasebasisplot,'reconstruct',@reconstructplot,...
+    'delayseries',@delayseriesplot);
+config.mainplotfuns = struct('phase',@phaseplot,'disceig',@disceigplot,...
+    'conteig',@conteigplot,'sing',@singplot,'delayphase',@delayphaseplot);
+config.secplotfuns = struct('phasebasis',@phasebasisplot,...
+    'reconstruct',@reconstructplot,'delayseries',@delayseriesplot,...
+    'sing',@singplot);
                      
 %% Define plot names
 config.plotnames = struct('phase','Phasenraum','phasebasis','Phasenraum mit ...',...
-    'disceig','Diskrete Eigenwerte','conteig','Kontinuierliche Eigenwerte',...
-    'sing','Singulärwerte','delayphase','Delay Phasenraum','reconstruct','Rekonstruktion');
+    'disceig','Diskr. Eigenwerte','conteig','Kontin. Eigenwerte',...
+    'sing','Singulärwerte','delayphase','Delay Phasenraum','reconstruct','Rekonstruktion',...
+    'delayseries','Delay Zeitsignal');
                      
 %% Define evaluation functions struct
 config.evalfuns = struct('reconstruct',@reconstruct,'rmse',@rmse);
            
 %% Define plot function names for algorithms
-config.dmdplots = {'phase','disceig','sing'};%'phasebasis','reconstruct'};
-config.havokplots = {'delayphase','sing'};
+config.maindmdplots = {'phase','disceig','sing','conteig'};
+config.secdmdplots = {'reconstruct','phasebasis'};
+config.mainhavokplots = {'phase','delayphase','sing'};
+config.sechavokplots = {'delayseries','sing'};
+config.hdmdplots = {'phase','disceig','sing','conteig'};
+config.maintestplots = {'phase','delayphase','sing'};
+config.sectestplots = {'delayphase','sing'};
 
 %% Define evaluation function names for algorithms
 config.dmdevals = {{'reconstruct','Y_'},{'rmse','rmseY_'}}; %% Order !!!
 config.havokevals = {};
+config.hdmdevals = {{'reconstruct','Y_'},{'rmse','rmseY_'}};
+config.testevals = {};
 
 %% Define algorithm input fieldnames
 config.dmdinput = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured'};
 config.havokinput = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured'};
+config.hdmdinput = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured'};
+config.testinput = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured'};
 
 %% Define general fieldnames
 config.datafieldnames = {'t','X','Y'};
-config.svdfieldnames = {'H','U','s','V'};
+config.svdfieldnames = {'U','s','V'};
 config.metadatafieldnames = {'note','favorite','date','time'};
 
 %% Define DMD fieldname order
+config.dmdhankfieldnames = {'H','Hp'};
 config.dmdevalfieldnames = {'Y_','rmseY_'};
 config.dmdmodefieldnames = {'Atilde','W','d','Phi','omega','b'};
-config.dmdorder = [config.dmdinput,config.datafieldnames,config.svdfieldnames,...
-    config.dmdevalfieldnames,config.dmdmodefieldnames,config.metadatafieldnames];
+config.dmdorder = [config.dmdinput,config.datafieldnames,config.dmdhankfieldnames,...
+    config.svdfieldnames,config.dmdevalfieldnames,config.dmdmodefieldnames,...
+    config.metadatafieldnames];
 
 %% Define HAVOK fieldname order
-config.havokorder = [config.havokinput,config.datafieldnames,config.svdfieldnames,...
+config.havokhankfieldnames = {'H'};
+config.havokmodelfieldnames = {'A','B'};
+config.havokorder = [config.havokinput,config.datafieldnames,config.havokhankfieldnames,...
+    config.svdfieldnames,config.havokmodelfieldnames,config.metadatafieldnames];
+
+%% Define HDMD fieldname order
+config.hdmdhankfieldnames = {'H','Hp'};
+config.hdmdevalfieldnames = {'Y_','rmseY_'};
+config.hdmdmodefieldnames = {'Atilde','W','d','Phi','omega','b'};
+config.hdmdorder = [config.hdmdinput,config.datafieldnames,config.hdmdhankfieldnames,...
+    config.svdfieldnames,config.hdmdevalfieldnames,config.hdmdmodefieldnames,...
     config.metadatafieldnames];
+
+%% Define TEST fieldname order
+config.testhankfieldnames = {'H'};
+config.testmodelfieldnames = {'A','B'};
+config.testorder = [config.testinput,config.datafieldnames,config.testhankfieldnames,...
+    config.svdfieldnames,config.testmodelfieldnames,config.metadatafieldnames];
 
 %% Set latex as plot interpreter
 set(groot,'defaultTextInterpreter','latex');

@@ -1,7 +1,7 @@
 function [U,S,V] = truncsvd(X, rank)
 
 %% Compute svd
-[U,S,V] = svd(X,0);
+[U,S,V] = svd(X,'econ');
 
 %% Truncate svd
 if ~isempty(rank) && rank < size(S,1)

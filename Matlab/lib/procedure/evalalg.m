@@ -1,5 +1,7 @@
 function algdata = evalalg(algdata,config)
  
+dispstep('eval');
+
 %% Define algorithm
 algorithm = algdata.algorithm;
 

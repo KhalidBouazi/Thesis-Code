@@ -14,8 +14,8 @@ SingValMarker = 'o';
 s = result.s;
 s = s/sqrt(sum(s.^2));
 plot(s,'LineStyle','none','Marker',SingValMarker,'Color',SingValColor);
-xlabel('Nummer');
-ylabel('Normierter Singulaerwert');
+xlabel('Rang');
+ylabel('Norm. Singulaerwert');
 grid on;
 
 end

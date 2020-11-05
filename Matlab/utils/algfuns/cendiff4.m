@@ -3,7 +3,7 @@ function [X,dX] = cendiff4(X,dt)
 %% Compute derivatives (4th order central difference)
 [m,n] = size(X);
 
-dX = zeros(n-5,m); 
+dX = zeros(m,n-5); 
 
 for i = 1:m 
     for j = 3:n-3 
@@ -12,6 +12,6 @@ for i = 1:m
 end
 
 %% Trim first and last two rows that are lost in derivative
-X = X(3:end-3,:);
+X = X(:,3:end-3);
 
 end

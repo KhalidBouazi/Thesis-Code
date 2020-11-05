@@ -4,7 +4,7 @@ function [odefun,params,x0] = trippletank(params, x0)
 if isempty(params)
     Ai = (0.14^2)*pi/4;
     params = [Ai; Ai; Ai; 21.8e-6; 41e-6; 21.8e-6];
-elseif length(x0) ~= 6
+elseif length(params) ~= 6
     error('System parameters: Check number of elements.'); 
 end
 
@@ -22,11 +22,21 @@ elseif length(x0) ~= 3
     error('Initial condition: Check number of elements.'); 
 end
 
+%% Extract args
+% if isempty(ctrlargs)
+%    ctrlargs.ctrl1 = struct('type','noctrl'); 
+%    ctrlargs.ctrl2 = struct('type','noctrl'); 
+% end
+
 %% Define system function
 g = 9.81;
-u = [0; 0];
-odefun = @(t,x) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u(1));
+u1 = @(x) 0;
+u2 = @(x) 0;
+% u1 = @(x)sysctrl(x,ctrlargs.ctrl1);
+% u2 = @(x)sysctrl(x,ctrlargs.ctrl2);
+
+odefun = @(t,x) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u1(x));
                  1/A2*(q1*sqrt(2*g*(x(1) - x(2))) + q3*sqrt(2*g*(x(3) - x(2))) - q2*sqrt(2*g*x(2)));
-                 1/A3*(-q3*sqrt(2*g*(x(3) - x(2))) + u(2))];
+                 1/A3*(-q3*sqrt(2*g*(x(3) - x(2))) + u2(x))];
 
 end

@@ -5,65 +5,54 @@ clear;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set HAVOK parameters
-
+%% III. Set HDMD parameters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'HAVOK'};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.algorithm = {'HDMD'};
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'lorenz'};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.x0 = {};
+input.params = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.params = {};
+input.x0 = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.005};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {60000};
+input.timesteps = {3000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {20};
+input.rank = {15};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {32};
+input.delays = {70};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% spacing : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.spacing = {[1,1]};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% % observexp : double : optional
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% input.observexp = {10};
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-havok = combineinputs(input);
+hdmd = combineinputs(input);
 
 %% IV. Run procedure
-algprocedure(havok,config);
+algprocedure(hdmd,config);
 

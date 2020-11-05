@@ -3,7 +3,7 @@ function [odefun,params,x0] = duffing(params, x0)
 %% Extract system parameters
 if isempty(params)
     params = [1; 1; 0];
-elseif length(x0) ~= 3
+elseif length(params) ~= 3
     error('System parameters: Check number of elements.'); 
 end
 

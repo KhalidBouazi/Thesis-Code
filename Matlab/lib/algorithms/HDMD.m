@@ -1,4 +1,4 @@
-function algdata = DMD(algdata)
+function algdata = HDMD(algdata)
 
 %% Check obligatory and optional function arguments
 oblgfunargs = {'Y','dt'};
@@ -10,19 +10,17 @@ algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 H = hankmat(algdata.Y(:,1:end-1),algdata.delays,algdata.spacing);
 Hp = hankmat(algdata.Y(:,2:end),algdata.delays,algdata.spacing);
 
-[U,S,V] = truncsvd(H,algdata.rank);
+[U,S,V] = truncsvd(X,algdata.rank);
 
-Atilde = S\U'*Hp*V;
-[W,D] = eig(Atilde);
-Phi = Hp*V/S*W/D;
+Atilde = S\U'*Xp*V;
+[W,D] = eigdec(Atilde);
+Phi = U*W; %Xp*V/S*W/D;
 Phi = Phi(1:size(algdata.Y,1),:);
-b = (W*D)\(S*V(1,:)'); %modeamp(Phi,algdata.Y); 
+b = (W*D)\(S*V(1,:)');
 omega = log(diag(D))/algdata.dt;
 
 %% Save in algdata
-algdata.H = H; 
-algdata.Hp = Hp;
-algdata.rank = size(S,1);
+algdata.H = H;
 algdata.U = U;
 algdata.s = diag(S);
 algdata.V = V;

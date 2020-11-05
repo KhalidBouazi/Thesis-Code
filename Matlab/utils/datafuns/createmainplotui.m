@@ -1,4 +1,4 @@
-function createplotui(tg,algdata,algnr,algplots,config)
+function ax = createmainplotui(tg,algdata,algnr,algplots,config)
 
 tab = uitab(tg,'Title',[algdata.algorithm ' ' num2str(algnr)]);
 
@@ -13,7 +13,7 @@ datapan = uipanel(tab,'Title','Daten','FontSize',12,...
     'BackgroundColor','white','Position',[0.7 0 0.3 1]);
 
 %% For plotting
-axes('Parent',plotpan);
+ax = axes('Parent',plotpan);
 
 %% If new algorithm run add note, favorite and data saving option
 if isequal(config.usage,'new')
@@ -65,10 +65,14 @@ for i = 1:length(inputfieldnames)
         'Position',[0.4 y 0.6 0.04],'String',data.(inputfieldname),... 
         'FontSize',12,'BackgroundColor','white','HorizontalAlignment','left');
 end
-    
+
 %% Function for saving result
     function onsaveresult(source,eventdata,textarea,checkbox,text)
 
+        % Reset background color of text
+        text.BackgroundColor = 'white';
+
+        % Create metadata
         note = textarea.String;
         favorite = checkbox.Value;
         date = datetime('now','TimeZone','local','Format','d-MMM-y');
@@ -78,8 +82,10 @@ end
         algdata.date = date;
         algdata.time = time;
 
+        % Try to save result
         saved = saveresult(algdata,config,config.archivepath);
         
+        % Message for status
         if saved
             text.String = 'Gespeichert';
             text.BackgroundColor = [0.4660, 0.6740, 0.1880];

@@ -5,17 +5,16 @@ clear;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set HAVOK parameters
-
+%% III. Set TEST parameters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'HAVOK'};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.algorithm = {'TEST'};
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.system = {'vanderpol'};
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,7 +33,7 @@ input.dt = {0.005};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {60000};
+input.timesteps = {6000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -44,7 +43,7 @@ input.rank = {20};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {32};
+input.delays = {8,16,32,64};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -57,13 +56,8 @@ input.spacing = {[1,1]};
 input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% % observexp : double : optional
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% input.observexp = {10};
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-havok = combineinputs(input);
+TEST = combineinputs(input);
 
 %% IV. Run procedure
-algprocedure(havok,config);
+algprocedure(TEST,config);
 

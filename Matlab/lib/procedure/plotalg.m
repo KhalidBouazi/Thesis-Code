@@ -1,8 +1,12 @@
 function plotalg(algdata,config)
 
+dispstep('plot');
+
 %% Plotting
-fig = figure('NumberTitle', 'off', 'Name','Ergebnisse','Position',[100 100 1300 650]);
-tg = uitabgroup('Parent',fig);
+mainfig = figure('Name','Ergebnisse','units','normalized','outerposition',[0 0.05 1 0.94]);
+secfig = figure('Name','Ergebnisse','units','normalized','outerposition',[0 0.05 1 0.94]);
+maintg = uitabgroup('Parent',mainfig);
+sectg = uitabgroup('Parent',secfig);
 
 for k = 1:length(algdata)
     
@@ -11,37 +15,28 @@ for k = 1:length(algdata)
     
     % Extract algplots for algorithm
     if any(strcmp(config.algorithms,algorithm))
-        algplots = config.([lower(algorithm) 'plots']);
+        mainalgplots = config.(['main' lower(algorithm) 'plots']);
+        secalgplots = config.(['sec' lower(algorithm) 'plots']);
+        algplots = [mainalgplots secalgplots];
     else
         error(['Plot: No algorithm ' algorithm ' available.']); 
     end
+      
+    % Plot on main figure
+    ax = createmainplotui(maintg,algdata{k},k,algplots,config);
+    plotonmainui(ax,algdata{k},mainalgplots,config);
     
-    % Compute layout dimension
-    width = 2;
-    height = round(length(algplots)/width);
-  
-    % Create figure layout with tabs
-    createplotui(tg,algdata{k},k,algplots,config);
-    
-    % Plot algorithm data
-    for j = 1:length(algplots)
-        ax(k,j) = subplot(height,width,j);
-        plotkey = algplots{j};
-        if isfield(config.plotfuns,plotkey)
-            fun = config.plotfuns.(plotkey);
-            fun(algdata{k});
-        else
-            error(['Plot: No plot ' plotkey ' available.']);
-        end
-    end
+    % Plot on second figure
+    [axl,axr] = createsecplotui(sectg,algdata{k},k);
+    plotonsecui(axl,axr,algdata{k},secalgplots,config);
     
 end
 
 %% Link axes
-for j = 1:size(ax,2)
-    if isequal(algplots{j},'disceig') 
-        linkaxes(ax(:,j),'xy');
-    end
-end
+% for j = 1:size(ax,2)
+%     if isequal(algplots{j},'disceig') 
+%         linkaxes(ax(:,j),'xy');
+%     end
+% end
 
 end

@@ -3,7 +3,7 @@ function [odefun,params,x0] = vanderpol(params, x0)
 %% Extract system parameters
 if isempty(params)
     params = 5;
-elseif length(x0) ~= 1
+elseif length(params) ~= 1
     error('System parameters: Check number of elements.'); 
 end
 

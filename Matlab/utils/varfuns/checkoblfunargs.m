@@ -1,13 +1,15 @@
 function checkoblfunargs(algstruct,oblgfunargs)
 
-for i = 1:length(algstruct)
-    if ~all(isfield(algstruct(i),oblgfunargs))
-        argstr = '';
-        for j = 1:length(oblgfunargs)
+if ~all(isfield(algstruct,oblgfunargs))
+    argstr = '';
+    for j = 1:length(oblgfunargs)
+        if j < length(oblgfunargs)
+            argstr = [argstr oblgfunargs{j} ', '];
+        else
             argstr = [argstr oblgfunargs{j}];
         end
-        error(['Struct field: Obligatory function arguments are {' argstr '}.']);
     end
+    error(['Struct field: Obligatory function arguments are {' argstr '}.']);
 end
 
 end

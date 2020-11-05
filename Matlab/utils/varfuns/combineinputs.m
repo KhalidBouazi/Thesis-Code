@@ -1,10 +1,11 @@
 function cellalgdata = combineinputs(input)
 
 f = fieldnames(input);
+numf = length(f);
 
 %% Guarantee uniqueness of input elements
 o = 1;
-for i = 1:length(f)
+for i = 1:numf
     % Check if input values are of type cell
     if ~iscell(input.(f{i}))
         error('Input values: Must be of type cell.');
@@ -21,14 +22,19 @@ for i = 1:length(f)
         % TODO
         %tempin = cell2mat(input.(f{i}));
         %input.(f{i}) = mat2cell(unique(tempin,'first'),1,ones(,1));
-        l(i) = length(input.(f{i}));%{:}
-    else
+        l(i) = length(input.(f{i}));
+    elseif ~isa(input.(f{i}){1},'struct')
         input.(f{i}) = unique(input.(f{i}),'first');
+        l(i) = length(input.(f{i}));
+    else
         l(i) = length(input.(f{i}));
     end
     m(i) = o;
     o = o * l(i);
 end
+
+l = nonzeros(l)';
+m = nonzeros(m)';
 
 %% Construct combination matrix
 f = fieldnames(input);

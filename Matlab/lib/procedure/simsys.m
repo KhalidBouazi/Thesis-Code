@@ -1,11 +1,13 @@
 function algdata = simsys(algdata,config)
 
+dispstep('sim');
+
 %% Check obligatory and optional function arguments
 oblgfunargs = {'system','dt','timesteps'};
-optfunargs = {'params','x0'};
-optargvals = {[],[]};
+optfunargs = {'params','x0','delays','spacing'};
+optargvals = {[],[],1,[1,1]};
 algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
- 
+
 %% Extract system function and initial state
 system = algdata.system;
 if isfield(config.systemfuns,system)
@@ -16,7 +18,8 @@ else
 end
 
 %% Create timespan
-tspan = (0:algdata.dt:algdata.dt*algdata.timesteps);
+timesteps = algdata.timesteps + algdata.spacing(2)*(algdata.delays - 1) - 1; % TODO spacingx
+tspan = (0:algdata.dt:algdata.dt*timesteps);
 
 %% Simulate system
 options = odeset('RelTol',1e-12);

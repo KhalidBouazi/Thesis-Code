@@ -1,17 +1,17 @@
 function delayphaseplot(result)
 
 %% Check obligatory and optional function arguments
-oblgfunargs = {'V'};
+oblgfunargs = {'X','V'};
 optfunargs = {};
 optargvals = {};
 result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
 
 %% Check delay coordinate dimension
 V = result.V;
-n = size(V,2);
+n = size(result.X,1);
 
 if n < 2
-    error('State dimension: Must be minimum 2.');
+    error('State dimension: Must be at least 2.');
 end
 
 %% Start plotting

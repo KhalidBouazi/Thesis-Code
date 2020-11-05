@@ -1,8 +1,10 @@
 function c = expdoublearray2char(value,expcnt)
 
-if length(value) > 1
+valuelen = length(value);
+
+if valuelen > 1
     c = '[';
-    for i = 1:size(value,1)
+    for i = 1:valuelen
         
         if expcnt(i) == 0
             expo = '';

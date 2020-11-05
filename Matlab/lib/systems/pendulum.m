@@ -3,7 +3,7 @@ function [odefun,params,x0] = pendulum(params, x0)
 %% Extract system parameters
 if isempty(params)
     params = 1;
-elseif length(x0) ~= 1
+elseif length(params) ~= 1
     error('System parameters: Check number of elements.'); 
 end
 
