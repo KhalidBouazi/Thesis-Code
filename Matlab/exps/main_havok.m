@@ -1,6 +1,6 @@
 %% I. First close all windows and clear workspace
 close all;
-clear;
+%clear;
 
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
@@ -29,22 +29,22 @@ input.params = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.005};
+input.dt = {0.001};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {60000};
+input.timesteps = {200000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {20};
+input.rank = {5,10,15};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {32};
+input.delays = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -65,5 +65,5 @@ input.measured = {1};
 havok = combineinputs(input);
 
 %% IV. Run procedure
-algprocedure(havok,config);
+result = algprocedure(havok,config);
 

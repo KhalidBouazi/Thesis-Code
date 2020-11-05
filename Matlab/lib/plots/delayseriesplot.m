@@ -10,7 +10,7 @@ result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
 if size(result.V,2) < 10
     m = size(result.V,2);
 else
-    m = 10; 
+    m = 5; 
 end
 
 t = result.t(1:size(result.V,1));

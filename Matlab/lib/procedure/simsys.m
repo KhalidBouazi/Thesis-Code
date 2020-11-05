@@ -22,7 +22,7 @@ timesteps = algdata.timesteps + algdata.spacing(2)*(algdata.delays - 1) - 1; % T
 tspan = (0:algdata.dt:algdata.dt*timesteps);
 
 %% Simulate system
-options = odeset('RelTol',1e-12);
+options = odeset('RelTol',1e-12,'AbsTol',1e-12*ones(1,length(algdata.x0)));
 [t,X] = ode45(odefun,tspan,algdata.x0,options);
 algdata.t = t';
 algdata.X = X';

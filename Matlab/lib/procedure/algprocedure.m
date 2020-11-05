@@ -1,4 +1,4 @@
-function algprocedure(algdata,config)
+function algdata = algprocedure(algdata,config)
 
 for i = 1:length(algdata)
     

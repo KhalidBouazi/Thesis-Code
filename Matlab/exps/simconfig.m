@@ -41,18 +41,18 @@ config.systemacr = struct('lorenz','LR','duffing','DF','roessler','RL',...
 config.plotfuns = struct('phase',@phaseplot,'disceig',@disceigplot,...
     'conteig',@conteigplot,'sing',@singplot,'delayphase',@delayphaseplot,...
     'phasebasis',@phasebasisplot,'reconstruct',@reconstructplot,...
-    'delayseries',@delayseriesplot);
+    'delayseries',@delayseriesplot,'delayreconstruct',@delayreconstructplot);
 config.mainplotfuns = struct('phase',@phaseplot,'disceig',@disceigplot,...
     'conteig',@conteigplot,'sing',@singplot,'delayphase',@delayphaseplot);
 config.secplotfuns = struct('phasebasis',@phasebasisplot,...
     'reconstruct',@reconstructplot,'delayseries',@delayseriesplot,...
-    'sing',@singplot);
+    'sing',@singplot,'delayreconstruct',@delayreconstructplot);
                      
 %% Define plot names
 config.plotnames = struct('phase','Phasenraum','phasebasis','Phasenraum mit ...',...
     'disceig','Diskr. Eigenwerte','conteig','Kontin. Eigenwerte',...
     'sing','Singulärwerte','delayphase','Delay Phasenraum','reconstruct','Rekonstruktion',...
-    'delayseries','Delay Zeitsignal');
+    'delayseries','Delay Zeitsignal','delayreconstruct','Delay Rekonstruktion');
                      
 %% Define evaluation functions struct
 config.evalfuns = struct('reconstruct',@reconstruct,'rmse',@rmse);
@@ -60,11 +60,14 @@ config.evalfuns = struct('reconstruct',@reconstruct,'rmse',@rmse);
 %% Define plot function names for algorithms
 config.maindmdplots = {'phase','disceig','sing','conteig'};
 config.secdmdplots = {'reconstruct','phasebasis'};
+
 config.mainhavokplots = {'phase','delayphase','sing'};
-config.sechavokplots = {'delayseries','sing'};
+config.sechavokplots = {'delayseries','delayreconstruct'};
+
 config.hdmdplots = {'phase','disceig','sing','conteig'};
+
 config.maintestplots = {'phase','delayphase','sing'};
-config.sectestplots = {'delayphase','sing'};
+config.sectestplots = {'delayphase','delayreconstruct'};
 
 %% Define evaluation function names for algorithms
 config.dmdevals = {{'reconstruct','Y_'},{'rmse','rmseY_'}}; %% Order !!!
@@ -93,7 +96,7 @@ config.dmdorder = [config.dmdinput,config.datafieldnames,config.dmdhankfieldname
 
 %% Define HAVOK fieldname order
 config.havokhankfieldnames = {'H'};
-config.havokmodelfieldnames = {'A','B'};
+config.havokmodelfieldnames = {'A','B','V_'};
 config.havokorder = [config.havokinput,config.datafieldnames,config.havokhankfieldnames,...
     config.svdfieldnames,config.havokmodelfieldnames,config.metadatafieldnames];
 

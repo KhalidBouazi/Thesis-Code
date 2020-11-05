@@ -11,6 +11,21 @@ H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
 
 [U,S,V] = truncsvd(H,algdata.rank);
 
+[Vs,dV] = cendiff4(V,algdata.dt);
+X = (Vs\dV)';
+A = X(1:end-1,1:end-1);
+B = X(1:end-1,end);
+% A = X(1:end,1:end);
+% B = X(1:end,end);
+
+L = 1:(algdata.timesteps-5);
+u = Vs(L,end); %zeros(length(L),1); 
+V0 = Vs(1,1:end-1);
+% V0 = Vs(1,1:end);
+
+sys = ss(A,B,eye(size(A,1)),0*B);
+[V_,~] = lsim(sys,u,algdata.dt*(L-1),V0);
+
 % W = S*pinv(V);
 % assignin('base','W',W);
 
@@ -35,10 +50,6 @@ H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
 
 % assignin('base','K',K);
 
-[V_,dV] = cendiff4(V',algdata.dt);
-X = (V_'\dV')';
-A = X(1:end-1,1:end-1);
-B = X(end,1:end-1);
 
 %% Save in algstruct(i)
 algdata.H = H;
@@ -48,5 +59,6 @@ algdata.s = diag(S);
 algdata.V = V;
 algdata.A = A;
 algdata.B = B;
+algdata.V_ = V_;
 
 end
