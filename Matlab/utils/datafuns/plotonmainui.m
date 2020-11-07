@@ -1,17 +1,17 @@
-function plotonmainui(ax, algdata, mainalgplots, config)
+function plotonmainui(ax, algdata, algplots, config)
 
 %% Plotting
 width = 2;
-height = round(length(mainalgplots)/width);
+height = round(length(algplots)/width);
 cnt = 1;
 
 axes(ax);
-for j = 1:length(mainalgplots)
-    plotkey = mainalgplots{j};
-    if isfield(config.mainplotfuns,plotkey)
+for j = 1:length(algplots)
+    plotname = algplots{j};
+    if isfield(config.general.plots,plotname)
         %axs(k,j) = subplot(height,width,j);
         subplot(height,width,cnt);
-        fun = config.mainplotfuns.(plotkey);
+        fun = config.general.plots.(plotname).fun;
         fun(algdata);
         cnt = cnt + 1;
     end

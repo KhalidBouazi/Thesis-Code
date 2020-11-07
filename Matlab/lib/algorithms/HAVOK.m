@@ -7,25 +7,26 @@ optargvals = {[]};
 algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 
 %% Start algorithm
-H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
+% Compute hankel matrix
+H = hankmat(algdata.Y(:,1:end-1),algdata.delays,algdata.spacing);
 
+% Compute svd
 [U,S,V] = truncsvd(H,algdata.rank);
 
+% Compute derivative of delay coordinates V
 [Vs,dV] = cendiff4(V,algdata.dt);
-X = (Vs\dV)';
-A = X(1:end-1,1:end-1);
-B = X(1:end-1,end);
-% A = X(1:end,1:end);
-% B = X(1:end,end);
 
-L = 1:(algdata.timesteps-5);
-u = Vs(L,end); %zeros(length(L),1); 
-V0 = Vs(1,1:end-1);
-% V0 = Vs(1,1:end);
+% Compute regression and split into state transition matrix and forcing
+% matrix
+Z = (Vs\dV)';
+A = Z(1:end-1,1:end-1);
+B = Z(1:end-1,end);
 
-sys = ss(A,B,eye(size(A,1)),0*B);
-[V_,~] = lsim(sys,u,algdata.dt*(L-1),V0);
+%% Reconstruct delay state and calculate rmse
+V_ = havokreconstruct(A,B,Vs,algdata.dt,algdata.timesteps-5); % Reduce timesteps by difforder 
+rmseV_ = rmse(Vs(:,1:end-1),V_);
 
+%% Tests
 % W = S*pinv(V);
 % assignin('base','W',W);
 
@@ -60,5 +61,6 @@ algdata.V = V;
 algdata.A = A;
 algdata.B = B;
 algdata.V_ = V_;
+algdata.rmseV_ = rmseV_;
 
 end

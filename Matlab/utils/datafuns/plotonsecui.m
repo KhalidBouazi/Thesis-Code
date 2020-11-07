@@ -1,20 +1,13 @@
-function plotonsecui(axl, axr, algdata, secalgplots, config)
+function plotonsecui(axs, algdata, algplots, config)
 
 %% Plotting
-% for j = 1:length(secalgplots)
-%     plotkey = secalgplots{j};
-%     if isfield(config.secplotfuns,plotkey)
-%         fun = config.secplotfuns.(plotkey);
-%         fun(algdata);
-%     end
-% end
-
-axes(axl);
-fun = config.secplotfuns.(secalgplots{1});
-fun(algdata);
-
-axes(axr);
-fun = config.secplotfuns.(secalgplots{2});
-fun(algdata);
+for j = 1:length(algplots)
+    plotname = algplots{j};
+    if isfield(config.general.plots,plotname)
+        axes(axs(j));
+        fun = config.general.plots.(plotname).fun;
+        fun(algdata);
+    end
+end
 
 end

@@ -26,7 +26,7 @@ if ~isequal(path,0)
         % Save every plot, that was checked in the figure
         for i = 1:length(checkedplots)
             checkedplot = checkedplots{i};
-            if isfield(config.plotnames,checkedplot)
+            if isfield(config.plots,checkedplot)
                 
                 % Define filename
                 filename = checkedplot;

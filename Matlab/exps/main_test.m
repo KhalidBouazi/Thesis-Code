@@ -6,15 +6,16 @@ clear;
 config = simconfig();
 
 %% III. Set TEST parameters
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.algorithm = {'TEST'};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'vanderpol'};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,5 +60,5 @@ input.measured = {1};
 TEST = combineinputs(input);
 
 %% IV. Run procedure
-algprocedure(TEST,config);
+result = algprocedure(TEST,config);
 

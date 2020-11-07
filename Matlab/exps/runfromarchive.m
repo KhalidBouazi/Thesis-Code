@@ -7,7 +7,7 @@ clear;
 
 %% Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
-config.usage = 'archive';
+config.general.usage = 'archive';
 
 %% Create figure
 fig = uifigure('Name','Vom Archiv ausführen','NumberTitle','off','Position',[400 200 700 500]);

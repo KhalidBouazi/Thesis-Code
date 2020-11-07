@@ -10,7 +10,7 @@ dispstep('alg',algdata.algorithm);
 
 %% Choose and run algorithm
 algorithm = algdata.algorithm;
-algfun = config.algorithmfuns.(algorithm);
-algdata = algfun(algdata);
+fun = config.general.algorithms.(algorithm);
+algdata = fun(algdata);
 
 end

@@ -6,15 +6,16 @@ clear;
 config = simconfig();
 
 %% III. Set HDMD parameters
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.algorithm = {'HDMD'};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'vanderpol'};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,12 +29,12 @@ input.x0 = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.01};
+input.dt = {0.001};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {3000};
+input.timesteps = {64000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -43,16 +44,21 @@ input.rank = {15};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {70};
+input.delays = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% spacing : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.spacing = {[1,1],[1,2],[1,5]};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 hdmd = combineinputs(input);
 
 %% IV. Run procedure
-algprocedure(hdmd,config);
+result = algprocedure(hdmd,config);
 

@@ -7,8 +7,9 @@ algorithm = result.algorithm;
 filename = [path algorithm '.mat'];
 
 %% Extract cell array for input fieldnames
-if any(strcmp(config.algorithms,algorithm))
-    inputfieldnames = config.([lower(algorithm) 'input']);
+algnames = fieldnames(config.general.algorithms);
+if any(strcmp(algnames,algorithm))
+    inputfieldnames = config.(lower(algorithm)).fieldnames.input;
 else
     error(['Save result: No algorithm ' algorithm ' available.']); 
 end
@@ -20,7 +21,7 @@ end
 if ~dataexists
     
     % Extract cell array for algorithm fieldname order
-    algfieldnames = config.([lower(algorithm) 'order']);
+    algfieldnames = config.(lower(algorithm)).fieldnames.order;
 
     % Order fields in result struct by algorithm fieldname order
     result = orderfields(result,algfieldnames);

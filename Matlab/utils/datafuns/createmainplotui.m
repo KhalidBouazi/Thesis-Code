@@ -16,7 +16,7 @@ datapan = uipanel(tab,'Title','Daten','FontSize',12,...
 ax = axes('Parent',plotpan);
 
 %% If new algorithm run add note, favorite and data saving option
-if isequal(config.usage,'new')
+if isequal(config.general.usage,'new')
     notetext = uicontrol('Parent',savepan,'Style','text','Units','Normalized',...
         'Position',[0.2 0.8 0.2 0.2],'String','Notiz',...
         'FontSize',11,'BackgroundColor','white');
@@ -35,7 +35,7 @@ end
 for i = 1:length(algplots)
     cbx = 0.01 + floor((i-1)/3)*0.3;
     cby = 0.7 - mod((i-1),3)*0.25;
-    cbstr = config.plotnames.(algplots{i});
+    cbstr = config.general.plots.(algplots{i}).name;
     plotcheckbox(i) = uicontrol('Parent',tikzpan,'Style','checkbox','String',cbstr,...
         'FontSize',10,'BackgroundColor','white','Units','Normalized',...
         'Position',[cbx cby 0.3 0.2]);
@@ -51,7 +51,7 @@ printbtn = uicontrol('Parent',tikzpan,'Style','pushbutton','String','Als tikz sp
 
 %% For data
 algorithm = algdata.algorithm;
-inputfieldnames = config.([lower(algorithm) 'input']);
+inputfieldnames = config.(lower(algorithm)).fieldnames.input;
 data = structbyfields(algdata,inputfieldnames);
 data = structelements2char(data);
 
@@ -83,7 +83,7 @@ end
         algdata.time = time;
 
         % Try to save result
-        saved = saveresult(algdata,config,config.archivepath);
+        saved = saveresult(algdata,config,config.general.archivepath);
         
         % Message for status
         if saved

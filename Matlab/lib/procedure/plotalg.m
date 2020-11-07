@@ -14,21 +14,22 @@ for k = 1:length(algdata)
     algorithm = algdata{k}.algorithm;
     
     % Extract algplots for algorithm
-    if any(strcmp(config.algorithms,algorithm))
-        mainalgplots = config.(['main' lower(algorithm) 'plots']);
-        secalgplots = config.(['sec' lower(algorithm) 'plots']);
+    algnames = fieldnames(config.general.algorithms);
+    if any(strcmp(algnames,algorithm))
+        mainalgplots = config.(lower(algorithm)).plots.main;
+        secalgplots = config.(lower(algorithm)).plots.sec;
         algplots = [mainalgplots secalgplots];
     else
         error(['Plot: No algorithm ' algorithm ' available.']); 
     end
       
     % Plot on main figure
-    ax = createmainplotui(maintg,algdata{k},k,algplots,config);
-    plotonmainui(ax,algdata{k},mainalgplots,config);
+    mainax = createmainplotui(maintg,algdata{k},k,algplots,config);
+    plotonmainui(mainax,algdata{k},mainalgplots,config);
     
     % Plot on second figure
-    [axl,axr] = createsecplotui(sectg,algdata{k},k);
-    plotonsecui(axl,axr,algdata{k},secalgplots,config);
+    secaxs = createsecplotui(sectg,algdata{k},k);
+    plotonsecui(secaxs,algdata{k},secalgplots,config);
     
 end
 

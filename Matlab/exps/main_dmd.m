@@ -6,15 +6,16 @@ clear;
 config = simconfig();
 
 %% III. Set DMD parameters
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.algorithm = {'DMD'};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'lorenz'};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,12 +29,12 @@ input.x0 = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.01};
+input.dt = {0.001};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {6400};
+input.timesteps = {640};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -59,5 +60,5 @@ input.measured = {};
 dmd = combineinputs(input);
 
 %% IV. Run procedure
-algprocedure(dmd,config);
+result = algprocedure(dmd,config);
 

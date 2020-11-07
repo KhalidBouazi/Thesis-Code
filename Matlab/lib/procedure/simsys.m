@@ -10,15 +10,15 @@ algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 
 %% Extract system function and initial state
 system = algdata.system;
-if isfield(config.systemfuns,system)
-    fun = config.systemfuns.(system);
+if isfield(config.general.systems,system)
+    fun = config.general.systems.(system).fun;
     [odefun,algdata.params,algdata.x0] = fun(algdata.params,algdata.x0);
 else
     error(['System: No system ' system ' available.']);
 end
 
 %% Create timespan
-timesteps = algdata.timesteps + algdata.spacing(2)*(algdata.delays - 1) - 1; % TODO spacingx
+timesteps = algdata.timesteps + algdata.spacing(2)*(algdata.delays - 1); % TODO spacingx
 tspan = (0:algdata.dt:algdata.dt*timesteps);
 
 %% Simulate system

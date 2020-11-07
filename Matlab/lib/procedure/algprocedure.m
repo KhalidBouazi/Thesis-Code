@@ -3,7 +3,6 @@ function algdata = algprocedure(algdata,config)
 for i = 1:length(algdata)
     
     dispstep('algnum',i);
-    
     t = tic;
     
     % I. Simulate system
@@ -13,16 +12,12 @@ for i = 1:length(algdata)
     % II. Compute algorithm
     algdata{i} = runalg(algdata{i},config);
     
-    % III. Evaluation
-    algdata{i} = evalalg(algdata{i},config);
-    
     timeelapsed = toc(t);
-    
     dispstep('time',timeelapsed);
     
 end
 
-% IV. Plot results in one figure
+% III. Plot results in one figure
 plotalg(algdata,config);
 
 end
