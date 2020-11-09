@@ -15,15 +15,16 @@ m = size(result.Y,1);
 for i = 1:m
     subplot(m,1,i);
     varstr = strcat('x_{',num2str(i),'}');
-    plot(result.t,result.Y(i,:),'Color',TrueYColor);
+    plot(result.t_,result.Y(i,1:size(result.Y_,2)),'Color',TrueYColor);
     hold on;
-    plot(result.t,result.Y_(i,:),'Color',PredYColor);
-    xlim([result.t(1) result.t(end)]);
+    plot(result.t_,result.Y_(i,:),'Color',PredYColor);
+    xlim([result.t_(1) result.t_(end)]);
     ylabel(strcat('$',varstr,'$'));
     
     if i == 1
         legend('Ref','Pred');
-    elseif i == m
+    end
+    if i == m
         xlabel('Zeit in s');
     end
 end

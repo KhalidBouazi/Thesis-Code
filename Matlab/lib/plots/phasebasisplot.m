@@ -26,8 +26,15 @@ else
     pov = [-6,13];
 end
 
-for j = 1:6
-    subplot(2,3,j);
+if size(V,2) >= 4
+    num = 4;
+else
+    num = size(V,2); 
+end
+
+for j = 1:num
+    subplot(2,2,j);
+    title(['$u_' num2str(j) '$']);
     surface([X(1,:);X(1,:)],[X(2,:);X(2,:)],[Z;Z],[V(:,j)';V(:,j)'],...
         'facecol','no',...
         'edgecol','interp',...

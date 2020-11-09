@@ -29,8 +29,13 @@ plot(x,y,'Color',AxesColor,'LineWidth',AxesWidth);
 hold on;
 
 scatter(realeig,imageig,'MarkerEdgeColor',PredEigColor,'Marker',PredEigMarker);
-xlim(xlimit);
-ylim(ylimit);
+if xlimit(1) < xlimit(2)
+    xlim(xlimit);
+end
+if ylimit(1) < ylimit(2)
+    ylim(ylimit);
+end
+
 xlabel(strcat('Re(',varstr,')'));
 ylabel(strcat('Im(',varstr,')'));
 grid on;

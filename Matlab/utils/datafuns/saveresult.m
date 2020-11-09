@@ -22,7 +22,7 @@ if ~dataexists
     
     % Extract cell array for algorithm fieldname order
     algfieldnames = config.(lower(algorithm)).fieldnames.order;
-
+    
     % Order fields in result struct by algorithm fieldname order
     result = orderfields(result,algfieldnames);
 
@@ -42,9 +42,6 @@ if ~dataexists
         elseif isequal(algorithm,'HDMD')
             HDMDdata(1,:) = result;
             varstr = 'HDMDdata';
-        elseif isequal(algorithm,'TEST')
-            TESTdata(1,:) = result;
-            varstr = 'TESTdata';
         else
             error(['Save result: No algorithm ' algorithm ' available.']);
         end

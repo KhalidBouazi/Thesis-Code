@@ -14,7 +14,7 @@ input.algorithm = {'HAVOK'};
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'duffing'};%,'vanderpol','duffing'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -34,12 +34,12 @@ input.dt = {0.001};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {2000};
+input.timesteps = {20000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {5,10,15};
+input.rank = {5,15};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
@@ -57,10 +57,10 @@ input.spacing = {[1,1]};
 input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% % observexp : double : optional
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% input.observexp = {10};
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% observexp : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observexp = {1};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 havok = combineinputs(input);
 

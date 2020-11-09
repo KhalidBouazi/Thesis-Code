@@ -23,7 +23,8 @@ omega = log(diag(D))/algdata.dt;
 b = (W*D)\(S*V(1,:)');
 
 %% Reconstruct states and calculate rmse
-Y_ = dmdreconstruct(Phi,omega,b,algdata.t);
+t_ = algdata.dt*(0:size(H,2)-1);
+Y_ = dmdreconstruct(Phi,omega,b,t_);
 rmseY_ = rmse(algdata.Y,Y_);
 
 %% Save in algdata
@@ -41,5 +42,6 @@ algdata.b = b;
 algdata.omega = omega;
 algdata.Y_ = Y_;
 algdata.rmseY_ = rmseY_;
+algdata.t_ = t_;
 
 end

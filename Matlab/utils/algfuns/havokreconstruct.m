@@ -1,7 +1,7 @@
-function V_ = havokreconstruct(A, B, Vs, dt, timesteps)
+function V_ = havokreconstruct(A, B, Vs, dt)
 
 %% Create index span
-L = 1:timesteps;
+L = 1:size(Vs,1);
 
 %% Extract forcing and initial value
 if length(L) > size(Vs,1)

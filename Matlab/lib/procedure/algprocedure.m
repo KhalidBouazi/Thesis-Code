@@ -7,7 +7,7 @@ for i = 1:length(algdata)
     
     % I. Simulate system
     algdata{i} = simsys(algdata{i},config);
-%     algdata{i}.Y = polyobserv(algdata{i}.Y,1);
+    algdata{i} = polyobserv(algdata{i});
     
     % II. Compute algorithm
     algdata{i} = runalg(algdata{i},config);

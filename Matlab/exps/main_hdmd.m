@@ -14,7 +14,7 @@ input.algorithm = {'HDMD'};
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -29,33 +29,38 @@ input.x0 = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.001};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {64000};
+input.timesteps = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {15};
+input.rank = {50};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100};
+input.delays = {5000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.spacing = {[1,1],[1,2],[1,5]};
+input.spacing = {[1,1]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% observexp : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observexp = {1};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 hdmd = combineinputs(input);
 

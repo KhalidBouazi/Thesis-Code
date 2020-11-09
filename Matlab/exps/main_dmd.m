@@ -34,7 +34,7 @@ input.dt = {0.001};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {640};
+input.timesteps = {6400};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -44,18 +44,23 @@ input.rank = {20};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {200};
+input.delays = {10};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.spacing = {[1,1],[1,10]};
+input.spacing = {[1,1]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.measured = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% observexp : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observexp = {1};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 dmd = combineinputs(input);
 

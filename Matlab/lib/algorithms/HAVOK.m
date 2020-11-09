@@ -23,7 +23,7 @@ A = Z(1:end-1,1:end-1);
 B = Z(1:end-1,end);
 
 %% Reconstruct delay state and calculate rmse
-V_ = havokreconstruct(A,B,Vs,algdata.dt,algdata.timesteps-5); % Reduce timesteps by difforder 
+V_ = havokreconstruct(A,B,Vs,algdata.dt); % Reduce timesteps by difforder 
 rmseV_ = rmse(Vs(:,1:end-1),V_);
 
 %% Tests
