@@ -4,10 +4,6 @@ function V_ = havokreconstruct(A, B, Vs, dt)
 L = 1:size(Vs,1);
 
 %% Extract forcing and initial value
-if length(L) > size(Vs,1)
-    error('HAVOK reconstruct: To much timesteps specified.');
-end
-
 u = Vs(L,end);
 v0 = Vs(1,1:end-1);
 

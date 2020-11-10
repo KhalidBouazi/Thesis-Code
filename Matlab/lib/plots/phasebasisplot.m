@@ -33,7 +33,7 @@ else
 end
 
 for j = 1:num
-    subplot(2,2,j);
+    subtightplot(2,2,j,[0.1 0.1],[0.07 0.07],[0.1 0.05]);
     title(['$u_' num2str(j) '$']);
     surface([X(1,:);X(1,:)],[X(2,:);X(2,:)],[Z;Z],[V(:,j)';V(:,j)'],...
         'facecol','no',...

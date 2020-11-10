@@ -14,6 +14,10 @@ input.algorithm = {'DMD'};
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% lorenz, vanderpol, duffing, 
+% pendulum, trippletank,
+% roessler, doubletank
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'lorenz'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -29,7 +33,7 @@ input.x0 = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.001};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
@@ -44,7 +48,7 @@ input.rank = {20};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {10};
+input.delays = {100,1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

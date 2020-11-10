@@ -14,7 +14,11 @@ input.algorithm = {'HAVOK'};
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};%,'vanderpol','duffing'
+% lorenz, vanderpol, duffing, 
+% pendulum, trippletank,
+% roessler, doubletank
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -29,17 +33,17 @@ input.params = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.001};
+input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {20000};
+input.timesteps = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {5,15};
+input.rank = {2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional

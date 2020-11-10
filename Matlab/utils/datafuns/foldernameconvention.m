@@ -1,21 +1,21 @@
 function foldername = foldernameconvention(result,config)
 
 algorithm = result.algorithm;
-inputfieldnames = config.(lower(algorithm)).input;
+folderacronyms = fieldnames(config.general.folderacr);
+algfieldnames = config.(lower(algorithm)).fieldnames.order;
 foldername = '';
 
 %% Create foldername according to foldername convention
-for i = 1:length(inputfieldnames)
-    inputfieldname = inputfieldnames{i};
+for i = 1:length(folderacronyms)
+    folderacr = folderacronyms{i};
     
-    % Check if input fieldname exists in folder acronyms
-    if isfield(config.general.folderacr,inputfieldname)
-        inputacr = config.general.folderacr.(inputfieldname);
-        value = result.(inputfieldname);
+    % Check if folder acronym exists in result fieldnames
+    if isfield(result,folderacr)
+        value = result.(folderacr);
         valuestr = '';
     
-        % Create value string for specific input fieldname
-        if isequal(inputfieldname,'system')
+        % Create value string for folder acronym
+        if isequal(folderacr,'system')
             valuestr = config.general.systems.(value).acr;
         elseif isa(value,'double')
             [value,expcnt] = comma2exp(value);
@@ -24,15 +24,14 @@ for i = 1:length(inputfieldnames)
             valuestr = value;
         end
         
-        if i ~= length(inputfieldnames)
+        if i ~= length(folderacronyms)
             valuestr = [valuestr '_'];
         else
             valuestr = [valuestr '\'];
         end
         
         % Concatenate foldername
-        foldername = [foldername inputacr valuestr];
-        
+        foldername = [foldername config.general.folderacr.(folderacr) valuestr];
     end 
 end
 

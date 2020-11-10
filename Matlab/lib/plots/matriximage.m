@@ -7,7 +7,8 @@ optargvals = {};
 result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
 
 %% Start plotting
-image(result.A);
+imagesc(result.A);
+axis off;
 colorbar;
 
 end

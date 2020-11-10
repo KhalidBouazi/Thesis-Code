@@ -1,6 +1,6 @@
 function checkoblfunargs(algstruct,oblgfunargs)
 
-if ~all(isfield(algstruct,oblgfunargs))
+if ~isempty(oblgfunargs) && ~all(isfield(algstruct,oblgfunargs))
     argstr = '';
     for j = 1:length(oblgfunargs)
         if j < length(oblgfunargs)

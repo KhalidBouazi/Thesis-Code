@@ -1,4 +1,4 @@
-function saved = saveresult(result,config,path)
+function saved = saveresult(result,path,config)
 
 saved = false;
 algorithm = result.algorithm;
@@ -15,7 +15,7 @@ else
 end
 
 %% Check if data with same input already exists
-[dataexists,idx] = checkdoubledata(result,inputfieldnames,path);
+[dataexists,~] = checkdoubledata(result,inputfieldnames,path);
 
 %% Save result
 if ~dataexists
@@ -42,15 +42,18 @@ if ~dataexists
         elseif isequal(algorithm,'HDMD')
             HDMDdata(1,:) = result;
             varstr = 'HDMDdata';
+        elseif isequal(algorithm,'CONVCOORD')
+            CONVCOORDdata(1,:) = result;
+            varstr = 'CONVCOORDdata';
         else
             error(['Save result: No algorithm ' algorithm ' available.']);
         end
-        save(filename,varstr,'-v7.3');
     end
-
-    disp('Save data: data succesfully added to archive.');
+    
+    save(filename,varstr,'-v7.3');
     saved = true;
-
+    disp('Save data: data succesfully added to archive.');
+    
 elseif result.note ~= "" || result.favorite == 1
 
     update = false;

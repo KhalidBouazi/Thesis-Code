@@ -16,7 +16,7 @@ end
 t = result.t(1:size(result.V,1));
 
 for i = 1:m
-    subplot(m,1,i);
+    subtightplot(m,1,i,[0.07 0.02],[0.07 0.03],[0.12 0.05]);
     varstr = strcat('v_{',num2str(i),'}');
     plot(t,result.V(:,i));
     xlim([t(1) t(end)]);

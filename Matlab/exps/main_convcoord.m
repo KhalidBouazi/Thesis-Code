@@ -1,15 +1,15 @@
 %% I. First close all windows and clear workspace
 close all;
-clear;
+%clear;
 
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set HDMD parameters
+%% III. Set CONVCOORD parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'HDMD'};
+input.algorithm = {'CONVCOORD'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
@@ -18,22 +18,22 @@ input.algorithm = {'HDMD'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.params = {};
+input.x0 = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.x0 = {};
+input.params = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.01};
+input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
@@ -43,12 +43,12 @@ input.timesteps = {2000};
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {50};
+input.rank = {2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {5000};
+input.delays = {1000,2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -66,8 +66,8 @@ input.measured = {1};
 input.observexp = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-hdmd = combineinputs(input);
+convcoord = combineinputs(input);
 
 %% IV. Run procedure
-result = algprocedure(hdmd,config);
+result = algprocedure(convcoord,config);
 

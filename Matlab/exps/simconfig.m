@@ -1,11 +1,11 @@
 function config = simconfig()
 
 %% Display Tool logo in command window
-disp('                            #######################################');
-disp('                            #                                     #');
-disp('                            #     Koopman Identification Tool     #');
-disp('                            #                                     #');
-disp('                            #######################################');
+disp('#######################################');
+disp('#                                     #');
+disp('#     Koopman Identification Tool     #');
+disp('#                                     #');
+disp('#######################################');
 
 %% Define mode of usage
 config.general.usage = 'new'; % archive
@@ -15,14 +15,15 @@ addpath(genpath('C:\Users\bouaz\Desktop\Thesis-Code\Matlab'));
 
 %% Define ARCHIVE path for storing and loading data
 config.general.archivepath = 'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\1_Daten\';
-config.general.plotpath = 'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\2_Plots\';
+config.general.plotpathtikz = 'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\2_Plots\tikz\';
+config.general.plotpathpng = 'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\2_Plots\png\';
 
 %% Define FOLDERNAME acronyms
 config.general.folderacr = struct('algorithm','alg','system','sys','params','p','x0','x0',...
     'dt','dt','timesteps','ts','rank','r','delays','d','spacing','sp','measured','m');
 
 %% Define ALGORITHMS struct with function
-config.general.algorithms = struct('DMD',@DMD,'HAVOK',@HAVOK,'HDMD',@HDMD,'TEST',@TEST);
+config.general.algorithms = struct('DMD',@DMD,'HAVOK',@HAVOK,'HDMD',@HDMD,'CONVCOORD',@CONVCOORD);
 
 %% Define SYSTEMS struct with acronym and function
 config.general.systems = ...
@@ -45,19 +46,21 @@ config.general.plots = ...
            'reconstruct',struct('name','Rekonstruktion','fun',@reconstructplot),...
            'delayseries',struct('name','Delay Zeitsignal','fun',@delayseriesplot),...
            'delayreconstruct',struct('name','Delay Rekonstruktion','fun',@delayreconstructplot),...
-           'matriximage',struct('name','Matrixbild','fun',@matriximage));
+           'convcoordreconstruct',struct('name','Conv. Rekonstruktion','fun',@convcoordreconstructplot),...
+           'matriximage',struct('name','Matrixbild','fun',@matriximage),...
+           'rmse',struct('name','rmse','fun',@rmseplot));
                      
 %% Define general fieldnames
 config.general.fieldnames.data = {'t','X','Y'};
-config.general.fieldnames.svd = {'U','s','V'};
+config.general.fieldnames.svd = {'U','s','sn','V'};
 config.general.fieldnames.metadata = {'note','favorite','date','time'};
 
 %% Define DMD struct
 config.dmd.plots.main = {'phase','disceig','sing','conteig'};
-config.dmd.plots.sec = {'reconstruct','phasebasis'};
+config.dmd.plots.sec = {'reconstruct','rmse','phasebasis'};
 config.dmd.fieldnames.input = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured','observexp'};
 config.dmd.fieldnames.hankel = {'H','Hp'};
-config.dmd.fieldnames.model = {'Atilde','W','d','Phi','omega','b','Y_','rmseY_','t_'};
+config.dmd.fieldnames.model = {'Atilde','W','d','Phi','omega','b','Y_','RMSEY_','rmseY_','t_'};
 
 config.dmd.fieldnames.order = [config.dmd.fieldnames.input,config.general.fieldnames.data,...
     config.dmd.fieldnames.hankel,config.general.fieldnames.svd,config.dmd.fieldnames.model,...
@@ -65,10 +68,10 @@ config.dmd.fieldnames.order = [config.dmd.fieldnames.input,config.general.fieldn
 
 %% Define HAVOK struct
 config.havok.plots.main = {'phase','delayphase','sing'};
-config.havok.plots.sec = {'delayreconstruct','matriximage'};
+config.havok.plots.sec = {'delayreconstruct','rmse','matriximage'};
 config.havok.fieldnames.input = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured','observexp'};
 config.havok.fieldnames.hankel = {'H'};
-config.havok.fieldnames.model = {'A','B','V_','rmseV_'};
+config.havok.fieldnames.model = {'A','B','V_','RMSEV_','rmseV_','t_'};
 
 config.havok.fieldnames.order = [config.havok.fieldnames.input,config.general.fieldnames.data,...
     config.havok.fieldnames.hankel,config.general.fieldnames.svd,config.havok.fieldnames.model,...
@@ -76,13 +79,24 @@ config.havok.fieldnames.order = [config.havok.fieldnames.input,config.general.fi
 
 %% Define HDMD struct
 config.hdmd.plots.main = {'phase','delayphase','sing'};
-config.hdmd.plots.sec = {'reconstruct','phasebasis'}; 
+config.hdmd.plots.sec = {'reconstruct','rmse','phasebasis'}; 
 config.hdmd.fieldnames.input = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured','observexp'};
 config.hdmd.fieldnames.hankel = {'H','Hp'};
-config.hdmd.fieldnames.model = {'Atilde','W','d','Phi','omega','b','Y_','rmseY_','t_'};
+config.hdmd.fieldnames.model = {'Atilde','W','d','Phi','omega','b','Y_','RMSEY_','rmseY_','t_'};
 
 config.hdmd.fieldnames.order = [config.hdmd.fieldnames.input,config.general.fieldnames.data,...
     config.hdmd.fieldnames.hankel,config.general.fieldnames.svd,config.hdmd.fieldnames.model,...
+    config.general.fieldnames.metadata];
+
+%% Define CONVCOORD struct
+config.convcoord.plots.main = {'phase','sing'};%,'delayphase'
+config.convcoord.plots.sec = {'convcoordreconstruct','rmse','matriximage'};
+config.convcoord.fieldnames.input = {'algorithm','system','params','x0','dt','timesteps','rank','delays','spacing','measured','observexp'};
+config.convcoord.fieldnames.hankel = {'H'};
+config.convcoord.fieldnames.model = {'A','W','W_','RMSEW_','rmseW_','t_'};
+
+config.convcoord.fieldnames.order = [config.convcoord.fieldnames.input,config.general.fieldnames.data,...
+    config.convcoord.fieldnames.hankel,config.general.fieldnames.svd,config.convcoord.fieldnames.model,...
     config.general.fieldnames.metadata];
 
 %% Set latex as plot interpreter
