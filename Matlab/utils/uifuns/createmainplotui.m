@@ -19,12 +19,12 @@ ax = axes('Parent',plotpan);
 
 %% For png saving
 for i = 1:length(algplots)
-    cbx = 0.01 + floor((i-1)/3)*0.3;
-    cby = 0.7 - mod((i-1),3)*0.25;
+    cbx = 0.01 + floor((i-1)/4)*0.3;
+    cby = 0.7 - mod((i-1),4)*0.2;
     cbstr = config.general.plots.(algplots{i}).name;
     plotcheckbox(i) = uicontrol('Parent',pngpan,'Style','checkbox','String',cbstr,...
         'FontSize',10,'BackgroundColor','white','Units','Normalized',...
-        'Position',[cbx cby 0.3 0.2]);
+        'Position',[cbx cby 0.3 0.15]);
 end
 plotcheckbox(end+1) = uicontrol('Parent',pngpan,'Style','checkbox','String','Alle auswählen',...
         'FontSize',10,'Units','Normalized','BackgroundColor','white',...
@@ -37,12 +37,12 @@ pngprintbtn = uicontrol('Parent',pngpan,'Style','pushbutton','String','Als png s
 
 %% For tikz saving
 for i = 1:length(algplots)
-    cbx = 0.01 + floor((i-1)/3)*0.3;
-    cby = 0.7 - mod((i-1),3)*0.25;
+    cbx = 0.01 + floor((i-1)/4)*0.3;
+    cby = 0.7 - mod((i-1),4)*0.2;
     cbstr = config.general.plots.(algplots{i}).name;
     plotcheckbox(i) = uicontrol('Parent',tikzpan,'Style','checkbox','String',cbstr,...
         'FontSize',10,'BackgroundColor','white','Units','Normalized',...
-        'Position',[cbx cby 0.3 0.2]);
+        'Position',[cbx cby 0.3 0.15]);
 end
 plotcheckbox(end+1) = uicontrol('Parent',tikzpan,'Style','checkbox','String','Alle auswählen',...
         'FontSize',10,'Units','Normalized','BackgroundColor','white',...

@@ -38,7 +38,12 @@ input.dt = {0.01};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {6400};
+input.timesteps = {500};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% horizon : double : obligatory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.horizon = {0};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -48,7 +53,7 @@ input.rank = {20};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100,1000};
+input.delays = {10,20,30};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

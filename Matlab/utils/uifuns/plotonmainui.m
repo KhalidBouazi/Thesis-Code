@@ -7,12 +7,12 @@ cnt = 1;
 
 axes(ax);
 for j = 1:length(algplots)
-    plotname = algplots{j};
-    if isfield(config.general.plots,plotname)
-        %axs(k,j) = subplot(height,width,j);
+    plottype = algplots{j};
+    if isfield(config.general.plots,plottype)
         subtightplot(height,width,cnt,[0.1 0.1],[0.1 0.05],[0.1 0.05]);
-        fun = config.general.plots.(plotname).fun;
-        fun(algdata);
+        fun = config.general.plots.(plottype).fun;
+        args = config.general.plots.(plottype).args;
+        fun(algdata,args);
         cnt = cnt + 1;
     end
 end

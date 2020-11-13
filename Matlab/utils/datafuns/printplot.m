@@ -1,5 +1,9 @@
 function printplot(plottype, savetype, result, folderpath, config)
 
+fun = config.general.plots.(plottype).fun;
+plotfunname = func2str(fun);
+plotfunname = plotfunname(1:end-4);
+
 %% Switch through plotnames
 if strcmp(savetype,'tikz')
     switch plottype
@@ -18,9 +22,17 @@ if strcmp(savetype,'tikz')
             error('Print plot: Not all plotfunctions implemented as tikz.');
     end
 elseif strcmp(savetype,'png')
-    fig = figure;
-    fun = config.general.plots.(plottype).fun;
-    fun(result);
+    if strcmp(plotfunname,'reconstruct') || strcmp(plotfunname,'delayreconstruct') || strcmp(plotfunname,'convcoordreconstruct')
+        fig = figure('Position',[300 300 1200 800]);
+    elseif strcmp(plotfunname,'phase') || strcmp(plotfunname,'delayphase') || strcmp(plotfunname,'phasebasis')
+        fig = figure('Position',[300 300 600 500]);
+    elseif strcmp(plotfunname,'matrix') || strcmp(plotfunname,'disceig') || strcmp(plotfunname,'conteig') 
+        fig = figure('Position',[300 300 600 500]);
+    elseif strcmp(plotfunname,'sing') || strcmp(plotfunname,'rmse')
+        fig = figure('Position',[300 300 600 300]);
+    end
+    args = config.general.plots.(plottype).args;
+    fun(result,args);
     saveas(gcf,[folderpath plottype '.png']);
     close(fig);
 end

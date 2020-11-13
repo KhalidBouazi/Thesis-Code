@@ -1,11 +1,7 @@
-function V_ = havokreconstruct(A, B, Vs, dt)
+function V_ = havokreconstruct(A, B, u, v0, dt)
 
 %% Create index span
-L = 1:size(Vs,1);
-
-%% Extract forcing and initial value
-u = Vs(L,end);
-v0 = Vs(1,1:end-1);
+L = 1:size(u,1);
 
 %% Create system object and simulate
 C = eye(size(A,1));

@@ -1,29 +1,30 @@
-function rmseplot(result)
+function rmseplot(result,args)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {};
-optfunargs = {};
-optargvals = {};
-result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
-
-%%
-algorithm = result.algorithm;
-if strcmp(algorithm,'DMD')
-    rmse = result.rmseY_;
-elseif strcmp(algorithm,'HDMD')
-    rmse = result.rmseY_;
-elseif strcmp(algorithm,'HAVOK')
-    rmse = result.rmseV_;
-elseif strcmp(algorithm,'CONVCOORD')
-    rmse = result.rmseW_;
-end
+%% Extract arguments
+rmse = result.(args{1});
 
 %% Start plotting
-for i = 1:size(rmse,1)
-    plot(result.t_,rmse(i,:));
+if size(rmse,1) < 5
+    l = 1:size(rmse,1);
+else
+    l = [1 round(linspace(2,size(rmse,1),4))];
+end
+n = length(l);
+
+legendstr = {};
+tr = result.tr;
+t = [tr result.tp];
+for i = 1:n
+    legendstr = [legendstr, ['$\mathrm{rmse}_{' num2str(l(i)) '}$']];
+    plot(t,rmse(l(i),:));
     hold on;
 end
 xlabel('Zeit in s');
 ylabel('RMSE');
+xlim([t(1) t(end)]);
+x = [tr(end); max(xlim); max(xlim); tr(end)];
+y = [0; 0; max(ylim); max(ylim)];
+patch('Faces',1:4,'Vertices',[x y],'FaceColor','r','FaceAlpha',0.1);
+legend(legendstr,'Location','southeast');
 
 end

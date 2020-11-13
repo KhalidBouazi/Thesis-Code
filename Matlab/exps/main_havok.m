@@ -18,7 +18,7 @@ input.algorithm = {'HAVOK'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -33,12 +33,17 @@ input.params = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.1};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.timesteps = {2000};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% horizon : double : obligatory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.horizon = {0};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -48,7 +53,7 @@ input.rank = {2};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100};
+input.delays = {10000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

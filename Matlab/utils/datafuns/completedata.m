@@ -5,7 +5,7 @@ m = size(data,1);
 %% Define functions to fill specific data fields  with computed data
 date = datetime('now','TimeZone','local','Format','d-MMM-y');
 time = datetime('now','TimeZone','local','Format','HH:mm:ss');
-placeholders = struct('rmseY_',{{@rmse,'Y','Y_'}},'note',[],'favorite',0,'date',date,'time',time);
+placeholders = struct('rmseY_',{{@rmse,'Y','Yr'}},'note',[],'favorite',0,'date',date,'time',time);
 
 %% Add missing fields and fill with value or NaN
 for i = 1:length(algfieldnames)

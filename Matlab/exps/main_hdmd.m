@@ -41,6 +41,11 @@ input.dt = {0.01};
 input.timesteps = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% horizon : double : obligatory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.horizon = {0};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 input.rank = {50};

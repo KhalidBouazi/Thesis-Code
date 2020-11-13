@@ -1,20 +1,16 @@
-function phasebasisplot(result)
+function phasebasisplot(result,args)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'X','V'};
-optfunargs = {};
-optargvals = {};
-result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
+%% Extract arguments
+X = result.(args{1});
+V = result.(args{2});
 
 %% Check state dimension
-X = result.X;
 m = size(X,1);
 
 if m < 2 || m > 3
     error('State dimension: Must be 2 or 3.');
 end
 
-V = result.V;
 X = X(:,1:size(V,1));
 
 %% Start plotting
@@ -33,7 +29,7 @@ else
 end
 
 for j = 1:num
-    subtightplot(2,2,j,[0.1 0.1],[0.07 0.07],[0.1 0.05]);
+    subtightplot(2,2,j,[0.15 0.1],[0.12 0.07],[0.1 0.05]);
     title(['$u_' num2str(j) '$']);
     surface([X(1,:);X(1,:)],[X(2,:);X(2,:)],[Z;Z],[V(:,j)';V(:,j)'],...
         'facecol','no',...

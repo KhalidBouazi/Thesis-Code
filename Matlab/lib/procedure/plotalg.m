@@ -16,8 +16,7 @@ for k = 1:length(algdata)
     % Extract algplots for algorithm
     algnames = fieldnames(config.general.algorithms);
     if any(strcmp(algnames,algorithm))
-        mainalgplots = config.(lower(algorithm)).plots.main;
-        secalgplots = config.(lower(algorithm)).plots.sec;
+        [mainalgplots,secalgplots] = divideplots(algdata{k},config);
         algplots = [mainalgplots secalgplots];
     else
         error(['Plot: No algorithm ' algorithm ' available.']); 

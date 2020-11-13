@@ -1,10 +1,7 @@
-function disceigplot(result)
+function disceigplot(result,args)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'d'};
-optfunargs = {};
-optargvals = {};
-result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
+%% Extract arguments
+d = result.(args{1});
 
 %% Plot config
 AxesColor = [96, 96, 96]/255;
@@ -15,7 +12,6 @@ PredEigMarker = 'o';
 TrueEigMarker = 'x';
     
 %% Start plotting
-d = result.d;
 realeig = real(d);
 imageig = imag(d);
 xlimit = [min(realeig),max(realeig)];
@@ -38,6 +34,6 @@ end
 
 xlabel(strcat('Re(',varstr,')'));
 ylabel(strcat('Im(',varstr,')'));
-grid on;
+% grid on;
 
 end

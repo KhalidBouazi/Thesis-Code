@@ -1,10 +1,7 @@
-function conteigplot(result)
+function conteigplot(result,args)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'omega'};
-optfunargs = {};
-optargvals = {};
-result = checkandfillfunargs(result,oblgfunargs,optfunargs,optargvals);
+%% Extract arguments
+omega = result.(args{1});
 
 %% Plot config
 AxesColor = [96, 96, 96]/255;
@@ -15,7 +12,6 @@ PredEigMarker = 'o';
 TrueEigMarker = 'x';
     
 %% Start plotting
-omega = result.omega;
 realeig = real(omega);
 imageig = imag(omega);
 xlimit = [min(realeig),max(realeig)];
@@ -36,6 +32,6 @@ end
 
 xlabel(strcat('Re(',varstr,')'));
 ylabel(strcat('Im(',varstr,')'));
-grid on;
+% grid on;
 
 end

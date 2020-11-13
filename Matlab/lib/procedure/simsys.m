@@ -18,8 +18,10 @@ else
 end
 
 %% Create timespan
-timesteps = algdata.timesteps + algdata.spacing(2)*(algdata.delays - 1); % TODO spacingx
-tspan = (0:algdata.dt:algdata.dt*timesteps);
+traintimesteps = (algdata.timesteps + 1) + algdata.spacing(2)*(algdata.delays - 1); % TODO spacingx
+testtimesteps = algdata.horizon;
+timesteps = traintimesteps + testtimesteps; 
+tspan = (0:timesteps)*algdata.dt;
 
 %% Simulate system
 options = odeset('RelTol',1e-12,'AbsTol',1e-12*ones(1,length(algdata.x0)));
