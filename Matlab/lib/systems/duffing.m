@@ -1,4 +1,4 @@
-function [odefun,params,x0] = duffing(params, x0)
+function [odefun,params,x0,Nu] = duffing(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -10,6 +10,7 @@ end
 alpha = params(1);
 beta = params(2);
 delta = params(3);
+Nu = 1;
 
 %% Define initial state
 if isempty(x0)
@@ -19,7 +20,7 @@ elseif length(x0) ~= 2
 end
 
 %% Define system function
-odefun = @(t,x) [x(2);
-                 -delta*x(2) - alpha*x(1) - beta*x(1)^3];
+odefun = @(t,x,u) [x(2);
+                   -delta*x(2) - alpha*x(1) - beta*x(1)^3 + u(t)];
 
 end

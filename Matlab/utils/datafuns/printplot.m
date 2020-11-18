@@ -16,7 +16,7 @@ if strcmp(savetype,'tikz')
             d = result.d;
             pgfdisceigplot_(real(d),imag(d),plottype,folderpath);
         case 'sing'
-            s = result.s;
+            s = result.sn_;
             pgfsingplot_(1:length(s),s,plottype,folderpath);
         otherwise
             error('Print plot: Not all plotfunctions implemented as tikz.');

@@ -16,8 +16,8 @@ H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
 % Compute derivative of train delay coordinates V
 [Vtrain,dV] = cendiff4(V(1:end-algdata.horizon,:),algdata.dt);
 
-% Compute regression and split into state transition matrix and forcing
-% matrix
+% Compute regression and split into linear state transition matrix and 
+% forcing matrix
 Z = (Vtrain\dV)';
 A = Z(1:end-1,1:end-1);
 B = Z(1:end-1,end);
@@ -43,10 +43,10 @@ Vr = Vr(Lr,:);
 %% Save in algstruct(i)
 algdata.H = H;
 algdata.rank = size(S,1);
-algdata.U = U;
-algdata.s = diag(S);
-algdata.sn = diag(Sn);
-algdata.V = V;
+algdata.U_ = U;
+algdata.s_ = diag(S);
+algdata.sn_ = diag(Sn);
+algdata.V_ = V;
 algdata.A = A;
 algdata.B = B;
 

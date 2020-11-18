@@ -18,7 +18,7 @@ input.algorithm = {'HDMD'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'lorenz'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -43,17 +43,17 @@ input.timesteps = {2000};
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {0};
+input.horizon = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {50};
+input.rank = {30};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {5000};
+input.delays = {10000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -66,10 +66,10 @@ input.spacing = {[1,1]};
 input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% observexp : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observexp = {1};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observables = {};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 hdmd = combineinputs(input);
 

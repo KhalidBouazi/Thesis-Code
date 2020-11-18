@@ -1,4 +1,4 @@
-function [odefun,params,x0] = pendulum(params, x0)
+function [odefun,params,x0,Nu] = pendulum(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -8,6 +8,7 @@ elseif length(params) ~= 1
 end
 
 l = params(1);
+Nu = 0;
 
 %% Define initial state
 if isempty(x0)

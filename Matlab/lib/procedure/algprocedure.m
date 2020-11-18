@@ -7,9 +7,11 @@ for i = 1:length(algdata)
     
     % I. Simulate system
     algdata{i} = simsys(algdata{i},config);
-    algdata{i} = polyobserv(algdata{i});
     
-    % II. Compute algorithm
+    % II. Transform through dictionary
+    algdata{i} = observe(algdata{i});
+    
+    % III. Compute algorithm
     algdata{i} = runalg(algdata{i},config);
     
     timeelapsed = toc(t);
@@ -17,7 +19,7 @@ for i = 1:length(algdata)
     
 end
 
-% III. Plot results in one figure
+% IV. Plot results in one figure
 plotalg(algdata,config);
 
 end

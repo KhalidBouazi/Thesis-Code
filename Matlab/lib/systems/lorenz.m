@@ -1,4 +1,4 @@
-function [odefun,params,x0] = lorenz(params, x0)
+function [odefun,params,x0,Nu] = lorenz(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -10,6 +10,7 @@ end
 sigma = params(1);
 rho = params(2);
 beta = params(3);
+Nu = 0;
 
 %% Define initial state
 if isempty(x0)

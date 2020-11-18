@@ -1,4 +1,4 @@
-function u = sysctrl(x,args)
+function u = ctrlsys(x,args)
 
 switch args.type
     case 'noctrl'

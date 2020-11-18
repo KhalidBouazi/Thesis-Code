@@ -5,9 +5,9 @@ X = result.(args{1});
 x = args{2};
 
 %%
-if strcmp(args{1},'V') && size(result.X,1) <= size(result.V,2)
-    X = result.V(:,1:size(result.X,1))';
-elseif strcmp(args{1},'V') && size(result.X,1) > size(result.V,2)
+if strcmp(args{1},'V_') && size(result.X,1) <= size(result.V_,2)
+    X = result.V_(:,1:size(result.X,1))';
+elseif strcmp(args{1},'V_') && size(result.X,1) > size(result.V_,2)
     return;
 end
 

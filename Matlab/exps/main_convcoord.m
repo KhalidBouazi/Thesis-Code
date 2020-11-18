@@ -66,10 +66,10 @@ input.spacing = {[1,1]};
 input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% observexp : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observexp = {1};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observables = {};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 convcoord = combineinputs(input);
 

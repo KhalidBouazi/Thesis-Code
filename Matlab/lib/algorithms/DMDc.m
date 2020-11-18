@@ -1,4 +1,4 @@
-function algdata = DMD(algdata)
+function algdata = DMDc(algdata) % TODO
 
 %% Check obligatory and optional function arguments
 oblgfunargs = {'Y','dt'};

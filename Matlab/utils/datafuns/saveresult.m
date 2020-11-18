@@ -36,6 +36,9 @@ if ~dataexists
         if isequal(algorithm,'DMD')
             DMDdata(1,:) = result;
             varstr = 'DMDdata';
+        elseif isequal(algorithm,'DMDc')
+            DMDcdata(1,:) = result;
+            varstr = 'DMDcdata';
         elseif isequal(algorithm,'HAVOK')
             HAVOKdata(1,:) = result;
             varstr = 'HAVOKdata';

@@ -1,15 +1,15 @@
 %% I. First close all windows and clear workspace
 close all;
-%clear;
+clear;
 
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set HAVOK parameters
+%% III. Set DMDc parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'HAVOK'};
+input.algorithm = {'DMDc'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
@@ -18,17 +18,22 @@ input.algorithm = {'HAVOK'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'trippletank'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.x0 = {};
+input.params = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.params = {};
+input.x0 = {};
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% input : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.input = {{struct('type','sine')}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -38,7 +43,7 @@ input.dt = {0.01};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {2000};
+input.timesteps = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
@@ -48,12 +53,12 @@ input.horizon = {0};
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {15};
+input.rank = {20};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {10000};
+input.delays = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -63,7 +68,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -71,8 +76,8 @@ input.measured = {1};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-havok = combineinputs(input);
+dmdc = combineinputs(input);
 
 %% IV. Run procedure
-result = algprocedure(havok,config);
+result = algprocedure(dmdc,config);
 

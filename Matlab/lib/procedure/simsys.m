@@ -12,7 +12,7 @@ algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 system = algdata.system;
 if isfield(config.general.systems,system)
     fun = config.general.systems.(system).fun;
-    [odefun,algdata.params,algdata.x0] = fun(algdata.params,algdata.x0);
+    [odefun,algdata.params,algdata.x0,Nu] = fun(algdata.params,algdata.x0);
 else
     error(['System: No system ' system ' available.']);
 end
@@ -23,9 +23,20 @@ testtimesteps = algdata.horizon;
 timesteps = traintimesteps + testtimesteps; 
 tspan = (0:timesteps)*algdata.dt;
 
+%% Create input signal
+if isfield(algdata,'input')
+    [algdata.input,algdata.U,u] = inputsignal(algdata.input,tspan,Nu);
+elseif Nu ~= 0
+    [~,~,u] = inputsignal({},tspan,Nu);
+end
+
 %% Simulate system
 options = odeset('RelTol',1e-12,'AbsTol',1e-12*ones(1,length(algdata.x0)));
-[t,X] = ode45(odefun,tspan,algdata.x0,options);
+if Nu ~= 0
+    [t,X] = ode45(@(t,x) odefun(t,x,u),tspan,algdata.x0,options);
+else
+    [t,X] = ode45(odefun,tspan,algdata.x0,options);
+end
 algdata.t = t';
 algdata.X = X';
 

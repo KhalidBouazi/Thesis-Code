@@ -14,8 +14,12 @@ ylabel('Norm. Singulaerwert');
 xlim([0 length(sn)+1])
 ylim([0 1])
 % grid on;
-gap = round(length(sn)/10);
-xlabels = 0:gap:length(sn)+1;
+if length(sn) >= 10
+    gap = round(length(sn)/10);
+else
+    gap = 1; 
+end
+xlabels = gap:gap:length(sn);
 set(gca,'XTick',xlabels);
 
 end

@@ -51,10 +51,10 @@ Wr = Wr(:,Lr);
 %% Save in algstruct(i)
 algdata.H = H;
 algdata.rank = size(S,1);
-algdata.U = U;
-algdata.s = diag(S);
-algdata.sn = diag(Sn);
-algdata.V = V;
+algdata.U_ = U;
+algdata.s_ = diag(S);
+algdata.sn_ = diag(Sn);
+algdata.V_ = V;
 algdata.A = A;
 
 algdata.Wtrain = Wtrain;

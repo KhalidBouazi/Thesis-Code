@@ -1,4 +1,4 @@
-function [odefun,params,x0] = roessler(params, x0)
+function [odefun,params,x0,Nu] = roessler(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -10,6 +10,7 @@ end
 a = params(1);
 b = params(2);
 c = params(3);
+Nu = 0;
 
 %% Define initial state
 if isempty(x0)

@@ -38,7 +38,7 @@ input.dt = {0.01};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {500};
+input.timesteps = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
@@ -48,12 +48,12 @@ input.horizon = {0};
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {20};
+input.rank = {150};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {10,20,30};
+input.delays = {10000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -66,10 +66,10 @@ input.spacing = {[1,1]};
 input.measured = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% observexp : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observexp = {1};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observables = {};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 dmd = combineinputs(input);
 

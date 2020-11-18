@@ -1,4 +1,4 @@
-function [odefun,params,x0] = doubletank(params, x0)
+function [odefun,params,x0,Nu] = doubletank(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -12,6 +12,8 @@ A1 = params(1);
 A2 = params(2);
 q1 = params(3);
 q2 = params(4);
+g = 9.81;
+Nu = 1;
 
 %% Define initial state
 if isempty(x0)
@@ -20,17 +22,8 @@ elseif length(x0) ~= 2
     error('Initial condition: Check number of elements.'); 
 end
 
-%% Extract args
-% if isempty(ctrlargs)
-%    ctrlargs.ctrl1 = struct('type','noctrl'); 
-% end
-
 %% Define system function
-g = 9.81;
-u = @(x) 0;
-% u = @(x)sysctrl(x,ctrlargs.ctrl1);
-
-odefun = @(t,x) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u(x));
+odefun = @(t,x,u) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u{1}(t));
                  1/A2*(q1*sqrt(2*g*(x(1) - x(2))) - q2*sqrt(2*g*x(2)))];
 
 end
