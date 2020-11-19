@@ -18,7 +18,7 @@ input.algorithm = {'HDMD'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -33,7 +33,7 @@ input.x0 = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.01};
+input.dt = {0.05};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
@@ -53,10 +53,12 @@ input.rank = {30};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {10000};
+input.delays = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [timespacing, delayspacing]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.spacing = {[1,1]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,7 +70,11 @@ input.measured = {1};
 
 % observables : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {};
+% {'identity'}
+% {'monomial', max. exponent}
+% {'rbf', bandwidth}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observables = {{'identity'},{'monomial',2},{'monomial',3},{'monomial',4}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 hdmd = combineinputs(input);

@@ -1,4 +1,4 @@
-function algdata = meassys(algdata)
+function algdata = measure(algdata)
     
 %% Fill field measured with default if empty
 if isfield(algdata,'measured')

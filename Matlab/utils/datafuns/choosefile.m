@@ -26,7 +26,7 @@ assignin('base','datastruct',storedStruct);
 
 %% Create table and fill with chosen file
 algorithm = storedStruct.algorithm;
-columnnames = [{'checkbox'},config.(lower(algorithm)).input,config.general.fieldnames.metadata];
+columnnames = [{'checkbox'},config.(lower(algorithm)).fieldnames.input,config.general.fieldnames.metadata];
 data = structbyfields(storedStruct,columnnames(2:end));
 data = structarr2cell(data);
 data = cellelements2char(data);

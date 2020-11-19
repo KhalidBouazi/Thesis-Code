@@ -1,16 +1,15 @@
 function algdata = runalg(algdata,config)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'algorithm'};
-optfunargs = {};
-optargvals = {};
-algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
-
 dispstep('alg',algdata.algorithm);
+timer = tic;
 
 %% Choose and run algorithm
 algorithm = algdata.algorithm;
 fun = config.general.algorithms.(algorithm);
 algdata = fun(algdata);
+
+%% Stop timer
+timeelapsed = toc(timer);
+dispstep('time',timeelapsed);
 
 end

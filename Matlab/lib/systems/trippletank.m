@@ -26,7 +26,7 @@ end
 
 %% Define system function
 odefun = @(t,x,u) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u{1}(t));
-                 1/A2*(q1*sqrt(2*g*(x(1) - x(2))) + q3*sqrt(2*g*(x(3) - x(2))) - q2*sqrt(2*g*x(2)));
-                 1/A3*(-q3*sqrt(2*g*(x(3) - x(2))) + u{2}(t))];
+                   1/A2*(q1*sqrt(2*g*(x(1) - x(2))) + q3*sqrt(2*g*(x(3) - x(2))) - q2*sqrt(2*g*x(2)));
+                   1/A3*(-q3*sqrt(2*g*(x(3) - x(2))) + u{2}(t))];
 
 end

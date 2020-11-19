@@ -19,6 +19,6 @@ end
 
 %% Define system function
 odefun = @(t,x,u) [x(2);
-                 mu*(1 - x(1)^2)*x(2) - x(1) + u(t)];
+                 mu*(1 - x(1)^2)*x(2) - x(1) + u{1}(t)];
 
 end

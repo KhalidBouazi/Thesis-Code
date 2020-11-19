@@ -18,7 +18,7 @@ input.algorithm = {'DMDc'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'trippletank'};
+input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -33,7 +33,14 @@ input.x0 = {};
 
 % input : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','sine')}};
+% struct('type','none')
+% struct('type','const','value',...)
+% struct('type','sine','amp',...,'freq',...,'phi',...) 
+% struct('type','chirp','amp',...,'freqa',...,'freqb',...) 
+% freqb should be <= 1/20 * 1/dt
+% struct('type','prbs') 
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.input = {{struct('type','chirp','amp',2,'freqa',1,'freqb',5)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -43,7 +50,7 @@ input.dt = {0.01};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {100};
+input.timesteps = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
@@ -63,6 +70,8 @@ input.delays = {};
 
 % spacing : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [timespacing, delayspacing]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.spacing = {[1,1]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -72,6 +81,10 @@ input.measured = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% {'identity'}
+% {'monomial', max. exponent}
+% {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

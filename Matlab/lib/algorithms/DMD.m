@@ -17,15 +17,15 @@ H = hankmat(Y(:,1:end-1),algdata.delays,algdata.spacing);
 Hp = hankmat(Y(:,2:end),algdata.delays,algdata.spacing);
 
 % Compute svd
-[U,S,Sn,V] = truncsvd(H,algdata.rank);
+[U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);
 
 % Compute transition matrix and its modes
-Atilde = S\U'*Hp*V;
+Atilde = U_'*Hp*V_/S_;
 [W,D] = eig(Atilde);
-Phi = Hp*V/S*W/D;
-Phi = Phi(1:size(algdata.Y,1),:);
+Phi = Hp*V_/S_*W/D;
+Phi = Phi(1:size(Y,1),:);
 omega = log(diag(D))/algdata.dt;
-b = (W*D)\(S*V(1,:)');
+b = (W*D)\(S_*V_(:,1)');
 
 %% Reconstruct states
 Lr = (1:size(Ytrain,2));
@@ -44,11 +44,12 @@ Yr = Yr(:,Lr);
 %% Save in algdata
 algdata.H = H; 
 algdata.Hp = Hp;
-algdata.rank = size(S,1);
-algdata.U_ = U;
-algdata.s_ = diag(S);
-algdata.sn_ = diag(Sn);
-algdata.V_ = V;
+algdata.rank = size(S_,1);
+algdata.U_ = U_;
+algdata.s_ = diag(S_);
+algdata.sn = diag(Sn);
+algdata.sn_ = diag(Sn_);
+algdata.V_ = V_;
 algdata.Atilde = Atilde;
 algdata.W = W;
 algdata.d = diag(D);

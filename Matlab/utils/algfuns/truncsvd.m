@@ -1,17 +1,18 @@
-function [U,S,Sn,V] = truncsvd(X, rank)
+function [U_,S_,Sn,Sn_,V_] = truncsvd(X, rank)
 
 %% Compute svd
-[U,S,V] = svd(X,'econ');
+[U_,S_,V_] = svd(X,'econ');
 
 %% Normalize singular values
-Sn = S./sqrt(sum(diag(S).^2));
+Sn_ = S_./sqrt(sum(diag(S_).^2));
+Sn = Sn_;
 
 %% Truncate svd
-if ~isempty(rank) && rank < size(S,1)
-    U = U(:,1:rank);
-    S = S(1:rank,1:rank);
-    Sn = Sn(1:rank,1:rank);
-    V = V(:,1:rank);
+if ~isempty(rank) && rank < size(S_,1)
+    U_ = U_(:,1:rank);
+    S_ = S_(1:rank,1:rank);
+    Sn_ = Sn_(1:rank,1:rank);
+    V_ = V_(:,1:rank);
 end
 
 end

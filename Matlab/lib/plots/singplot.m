@@ -2,13 +2,24 @@ function singplot(result,args)
 
 %% Extract arguments
 sn = result.(args{1});
+sn_ = result.(args{2});
 
 %% Plot config
-SingValColor = [0.6350, 0.0780, 0.1840];
+SingValColor = 'k';
+SingValColor_ = [0.6350, 0.0780, 0.1840];
 SingValMarker = 'o';
 
 %% Start plotting
+idx = sn > 1e-2;
+if length(sn(idx)) < length(sn_)
+    sn = sn(1:length(sn_));
+else
+    sn = sn(idx);
+end
+
 plot(1:length(sn),sn,'LineStyle','none','Marker',SingValMarker,'Color',SingValColor);
+hold on;
+plot(1:length(sn_),sn_,'LineStyle','none','Marker',SingValMarker,'Color',SingValColor_);
 xlabel('Rang');
 ylabel('Norm. Singulaerwert');
 xlim([0 length(sn)+1])

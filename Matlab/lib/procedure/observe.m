@@ -4,21 +4,27 @@ function algdata = observe(algdata)
 if isfield(algdata,'observables')
     if ~isempty(algdata.observables)
         obstype = algdata.observables{1};
-        obsparam = algdata.observables{2};
+        if ~strcmp(obstype,'identity')
+            obsparam = algdata.observables{2};
+        end
     else
-        algdata.observables = {'idt'};
+        algdata.observables = {'identity'};
         return;
     end
 else
-    algdata.observables = {'idt'};
+    algdata.observables = {'identity'};
     return;
 end
 
+%% ...
+dispstep('obs');
+timer = tic;
+
 %% Run dictionary on data
 switch obstype
-    case 'idt'
+    case 'identity'
         return;
-    case 'mon'
+    case 'monomial'
         PsiY = [];
         for i = 1:obsparam
             PsiY = [PsiY; algdata.Y.^i];
@@ -35,5 +41,9 @@ end
 
 %% Save PsiY in Y (temporary)
 algdata.Y = PsiY;
+
+%% Stop timer
+timeelapsed = toc(timer);
+dispstep('time',timeelapsed);
 
 end

@@ -22,8 +22,9 @@ end
 xlabel('Zeit in s');
 ylabel('RMSE');
 xlim([t(1) t(end)]);
+ylimit = get(gca,'YLim');
 x = [tr(end); max(xlim); max(xlim); tr(end)];
-y = [0; 0; max(ylim); max(ylim)];
+y = [0; 0; max(ylimit); max(ylimit)];
 patch('Faces',1:4,'Vertices',[x y],'FaceColor','r','FaceAlpha',0.1);
 legend(legendstr,'Location','southeast');
 

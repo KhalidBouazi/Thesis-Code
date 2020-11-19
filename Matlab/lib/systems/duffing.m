@@ -21,6 +21,6 @@ end
 
 %% Define system function
 odefun = @(t,x,u) [x(2);
-                   -delta*x(2) - alpha*x(1) - beta*x(1)^3 + u(t)];
+                   -delta*x(2) - alpha*x(1) - beta*x(1)^3 + u{1}(t)];
 
 end

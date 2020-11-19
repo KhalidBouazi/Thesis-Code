@@ -43,12 +43,12 @@ input.timesteps = {2000};
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {0};
+input.horizon = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {150};
+input.rank = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
@@ -57,6 +57,8 @@ input.delays = {10000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [timespacing, delayspacing]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.spacing = {[1,1]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,6 +69,10 @@ input.measured = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% {'identity'}
+% {'monomial', max. exponent}
+% {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

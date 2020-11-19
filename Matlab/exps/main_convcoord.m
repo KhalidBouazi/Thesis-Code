@@ -58,6 +58,8 @@ input.delays = {10000};
 
 % spacing : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [timespacing, delayspacing]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.spacing = {[1,1]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -67,6 +69,10 @@ input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% {'identity'}
+% {'monomial', max. exponent}
+% {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -11,20 +11,20 @@ algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
 
 % Compute svd
-[U,S,Sn,V] = truncsvd(H,algdata.rank);
+[U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);
 
 % Compute derivative of basis U
-[Us,dU] = cendiff4(U,algdata.dt);
-% [Vs,dV] = cendiff4(V(1:end-algdata.horizon,:),algdata.dt);
+[Us,dU] = cendiff4(U_,algdata.dt);
+% [Vs,dV] = cendiff4(V_(1:end-algdata.horizon,:),algdata.dt);
 
 % Compute Koopman Operator
 A = Us'*dU;
-% A = S\(Vs'*dV)*S;
+% A = S_\(Vs'*dV)*S_;
 
 % Compute convolutional coordinates
 y = hankmat(algdata.Y,size(Us,1),[1,1]);
 W = Us'*y;
-% W = U'*H;
+% W = U_'*H;
 % m = size(y,1)/2;
 % W = W(:,m:end-m);
 
@@ -50,11 +50,12 @@ Wr = Wr(:,Lr);
 
 %% Save in algstruct(i)
 algdata.H = H;
-algdata.rank = size(S,1);
-algdata.U_ = U;
-algdata.s_ = diag(S);
-algdata.sn_ = diag(Sn);
-algdata.V_ = V;
+algdata.rank = size(S_,1);
+algdata.U_ = U_;
+algdata.s_ = diag(S_);
+algdata.sn = diag(Sn);
+algdata.sn_ = diag(Sn_);
+algdata.V_ = V_;
 algdata.A = A;
 
 algdata.Wtrain = Wtrain;

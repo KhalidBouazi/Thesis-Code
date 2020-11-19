@@ -1,6 +1,7 @@
 function algdata = simsys(algdata,config)
 
 dispstep('sim');
+timer = tic;
 
 %% Check obligatory and optional function arguments
 oblgfunargs = {'system','dt','timesteps'};
@@ -25,9 +26,9 @@ tspan = (0:timesteps)*algdata.dt;
 
 %% Create input signal
 if isfield(algdata,'input')
-    [algdata.input,algdata.U,u] = inputsignal(algdata.input,tspan,Nu);
+    [algdata.input,algdata.U,u] = geninput(algdata.input,tspan,Nu);
 elseif Nu ~= 0
-    [~,~,u] = inputsignal({},tspan,Nu);
+    [~,~,u] = geninput({},tspan,Nu);
 end
 
 %% Simulate system
@@ -41,6 +42,10 @@ algdata.t = t';
 algdata.X = X';
 
 %% Do measurement
-algdata = meassys(algdata);
+algdata = measure(algdata);
+
+%% Stop timer
+timeelapsed = toc(timer);
+dispstep('time',timeelapsed);
 
 end
