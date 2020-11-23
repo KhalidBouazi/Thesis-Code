@@ -8,7 +8,7 @@ algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 
 %% Start algorithm
 % Compute hankel matrix
-H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
+H = hankmat(algdata.Yn,algdata.delays,algdata.spacing);
 
 % Compute svd
 [U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);

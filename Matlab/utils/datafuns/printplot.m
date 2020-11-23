@@ -31,8 +31,14 @@ elseif strcmp(savetype,'png')
     elseif strcmp(plotfunname,'sing') || strcmp(plotfunname,'rmse')
         fig = figure('Position',[300 300 600 300]);
     end
+    
     args = config.general.plots.(plottype).args;
-    fun(result,args);
+    if nargout(fun) > 0
+        figheight = fun(result,args);        
+        set(fig,'position',[500 300 1200 figheight+300])
+    else
+        fun(result,args); 
+    end
     saveas(gcf,[folderpath plottype '.png']);
     close(fig);
 end

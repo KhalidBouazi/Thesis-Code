@@ -7,10 +7,8 @@ optargvals = {[]};
 algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 
 %% Start algorithm
-% Create Data matrices for Hankel matrix, training and test
-Y = algdata.Y(:,1:end-algdata.horizon);
-Ytrain = algdata.Y(:,1:algdata.timesteps);
-Ytest = algdata.Y(:,(1:algdata.horizon)+algdata.timesteps);
+% Create Data matrices for Hankel matrix
+Y = algdata.Yn(:,1:end-algdata.horizon);
 
 % Compute hankel matrices
 H = hankmat(Y(:,1:end-1),algdata.delays,algdata.spacing);
@@ -20,23 +18,23 @@ Hp = hankmat(Y(:,2:end),algdata.delays,algdata.spacing);
 [U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);
 
 % Compute transition matrix and its modes
-Atilde = S_\U_'*Hp*V_;
+Atilde = U_'*Hp*V_/S_;
 [W,D] = eig(Atilde);
-Phi = U_*W;
-Phi = Phi(1:size(algdata.Y,1),:);
+Phi = Hp*V_/S_*W/D; %U_*W; %
+Phi = Phi(1:size(Y,1),:);
 omega = log(diag(D))/algdata.dt;
 b = (W*D)\(S_*V_(1,:)');
 
 %% Reconstruct states
-Lr = (1:size(Ytrain,2));
-Lp = (1:algdata.horizon) + size(Ytrain,2);
-tr = algdata.dt*(Lr-1);
-tp = algdata.dt*(Lp-1);
-Yr = dmdreconstruct(Phi,omega,b,[tr tp]);
-Yp = Yr(:,Lp);
-Yr = Yr(:,Lr);
+Lr = (1:length(algdata.tr));
+Lp = (1:length(algdata.tp)) + length(algdata.tr);
+Yi = dmdreconstruct(D,Phi,b,length(algdata.t)) .* algdata.normValsY;
+Yr = Yi(:,Lr);
+Yp = Yi(:,Lp);
 
 %% Calculate RMSE
+Ytrain = algdata.Y(:,Lr);
+Ytest = algdata.Y(:,Lp);
 [RMSEYr,rmseYr] = rmse(Ytrain,Yr);
 [RMSEYp,rmseYp] = rmse(Ytest,Yp);
 [RMSEY,rmseY] = rmse([Ytrain Ytest],[Yr Yp]);
@@ -59,12 +57,10 @@ algdata.omega = omega;
 
 algdata.Ytrain = Ytrain;
 algdata.Yr = Yr;
-algdata.tr = tr;
 algdata.RMSEYr = RMSEYr;
 algdata.rmseYr = rmseYr;
 algdata.Ytest = Ytest;
 algdata.Yp = Yp;
-algdata.tp = tp;
 algdata.RMSEYp = RMSEYp;
 algdata.rmseYp = rmseYp;
 algdata.RMSEY = RMSEY;

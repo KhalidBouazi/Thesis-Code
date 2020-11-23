@@ -28,9 +28,12 @@ for k = 1:length(algdata)
     
     % Plot on second figure
     secaxs = createsecplotui(sectg,algdata{k},k);
-    plotonsecui(secaxs,algdata{k},secalgplots,config);
+    plotonsecui(secaxs,algdata{k},secalgplots,config);    
     
 end
+
+% Plot on third figure
+% rmsecompplot(algdata);
 
 %% Link axes
 % for j = 1:size(ax,2)

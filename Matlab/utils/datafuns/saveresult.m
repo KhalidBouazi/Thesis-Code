@@ -39,24 +39,27 @@ if ~dataexists
         elseif isequal(algorithm,'DMDc')
             DMDcdata(1,:) = result;
             varstr = 'DMDcdata';
-        elseif isequal(algorithm,'HAVOK')
-            HAVOKdata(1,:) = result;
-            varstr = 'HAVOKdata';
         elseif isequal(algorithm,'HDMD')
             HDMDdata(1,:) = result;
             varstr = 'HDMDdata';
+        elseif isequal(algorithm,'HDMDc')
+            HDMDcdata(1,:) = result;
+            varstr = 'HDMDcdata';
+        elseif isequal(algorithm,'HAVOK')
+            HAVOKdata(1,:) = result;
+            varstr = 'HAVOKdata';
         elseif isequal(algorithm,'CONVCOORD')
             CONVCOORDdata(1,:) = result;
             varstr = 'CONVCOORDdata';
         else
             error(['Save result: No algorithm ' algorithm ' available.']);
         end
+    
+        save(filename,varstr,'-v7.3');
+        saved = true;
+        disp('Save data: data succesfully added to archive.');
     end
-    
-    save(filename,varstr,'-v7.3');
-    saved = true;
-    disp('Save data: data succesfully added to archive.');
-    
+
 elseif result.note ~= "" || result.favorite == 1
 
     update = false;

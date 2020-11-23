@@ -14,24 +14,21 @@ TrueEigMarker = 'x';
 %% Start plotting
 realeig = real(omega);
 imageig = imag(omega);
-xlimit = [min(min(realeig),-1),max(0.5,max(realeig))];
-ylimit = [1.5*min(imageig),1.5*max(imageig)];
-
-varstr = '$\omega$';
-plot(xlimit,[0 0],'Color',AxesColor,'LineWidth',AxesWidth);
-hold on;
-plot([0 0],ylimit,'Color',AxesColor,'LineWidth',AxesWidth);
 
 scatter(realeig,imageig,'MarkerEdgeColor',PredEigColor,'Marker',PredEigMarker);
-% if xlimit(1) < xlimit(2)
-%     xlim(xlimit);
-% end
-if ylimit(1) < ylimit(2)
-    ylim(ylimit);
-end
+hold on;
+
+ymax = max(abs(min(ylim)),max(ylim));
+ylim([-ymax ymax]);
+xlim([min(min(xlim),-1) max(max(xlim),0.5)]);
+
+varstr = '$\omega$';
+plot(xlim,[0 0],'Color',AxesColor,'LineWidth',AxesWidth);
+plot([0 0],ylim,'Color',AxesColor,'LineWidth',AxesWidth);
 
 xlabel(strcat('Re(',varstr,')'));
 ylabel(strcat('Im(',varstr,')'));
 % grid on;
+box on;
 
 end

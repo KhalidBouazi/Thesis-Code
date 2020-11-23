@@ -1,4 +1,4 @@
-function reconstructplot(result,args)
+function figheight = reconstructplot(result,args)
 
 %% Extract arguments
 Xtrain = result.(args{1});
@@ -26,8 +26,10 @@ RMSEFontSize = 10;
 %% Start plotting
 if size(Xr,1) < 5
     l = 1:size(Xr,1);
+    figheight = (size(Xr,1) + 1)*100;
 else
     l = [1 round(linspace(2,size(Xr,1),4))];
+    figheight = 500;
 end
 n = length(l);
 
@@ -37,7 +39,6 @@ t = [tr tp];
 X = [Xtrain Xtest];
 tp = [tr(end) tp];
 Xp = [Xr(:,end) Xp];
-m = size(Xr,1);
 for i = 1:n
     subtightplot(n,1,i,[0.02 0],[0.12 0.03],[0.12 0.05]);
     varstr = strcat(x,'_{',num2str(l(i)),'}');

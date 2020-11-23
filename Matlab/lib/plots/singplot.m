@@ -10,7 +10,7 @@ SingValColor_ = [0.6350, 0.0780, 0.1840];
 SingValMarker = 'o';
 
 %% Start plotting
-idx = sn > 1e-2;
+idx = sn > 1e-3;
 if length(sn(idx)) < length(sn_)
     sn = sn(1:length(sn_));
 else

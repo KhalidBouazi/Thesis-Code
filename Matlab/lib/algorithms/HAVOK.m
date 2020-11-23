@@ -8,13 +8,14 @@ algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 
 %% Start algorithm
 % Compute full hankel matrix (train and test)
-H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
+H = hankmat(algdata.Yn,algdata.delays,algdata.spacing);
 
 % Compute svd of full hankel matrix (train and test)
 [U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);
 
 % Compute derivative of train delay coordinates V
 [Vtrain,dV] = cendiff4(V_(1:end-algdata.horizon,:),algdata.dt);
+doff = 2;
 
 % Compute regression and split into linear state transition matrix and 
 % forcing matrix
@@ -23,22 +24,22 @@ A = Z(1:end-1,1:end-1);
 B = Z(1:end-1,end);
 
 %% Reconstruct delay state
-u = V_(3:end,end);
-v0 = V_(3,1:end-1);
-Vr = havokreconstruct(A,B,u,v0,algdata.dt);
-
-Lr = (1:size(Vtrain,1)) + 2;
-Lp = (1:algdata.horizon) + size(Vtrain,1) + 2;
-Vtest = V_(Lp,:);
-tr = algdata.dt*(Lr-1);
-tp = algdata.dt*(Lp-1);
-Vp = Vr(Lp,:);
-Vr = Vr(Lr,:);
+Lr = (1:size(Vtrain,1));
+Lp = (1:algdata.horizon) + size(Vtrain,1);
+u = V_(1+doff:end,end);
+v0 = V_(1+doff,1:end-1);
+Vi = havokreconstruct(A,B,u,v0,algdata.dt) .* algdata.normValsY;
+Vr = Vi(Lr,:);
+Vp = Vi(Lp,:);
+tr = algdata.t(Lr);
+tp = algdata.t(Lp);
 
 %% Calculate RMSE
-[RMSEVr,rmseVr] = rmse(Vtrain(:,1:end-1),Vr);
-[RMSEVp,rmseVp] = rmse(Vtest(:,1:end-1),Vp);
-[RMSEV,rmseV] = rmse([Vtrain(:,1:end-1); Vtest(:,1:end-1)],[Vr; Vp]);
+Vtrain = Vtrain .* algdata.normValsY;
+Vtest = V_(Lp,:) .* algdata.normValsY;
+[RMSEVr,rmseVr] = rmse(Vtrain(:,1:end-1)',Vr');
+[RMSEVp,rmseVp] = rmse(Vtest(:,1:end-1)',Vp');
+[RMSEV,rmseV] = rmse([Vtrain(:,1:end-1)' Vtest(:,1:end-1)'],[Vr' Vp']);
 
 %% Save in algstruct(i)
 algdata.H = H;

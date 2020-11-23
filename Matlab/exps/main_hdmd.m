@@ -18,7 +18,7 @@ input.algorithm = {'HDMD'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'doubletank'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -33,27 +33,27 @@ input.x0 = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.05};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {2000};
+input.timesteps = {3000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% horizon : double : obligatory
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {1000};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% horizon : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.horizon = {3000};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {30};
+input.rank = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100};
+input.delays = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -74,7 +74,7 @@ input.measured = {1};
 % {'monomial', max. exponent}
 % {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {{'identity'},{'monomial',2},{'monomial',3},{'monomial',4}};
+input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 hdmd = combineinputs(input);

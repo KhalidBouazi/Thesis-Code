@@ -32,7 +32,7 @@ switch obstype
     case 'rbf'
         PsiY = [];
         rbf = @(y,yi,sigma) exp(-((y-yi).^2/sigma^2));
-        for i = 1:size(algdata.Y,2)
+        for i = 1:100:size(algdata.Y,2)
             PsiY = [PsiY; rbf(algdata.Y,algdata.Y(:,i),obsparam)];
         end
     otherwise

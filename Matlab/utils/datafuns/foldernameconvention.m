@@ -22,6 +22,9 @@ for i = 1:length(folderacronyms)
             valuestr = expdoublearray2char(value,expcnt);
         elseif isa(value,'char')
             valuestr = value;
+        elseif isa(value,'cell')
+            tempval = cellelements2char(value);
+            valuestr = [sprintf('%s',tempval{1:end-1}),tempval{end}];
         end
         
         if i ~= length(folderacronyms)

@@ -5,20 +5,19 @@ clear;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set DMD parameters
+%% III. Set HDMDc parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'DMD'};
+input.algorithm = {'HDMDc'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% lorenz, vanderpol, duffing, 
-% pendulum, trippletank,
-% roessler, doubletank
+% vanderpol, duffing, 
+% trippletank, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -29,6 +28,19 @@ input.params = {};
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
 input.x0 = {};
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% input : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%
+% struct('type','none')
+% struct('type','const','value',...)
+% struct('type','sine','amp',...,'freq',...,'phi',...) 
+% struct('type','chirp','amp',...,'freqa',...,'freqb',...) 
+% freqb should be <= 1/20 * 1/dt
+% struct('type','prbs') 
+% struct('type','normd') 
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.input = {{struct('type','prbs')}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -53,7 +65,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {1000};
+input.delays = {100,1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -65,7 +77,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -77,8 +89,8 @@ input.measured = {};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-dmd = combineinputs(input);
+hdmdc = combineinputs(input);
 
 %% IV. Run procedure
-result = algprocedure(dmd,config);
+result = algprocedure(hdmdc,config);
 

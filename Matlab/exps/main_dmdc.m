@@ -14,9 +14,8 @@ input.algorithm = {'DMDc'};
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% lorenz, vanderpol, duffing, 
-% pendulum, trippletank,
-% roessler, doubletank
+% vanderpol, duffing, 
+% trippletank, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,8 +38,9 @@ input.x0 = {};
 % struct('type','chirp','amp',...,'freqa',...,'freqb',...) 
 % freqb should be <= 1/20 * 1/dt
 % struct('type','prbs') 
+% struct('type','normd') 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','chirp','amp',2,'freqa',1,'freqb',5)}};
+input.input = {{struct('type','none')}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -50,17 +50,17 @@ input.dt = {0.01};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {1000};
+input.timesteps = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {0};
+input.horizon = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {20};
+input.rank = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
@@ -77,7 +77,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
