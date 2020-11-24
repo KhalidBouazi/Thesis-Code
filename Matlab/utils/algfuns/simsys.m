@@ -1,12 +1,9 @@
 function algdata = simsys(algdata,config)
 
-dispstep('sim');
-timer = tic;
-
 %% Check obligatory and optional function arguments
 oblgfunargs = {'system','dt','timesteps'};
-optfunargs = {'params','x0','delays','spacing','horizon'};
-optargvals = {[],[],0,[1,1],0};
+optfunargs = {'params','x0','horizon'};
+optargvals = {[],[],0};
 algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 
 %% Extract system function and initial state
@@ -42,9 +39,5 @@ else
 end
 algdata.t = t';
 algdata.X = X';
-
-%% Stop timer
-timeelapsed = toc(timer);
-dispstep('time',timeelapsed);
 
 end

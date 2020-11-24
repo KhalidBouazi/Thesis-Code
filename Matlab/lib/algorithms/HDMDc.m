@@ -1,13 +1,7 @@
 function algdata = HDMDc(algdata)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'Y','dt'};
-optfunargs = {'rank'};
-optargvals = {[]};
-algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
-
 %% Start algorithm
-% Create Data matrices for Hankel matrix
+% Create Data matrices for hankel matrix
 Y = algdata.Yn(:,1:end-algdata.horizon);
 U = algdata.U(:,1:end-algdata.horizon);
 
@@ -17,7 +11,7 @@ Hxp = hankmat(Y(:,2:end),algdata.delays,algdata.spacing);
 Hu = hankmat(U(:,1:end-1),1,algdata.spacing);
 d = size(Hx,1);
 
-% Stack hankel matrices
+% Stack prior state and input hankel matrices
 Omega = [Hx; Hu(:,1:size(Hx,2))];
 
 % Compute svd of Hxp

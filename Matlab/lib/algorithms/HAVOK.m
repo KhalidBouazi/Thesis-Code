@@ -1,16 +1,10 @@
 function algdata = HAVOK(algdata)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'Y','dt'};
-optfunargs = {'rank'};
-optargvals = {[]};
-algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
-
 %% Start algorithm
-% Compute full hankel matrix (train and test)
+% Compute full hankel matrix
 H = hankmat(algdata.Yn,algdata.delays,algdata.spacing);
 
-% Compute svd of full hankel matrix (train and test)
+% Compute svd of full hankel matrix
 [U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);
 
 % Compute derivative of train delay coordinates V

@@ -1,29 +1,29 @@
 function algdata = algprocedure(algdata,config)
 
+% I. Simulate systems
+algdata = simallsys(algdata,config);
+
 for i = 1:length(algdata)
     
-    dispstep('algnum',i);
+    dispstep('startalg',i);
     
-    % I. Simulate system
-    algdata{i} = simsys(algdata{i},config);
-    
-    % Do measurement
+    % II. Do measurement
     algdata{i} = measure(algdata{i});
 
-    % Norm data
+    % III. Norm data
     algdata{i} = normdata(algdata{i});
 
-    % II. Transform through dictionary
+    % IV. Transform through dictionary
     algdata{i} = observe(algdata{i});
     
-    % III. Compute algorithm
+    % V. Compute algorithm
     algdata{i} = runalg(algdata{i},config);
     
-    dispstep('end',i);
+    dispstep('endalg',i);
     
 end
 
-% IV. Plot results in one figure
+% VI. Plot results in one figure
 plotalg(algdata,config);
 
 end

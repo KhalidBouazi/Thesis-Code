@@ -1,11 +1,5 @@
 function algdata = CONVCOORD(algdata)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'Y','dt'};
-optfunargs = {'rank'};
-optargvals = {[]};
-algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
-
 %% Start algorithm
 % Compute hankel matrix
 H = hankmat(algdata.Yn,algdata.delays,algdata.spacing);

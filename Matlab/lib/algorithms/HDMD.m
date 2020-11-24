@@ -1,13 +1,7 @@
 function algdata = HDMD(algdata)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'Y','dt'};
-optfunargs = {'rank'};
-optargvals = {[]};
-algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
-
 %% Start algorithm
-% Create Data matrices for Hankel matrix
+% Create Data matrices for hankel matrix
 Y = algdata.Yn(:,1:end-algdata.horizon);
 
 % Compute hankel matrices

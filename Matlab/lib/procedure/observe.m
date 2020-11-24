@@ -1,29 +1,28 @@
 function algdata = observe(algdata)
 
+%% Check obligatory and optional function arguments
+oblgfunargs = {'Y'};
+optfunargs = {'observables'};
+optargvals = {[]};
+algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
+
 %% Extract dictionary type
-if isfield(algdata,'observables')
-    if ~isempty(algdata.observables)
-        obstype = algdata.observables{1};
-        if ~strcmp(obstype,'identity')
-            obsparam = algdata.observables{2};
-        end
-    else
-        algdata.observables = {'identity'};
-        return;
-    end
-else
+if ~isempty(algdata.observables) && ~strcmp(algdata.observables{1},'identity')
+    obstype = algdata.observables{1};
+    obsparam = algdata.observables{2};
+elseif isempty(algdata.observables)
     algdata.observables = {'identity'};
     return;
+else
+    return; 
 end
 
-%% ...
+%% Start timer
 dispstep('obs');
 timer = tic;
 
 %% Run dictionary on data
 switch obstype
-    case 'identity'
-        return;
     case 'monomial'
         PsiY = [];
         for i = 1:obsparam
