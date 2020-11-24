@@ -20,7 +20,7 @@ Hp = hankmat(Y(:,2:end),algdata.delays,algdata.spacing);
 % Compute transition matrix and its modes
 Atilde = U_'*Hp*V_/S_;
 [W,D] = eig(Atilde);
-Phi = Hp*V_/S_*W/D; %U_*W; %
+Phi = Hp*V_/S_*W; %U_*W; %
 Phi = Phi(1:size(Y,1),:);
 omega = log(diag(D))/algdata.dt;
 b = (W*D)\(S_*V_(1,:)');

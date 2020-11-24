@@ -7,6 +7,12 @@ for i = 1:length(algdata)
     % I. Simulate system
     algdata{i} = simsys(algdata{i},config);
     
+    % Do measurement
+    algdata{i} = measure(algdata{i});
+
+    % Norm data
+    algdata{i} = normdata(algdata{i});
+
     % II. Transform through dictionary
     algdata{i} = observe(algdata{i});
     

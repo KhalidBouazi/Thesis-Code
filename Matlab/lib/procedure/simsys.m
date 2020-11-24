@@ -6,7 +6,7 @@ timer = tic;
 %% Check obligatory and optional function arguments
 oblgfunargs = {'system','dt','timesteps'};
 optfunargs = {'params','x0','delays','spacing','horizon'};
-optargvals = {[],[],1,[1,1],0};
+optargvals = {[],[],0,[1,1],0};
 algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
 
 %% Extract system function and initial state
@@ -19,7 +19,7 @@ else
 end
 
 %% Create timespan
-traintimesteps = (algdata.timesteps + 1) + algdata.spacing(2)*(algdata.delays - 1); % TODO spacingx
+traintimesteps = (algdata.timesteps + 1);
 testtimesteps = algdata.horizon;
 timesteps = traintimesteps + testtimesteps; 
 tspan = (0:timesteps)*algdata.dt;
@@ -42,12 +42,6 @@ else
 end
 algdata.t = t';
 algdata.X = X';
-
-%% Do measurement
-algdata = measure(algdata);
-
-%% Norm data
-algdata = normdata(algdata);
 
 %% Stop timer
 timeelapsed = toc(timer);

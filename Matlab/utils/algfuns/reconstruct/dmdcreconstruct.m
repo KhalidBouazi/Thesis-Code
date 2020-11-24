@@ -10,7 +10,7 @@ A = Phi*D_*pinv(Phi);
 timesteps = size(U,2);
 tempU = B*zeros(size(U,1),1);
 for i = 1:timesteps
-    Y_(:,i) = real(Phi*(D_^(i-1))*b + real(tempU));
+    Y_(:,i) = real(Phi*(D_^(i-1))*b + tempU);
     tempU = A*tempU + B*U(:,i);
 end
 

@@ -19,7 +19,7 @@ switch type
         disp([' :::: Time elapsed: ' num2str(arg) 's ']);
         disp(' ');
     case 'end'
-        disp(['          END OF ALGORITHM ' num2str(arg)]);
+        disp(['           END OF ALGORITHM ' num2str(arg)]);
         disp(' _____________________________________');
     case 'plot'
         disp(' _____________________________________');

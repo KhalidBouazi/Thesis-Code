@@ -9,7 +9,7 @@ Sn_ = S_./sum(diag(S_));
 Sn = Sn_;
 
 %% Find index of threshold
-idx = diag(Sn_) > 1e-3;
+idx = diag(Sn_) > 1e-4;
 if ~all(idx)
     threshidx = find(idx == 0,1);
 end

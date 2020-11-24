@@ -16,8 +16,10 @@ input.algorithm = {'HDMDc'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % vanderpol, duffing, 
 % trippletank, doubletank
+% massoscillator,
+% evaporationplant
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -40,7 +42,7 @@ input.x0 = {};
 % struct('type','prbs') 
 % struct('type','normd') 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','prbs')}};
+input.input = {{struct('type','none')}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -65,7 +67,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100,1000};
+input.delays = {100,1000,1100,1500};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

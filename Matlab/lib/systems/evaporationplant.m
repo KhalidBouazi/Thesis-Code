@@ -1,4 +1,4 @@
-function [odefun,params,x0,Nu] = eindampfanlage(params, x0)
+function [odefun,params,x0,Nu] = evaporationplant(params, x0)
 
 %% Extract system parameters
 if isempty(params)

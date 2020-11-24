@@ -15,32 +15,35 @@ U = algdata.U(:,1:end-algdata.horizon);
 Hx = hankmat(Y(:,1:end-1),algdata.delays,algdata.spacing);
 Hxp = hankmat(Y(:,2:end),algdata.delays,algdata.spacing);
 Hu = hankmat(U(:,1:end-1),1,algdata.spacing);
+d = size(Hx,1);
 
 % Stack hankel matrices
 Omega = [Hx; Hu(:,1:size(Hx,2))];
 
-% Compute svd of Omega
-[U1_,S1_,S1n,S1n_,V1_] = truncsvd(Omega,2*algdata.rank);
-
 % Compute svd of Hxp
 [U2_,S2_,S2n,S2n_,V2_] = truncsvd(Hxp,algdata.rank);
+rank2 = length(S2_);
+
+% Compute svd of Omega
+[U1_,S1_,S1n,S1n_,V1_] = truncsvd(Omega,rank2 + 10); % rank of Hxp + 10
 
 % Compute approximation of operators A and B
-Atilde = U2_'*Hxp*V1_/S1_*U1_(1:size(Hx,1),:)'*U2_;
-Btilde = U2_'*Hxp*V1_/S1_*U1_(size(Hx,1)+1:end,:)';
+Atilde = U2_'*Hxp*V1_/S1_*U1_(1:d,:)'*U2_;
+Btilde = U2_'*Hxp*V1_/S1_*U1_(d+1:end,:)';
 
 % Compute modes of Atilde
 [W,D] = eig(Atilde);
-Phi = Hxp*V1_/S1_*U1_(1:size(Hx,1),:)'*U2_*W/D;
+Phi = Hxp*V1_/S1_*U1_(1:d,:)'*U2_*W;
 Phi = Phi(1:size(Y,1),:);
 omega = log(diag(D))/algdata.dt;
-b = pinv(Phi)*Y(:,1);
+% b = pinv(Phi)*Y(:,1);
+b = (W*D)\(S1_(1:rank2,1:rank2)*V1_(1,1:rank2)');
 B = Phi/W*Btilde;
 
 %% Reconstruct states
 Lr = (1:length(algdata.tr));
 Lp = (1:length(algdata.tp)) + length(algdata.tr);
-Yi = dmdcreconstruct(D,Phi,b,B,algdata.U) * algdata.normValsY;
+Yi = dmdcreconstruct(D,Phi,b,B,algdata.U) .* algdata.normValsY;
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
 
