@@ -1,16 +1,12 @@
 function H = hankmat(M, delays, spacing)
 
-%% ...
+%% Compute hankel dimension
 spacingx = spacing(1);
 spacingy = spacing(2);
 [statelen,timelen] = size(M);
 delays_ = 1 + spacingy*delays;
 Hheight = statelen*(delays+1);
 Hwidth = ceil((timelen-delays_+1)/spacingx);
-
-if Hwidth < 1
-    error('Hankel matrix: time delay dimension should be smaller than (timesteps - spacingx)/spacingy.'); 
-end
 
 %% Create hankel matrix
 if delays_ > 1

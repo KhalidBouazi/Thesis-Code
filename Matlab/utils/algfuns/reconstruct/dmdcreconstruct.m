@@ -1,7 +1,7 @@
 function Y_ = dmdcreconstruct(D, Phi, b, B, U)
 
 %% Scale discrete eigenvalues to magnitude 1
-D_ = D; % D/abs(D);
+D_ = D; %D/abs(D);
 
 %% Compute A as Operator with modes as eigenvectors
 A = Phi*D_*pinv(Phi);

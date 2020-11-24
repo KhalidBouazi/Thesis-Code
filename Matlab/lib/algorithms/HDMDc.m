@@ -8,7 +8,7 @@ U = algdata.U(:,1:end-algdata.horizon);
 % Compute hankel matrices
 Hx = hankmat(Y(:,1:end-1),algdata.delays,algdata.spacing);
 Hxp = hankmat(Y(:,2:end),algdata.delays,algdata.spacing);
-Hu = hankmat(U(:,1:end-1),1,algdata.spacing);
+Hu = hankmat(U(:,1:end-1),0,algdata.spacing);
 d = size(Hx,1);
 
 % Stack prior state and input hankel matrices

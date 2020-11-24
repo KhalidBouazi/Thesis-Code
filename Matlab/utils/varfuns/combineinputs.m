@@ -1,5 +1,12 @@
-function cellalgdata = combineinputs(inputstruct)
+function validalgdata = combineinputs(inputstruct)
 
+%% Check obligatory and optional function arguments
+oblgfunargs = {'system','dt','timesteps'};
+optfunargs = {'params','x0','horizon','delays','spacing','rank'};
+optargvals = {{[]},{[]},{0},{0},{[1,1]},{[]}};
+inputstruct = checkandfillfunargs(inputstruct,oblgfunargs,optfunargs,optargvals);
+
+%% ...
 f = fieldnames(inputstruct);
 numf = length(f);
 
@@ -60,4 +67,16 @@ for i = 1:size(combmat,1)
     cellalgdata{i} = algdata;
 end
 
+%% Check validity of inputs
+validalgdata = {};
+for i = 1:length(cellalgdata)
+    valid = checkinputvalidity(cellalgdata{i});
+    if valid
+        validalgdata = [validalgdata cellalgdata{i}];
+    end
 end
+
+end
+
+
+

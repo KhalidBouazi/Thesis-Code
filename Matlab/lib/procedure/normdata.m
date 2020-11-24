@@ -1,11 +1,5 @@
 function algdata = normdata(algdata)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'Y'};
-optfunargs = {};
-optargvals = {};
-algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
-
 %% Get maximum absolute values of time series
 Y = algdata.Y;
 maxVal = max(Y,[],2);

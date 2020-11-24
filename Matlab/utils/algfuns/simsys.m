@@ -1,11 +1,5 @@
 function algdata = simsys(algdata,config)
 
-%% Check obligatory and optional function arguments
-oblgfunargs = {'system','dt','timesteps'};
-optfunargs = {'params','x0','horizon'};
-optargvals = {[],[],0};
-algdata = checkandfillfunargs(algdata,oblgfunargs,optfunargs,optargvals);
-
 %% Extract system function and initial state
 system = algdata.system;
 if isfield(config.general.systems,system)

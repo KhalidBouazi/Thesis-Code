@@ -5,21 +5,19 @@ clear;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set HDMDc parameters
+%% III. Set DMDc parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'HDMDc'};
+input.algorithm = {'DMDc'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % vanderpol, duffing, 
 % trippletank, doubletank
-% massoscillator,
-% evaporationplant
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -42,22 +40,22 @@ input.x0 = {};
 % struct('type','prbs') 
 % struct('type','normd') 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd')}};
+input.input = {{struct('type','none')}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.02};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {1000};
+input.timesteps = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {500};
+input.horizon = {1000,20};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -67,7 +65,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {300,400,600,1200};
+input.delays = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -91,8 +89,8 @@ input.measured = {1};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-hdmdc = combineinputs(input);
+dmdc = combineinputs(input);
 
 %% IV. Run procedure
-result = algprocedure(hdmdc,config);
+result = algprocedure(dmdc,config);
 
