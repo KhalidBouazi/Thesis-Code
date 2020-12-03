@@ -6,10 +6,10 @@ if all(size(X) ~= size(X_))
 end
 
 %% Compute rmse
-RMSE = sqrt(mean(((X - X_)/X).^2,2));
-rmse = [];
+RMSE = sqrt(mean(((X - X_)./X).^2,2));
+rmse = zeros(size(X));
 for i = 1:size(X,2)
-    rmse(:,i) = sqrt(mean(((X(:,1:i) - X_(:,1:i))/X(:,1:i)).^2,2));
+    rmse(:,i) = sqrt(mean(((X(:,1:i) - X_(:,1:i))./X(:,1:i)).^2,2));
 end
 
 end

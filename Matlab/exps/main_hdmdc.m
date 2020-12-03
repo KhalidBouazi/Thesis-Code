@@ -1,7 +1,7 @@
 %% I. First close all windows and clear workspace
 close all;
-clear;
-
+clear input;
+ 
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
@@ -39,25 +39,25 @@ input.x0 = {};
 % struct('type','sine','amp',...,'freq',...,'phi',...) 
 % struct('type','chirp','amp',...,'freqa',...,'freqb',...) 
 % freqb should be <= 1/20 * 1/dt
-% struct('type','prbs') 
-% struct('type','normd') 
+% struct('type','prbs','amp',...) 
+% struct('type','normd','amp',...) 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd')}};
+input.input = {{struct('type','normd','amp',0.5)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.02};
+input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {1000};
+input.timesteps = {300};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {500};
+input.horizon = {300};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -67,7 +67,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {300,400,600,1200};
+input.delays = {50,100,150};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -79,7 +79,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {1,2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -88,11 +88,11 @@ input.measured = {1};
 % {'monomial', max. exponent}
 % {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {};
+input.observables = {{'identity'}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-hdmdc = combineinputs(input);
+hdmdcinput = combineinputs(input);
 
 %% IV. Run procedure
-result = algprocedure(hdmdc,config);
+hdmdcresult = algprocedure(hdmdcinput,config);
 

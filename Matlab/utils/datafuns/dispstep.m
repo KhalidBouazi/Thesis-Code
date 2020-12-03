@@ -11,19 +11,20 @@ switch type
     case 'startalg'
         disp(' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _');
         disp(' ');
-        disp(['           START ALGORITHM ' num2str(arg)]);
-        disp(' ');
+        disp(['         START ALGORITHM ' num2str(arg(1)) '/' num2str(arg(2))]);
     case 'obs'
+        disp(' ');
         disp(' = OBSERVE STATES...');
         disp(' ');    
     case 'alg'
+        disp(' ');
         disp(' = RUN ALGORITHM...');
         disp(' ');
     case 'time'
         disp([' :::: Time elapsed: ' num2str(arg) 's ']);
     case 'endalg'
         disp(' ');
-        disp(['           END OF ALGORITHM ' num2str(arg)]);
+        disp(['          END ALGORITHM ' num2str(arg(1)) '/' num2str(arg(2))]);
         disp(' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _');
     case 'plot'
         disp(' _____________________________________');

@@ -1,6 +1,6 @@
 %% I. First close all windows and clear workspace
 close all;
-clear;
+clear input;
 
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
@@ -18,7 +18,7 @@ input.algorithm = {'HDMD'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'roessler'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -33,17 +33,17 @@ input.x0 = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.01};
+input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {1000,2000};
+input.timesteps = {300};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {1000};
+input.horizon = {300};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -53,7 +53,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {0,5,10,100,500,700,900};
+input.delays = {50,100,150};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -77,8 +77,8 @@ input.measured = {1};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-hdmd = combineinputs(input);
+hdmdinput = combineinputs(input);
 
 %% IV. Run procedure
-result = algprocedure(hdmd,config);
+hdmdresult = algprocedure(hdmdinput,config);
 

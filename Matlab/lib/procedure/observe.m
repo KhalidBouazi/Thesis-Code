@@ -25,8 +25,8 @@ timer = tic;
 switch obstype
     case 'monomial'
         PsiY = [];
-        for i = 1:obsparam
-            PsiY = [PsiY; algdata.Y.^i];
+        for i = 1:length(obsparam)
+            PsiY = [PsiY; algdata.Y.^(obsparam(i))];
         end
     case 'rbf'
         PsiY = [];

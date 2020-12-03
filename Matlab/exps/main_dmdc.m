@@ -1,6 +1,6 @@
 %% I. First close all windows and clear workspace
 close all;
-clear;
+clear input;
 
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
@@ -17,7 +17,7 @@ input.algorithm = {'DMDc'};
 % vanderpol, duffing, 
 % trippletank, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -40,22 +40,22 @@ input.x0 = {};
 % struct('type','prbs') 
 % struct('type','normd') 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','none')}};
+input.input = {{struct('type','normd','amp',0.5)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.01};
+input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {1000,2000};
+input.timesteps = {300};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {1000};
+input.horizon = {300};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -65,7 +65,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {500,1500};
+input.delays = {50,100,150};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -77,7 +77,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {1,2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -89,8 +89,8 @@ input.measured = {1};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-dmdc = combineinputs(input);
+dmdcinput = combineinputs(input);
 
 %% IV. Run procedure
-result = algprocedure(dmdc,config);
+dmdcresult = algprocedure(dmdcinput,config);
 

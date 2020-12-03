@@ -28,6 +28,7 @@ end
 for i = 1:length(algdata)
     simtype = algdata{i}.simtype;
     algdata{i} = fillstruct(algdata{i},simdata{simtype});
+    algdata{i} = rmfield(algdata{i},'simtype');
 end
 
 %% Stop timer

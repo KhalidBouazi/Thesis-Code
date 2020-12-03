@@ -22,9 +22,9 @@ for i = 1:Nu
             case 'chirp'
                 u = inputi.amp*chirp(tspan,inputi.freqa,tspan(end),inputi.freqb,'linear',-90);
             case 'prbs'
-                u = 0.4*randi([0 1], 1, length(tspan));
+                u = inputi.amp*randi([0 1],1,length(tspan));
             case 'normd'
-                u = 0.4*randn(1,length(tspan));
+                u = inputi.amp*randn(1,length(tspan));
             otherwise
                 error(['Input signal: No input signal `' inputi.type '` implemented yet.']); 
         end

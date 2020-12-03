@@ -8,10 +8,21 @@ A = Phi*D_*pinv(Phi);
 
 %% Reconstruct dynamics
 timesteps = size(U,2);
-tempU = B*zeros(size(U,1),1);
+tempU = B*zeros(size(U(:,1)));
 for i = 1:timesteps
     Y_(:,i) = real(Phi*(D_^(i-1))*b + tempU);
     tempU = A*tempU + B*U(:,i);
 end
+
+%% Create index span
+% L = 1:size(U,2);
+
+%% Create system object and simulate
+% C = eye(size(A,1));
+% D = 0*B;
+% sys = ss(A,B,C,D,dt);
+% sys = d2c(sys);
+% [Y_,~] = lsim(sys,U,dt*(L-1),y0);
+% Y_ = real(Y_');
 
 end

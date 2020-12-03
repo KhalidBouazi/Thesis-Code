@@ -8,7 +8,7 @@ elseif length(params) ~= 1
 end
 
 l = params(1);
-Nu = 0;
+Nu = 1;
 
 %% Define initial state
 if isempty(x0)
@@ -18,7 +18,7 @@ elseif length(x0) ~= 2
 end
 
 %% Define system function
-odefun = @(t,x) [x(2);
-                 -9.81/l*sin(x(1))];
+odefun = @(t,x,u) [x(2);
+                 -9.81/l*sin(x(1)) + u{1}(t)];
 
 end

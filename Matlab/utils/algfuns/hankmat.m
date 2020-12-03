@@ -1,5 +1,10 @@
 function H = hankmat(M, delays, spacing)
 
+%% Check if spacing is empty
+if nargin == 2
+    spacing = [1 1];
+end
+
 %% Compute hankel dimension
 spacingx = spacing(1);
 spacingy = spacing(2);

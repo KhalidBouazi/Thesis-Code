@@ -1,42 +1,52 @@
-function algdata = HAVOK(algdata)
+function algdata = HAVOKc(algdata)
 
 %% Start algorithm
-% Compute hankel matrix of Y
+% Norm input data matrix
+Un = normdata(algdata.U);
+Untrain = Un(:,1:end-algdata.horizon);
+
+% Compute hankel matrices
 H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
+Hu = hankmat(algdata.U,0,algdata.spacing);
 
-% Compute svd of hankel matrix
+% Compute svd of H
 [U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);
+Vtrain = V_(1:end-algdata.horizon,:);
 
-% Compute derivative of train delay coordinates V
-[Vtrain,dV] = cendiff4(V_(1:end-algdata.horizon,:),algdata.dt);
-doff = 2;
+% Split in prior and posterior matrix
+V = Vtrain(1:end-1,:);
+Vp = Vtrain(2:end,:);
 
-% Compute regression and split into linear state transition matrix and 
-% forcing matrix
-Z = (Vtrain\dV)';
-A = Z(1:end-1,1:end-1);
-B = Z(1:end-1,end);
+% Stack V and Hu horizontally
+Omega = [V, Hu(:,1:size(V,1))'];
+
+% Do regression and split into system and input matrix
+Z = (Omega\Vp)';
+A = Z(:,1:end-size(Hu,1));
+B = Z(:,end-size(Hu,1)+1:end);
+
+% Eigen values of A
+[~,D] = eigdec(A);
+omega = log(diag(D))/algdata.dt;
 
 %% Reconstruct delay state
 Lr = (1:size(Vtrain,1));
 Lp = (1:algdata.horizon) + size(Vtrain,1);
-u = V_(1+doff:end-(1+doff),end);
-v0 = V_(1+doff,1:end-1);
-Vi = havokreconstruct(A,B,u,v0,algdata.dt);
+Vi = havokcreconstruct(A,B,Un',V(1,:),algdata.dt);
 Vr = Vi(Lr,:);
 Vp = Vi(Lp,:);
-tr = algdata.t(Lr);
-tp = algdata.t(Lp);
+tr = algdata.dt*(Lr-1);
+tp = algdata.dt*(Lp-1);
 
 %% Calculate RMSE
-Vtrain = Vtrain(:,1:end-1);
-Vtest = V_(Lp+doff,1:end-1);
+Vtest = V_(Lp,:);
 [RMSEVr,rmseVr] = rmse(Vtrain',Vr');
 [RMSEVp,rmseVp] = rmse(Vtest',Vp');
 [RMSEV,rmseV] = rmse([Vtrain' Vtest'],[Vr' Vp']);
 
 %% Save in algdata
 algdata.H = H;
+algdata.Hu = Hu;
 algdata.rank = length(S_);
 algdata.U_ = U_;
 algdata.s_ = diag(S_);
@@ -45,6 +55,7 @@ algdata.sn_ = diag(Sn_);
 algdata.V_ = V_;
 algdata.A = A;
 algdata.B = B;
+algdata.omega = omega;
 
 algdata.Vtrain = Vtrain;
 algdata.Vr = Vr;

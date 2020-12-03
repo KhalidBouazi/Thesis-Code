@@ -33,7 +33,7 @@ for k = 1:length(algdata)
 end
 
 % Plot on third figure
-% rmsecompplot(algdata);
+rmsecompplot(algdata);
 
 %% Link axes
 % for j = 1:size(ax,2)
