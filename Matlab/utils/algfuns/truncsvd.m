@@ -9,13 +9,10 @@ Sn_ = S_./sum(diag(S_));
 Sn = Sn_;
 
 %% Find index of threshold
-idx = diag(Sn_) > 1e-3;
-% if ~all(idx)
-%     threshidx = find(idx == 0,1);
-% end
+idx = diag(S_) > 1e-10;
 
 %% Truncate svd
-if ~isempty(rank) && rank <= size(S_,1) % && rank < threshidx
+if ~isempty(rank) && rank <= size(S_,1)
     U_ = U_(:,1:rank);
     S_ = S_(1:rank,1:rank);
     Sn_ = Sn_(1:rank,1:rank);

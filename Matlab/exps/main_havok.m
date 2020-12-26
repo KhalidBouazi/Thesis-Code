@@ -78,7 +78,7 @@ input.measured = {1};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-havokinput = combineinputs(input);
+havokinput = combineinputs(input,config);
 
 %% IV. Run procedure
 havokresult = algprocedure(havokinput,config);

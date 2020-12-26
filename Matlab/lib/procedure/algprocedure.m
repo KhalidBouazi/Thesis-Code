@@ -10,18 +10,15 @@ for i = 1:m
     
     % II. Do measurement
     algdata{i} = measure(algdata{i});
-
-    % III. Transform data through dictionary
-    algdata{i} = observe(algdata{i});
     
-    % IV. Compute algorithm
+    % III. Compute algorithm
     algdata{i} = runalg(algdata{i},config);
     
     dispstep('endalg',[i m]);
     
 end
 
-% V. Plot results in one figure
+% IV. Plot results in one figure
 plotalg(algdata,config);
 
 end

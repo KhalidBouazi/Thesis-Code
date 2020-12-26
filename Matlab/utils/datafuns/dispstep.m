@@ -11,11 +11,7 @@ switch type
     case 'startalg'
         disp(' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _');
         disp(' ');
-        disp(['         START ALGORITHM ' num2str(arg(1)) '/' num2str(arg(2))]);
-    case 'obs'
-        disp(' ');
-        disp(' = OBSERVE STATES...');
-        disp(' ');    
+        disp(['         START ALGORITHM ' num2str(arg(1)) '/' num2str(arg(2))]); 
     case 'alg'
         disp(' ');
         disp(' = RUN ALGORITHM...');

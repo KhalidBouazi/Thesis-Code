@@ -65,7 +65,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {};
+input.measured = {1,2,[1,2]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -77,7 +77,7 @@ input.measured = {};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-dmdinput = combineinputs(input);
+dmdinput = combineinputs(input,config);
 
 %% IV. Run procedure
 dmdresult = algprocedure(dmdinput,config);

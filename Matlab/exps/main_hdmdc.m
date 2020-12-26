@@ -42,7 +42,7 @@ input.x0 = {};
 % struct('type','prbs','amp',...) 
 % struct('type','normd','amp',...) 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd','amp',0.5)}};
+input.input = {{struct('type','normd','amp',0.3)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -57,18 +57,23 @@ input.timesteps = {300};
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {300};
+input.horizon = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {};
+input.rank = {10};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {50,100,150};
+input.delays = {10,30,50,70,90};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% input delays: double: optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.uhasdelays = {0,1};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,19 +84,19 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,2};
+input.measured = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % {'identity'}
-% {'monomial', max. exponent}
+% {'monomial', [minexp. maxexp.]}
 % {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {{'identity'}};
+input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-hdmdcinput = combineinputs(input);
+hdmdcinput = combineinputs(input,config);
 
 %% IV. Run procedure
 hdmdcresult = algprocedure(hdmdcinput,config);

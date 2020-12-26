@@ -7,48 +7,67 @@ Yntrain = Yn(:,1:end-algdata.horizon);
 Un = normdata(algdata.U);
 Untrain = Un(:,1:end-algdata.horizon);
 
-% Compute hankel matrices
+% % Compute hankel matrices
 H = hankmat(Yntrain,algdata.delays,algdata.spacing);
+udelays = algdata.delays;
+if ~algdata.uhasdelays
+    udelays = 0;
+end
+Hu_ = hankmat(Un,udelays,algdata.spacing);
+Hu = hankmat(Untrain,udelays,algdata.spacing);
+
+% Transform through observables
+H = observe(H,algdata.observables);
+d = rows(H);
+
+% Split
 Hy = H(:,1:end-1);
 Hyp = H(:,2:end);
-Hu = hankmat(Untrain,0,algdata.spacing);
-d = size(Hy,1);
 
 % Stack prior state and input hankel matrices
-Omega = [Hy; Hu(:,1:size(Hy,2))];
+Omega = [Hy; Hu(:,1:cols(Hy))];
 
-% Compute svd of Hxp
+% Compute svd of Omega
+[U1_,S1_,~,~,V1_] = truncsvd(Omega,[]);
+rank1 = length(S1_);
+
+% Compute svd of Hyp
 [U2_,S2_,S2n,S2n_,V2_] = truncsvd(Hyp,algdata.rank);
 rank2 = length(S2_);
 
-% Compute svd of Omega
-[U1_,S1_,S1n,S1n_,V1_] = truncsvd(Omega,[]);
-rank = length(S1_);
-
 % Compute approximation of operators A and B
-Atilde = U2_'*Hyp*V1_/S1_*U1_(1:d,:)'*U2_;
-Btilde = U2_'*Hyp*V1_/S1_*U1_(d+1:end,:)';
+Up_ = Hyp*V1_/S1_;
+G = Up_*U1_';
+Atilde_ = G(:,1:d);
+Btilde_ = G(:,d+1:end);
+
+% Project matrices to output space
+Atilde = U2_'*Atilde_*U2_;
+Btilde = U2_'*Btilde_;
 
 % Compute modes of Atilde
 [W,D] = eig(Atilde);
-Phi = Hyp*V1_/S1_*U1_(1:d,:)'*U2_*W;
-Phi = Phi(1:size(Yntrain,1),:);
+Phi = (Atilde_*U2_)*W;
 omega = log(diag(D))/algdata.dt;
-% b = pinv(Phi)*Y(:,1);
-if rank > rank2
+if rank1 > rank2
     b = (W*D)\(S1_(1:rank2,1:rank2)*V1_(1,1:rank2)');
 else
     b = (W*D)\(S2_*V2_(1,:)');
 end
-B = Phi/W*Btilde;
-B = B(:,1);
+A = Phi*D*pinv(Phi);
+B = (Atilde_*U2_)*Btilde;
 
 %% Reconstruct states
-Lr = (1:length(algdata.tr));
-Lp = (1:length(algdata.tp)) + length(algdata.tr);
-Yi = dmdcreconstruct(D,Phi,b,B,Un) .* normValsY;
+C = zeros(rows(Yntrain),rows(Phi));
+C(1:rows(Yntrain),1:rows(Yntrain)) = eye(rows(Yntrain));
+Lr = (1:cols(Hu));
+Lp = (1:length(algdata.tp)) + length(Lr);
+Zi = dmdcreconstruct(A,B,Hu_,H(:,1));
+Yi = (C*Zi) .* normValsY;
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
+tr = algdata.t(Lr);
+tp = algdata.t(Lp);
 
 %% Calculate RMSE
 Ytrain = algdata.Y(:,Lr);
@@ -73,13 +92,17 @@ algdata.d = diag(D);
 algdata.Phi = Phi;
 algdata.b = b;
 algdata.omega = omega;
+algdata.A = A;
+algdata.B = B;
 
 algdata.Ytrain = Ytrain;
 algdata.Yr = Yr;
+algdata.tr = tr;
 algdata.RMSEYr = RMSEYr;
 algdata.rmseYr = rmseYr;
 algdata.Ytest = Ytest;
 algdata.Yp = Yp;
+algdata.tp = tp;
 algdata.RMSEYp = RMSEYp;
 algdata.rmseYp = rmseYp;
 algdata.RMSEY = RMSEY;

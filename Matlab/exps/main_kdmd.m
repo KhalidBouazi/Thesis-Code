@@ -5,17 +5,18 @@ clear input;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set DMDc parameters
+%% III. Set kEDMD parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'DMDc'};
+input.algorithm = {'kDMD'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% vanderpol, duffing, 
-% trippletank, doubletank
+% lorenz, vanderpol, duffing, 
+% pendulum, trippletank,
+% roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,19 +29,6 @@ input.params = {};
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
 input.x0 = {};
-%%%%%%%%%%%%%%%%%%%%%%%%
-
-% input : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%
-% struct('type','none')
-% struct('type','const','value',...)
-% struct('type','sine','amp',...,'freq',...,'phi',...) 
-% struct('type','chirp','amp',...,'freqa',...,'freqb',...) 
-% freqb should be <= 1/20 * 1/dt
-% struct('type','prbs') 
-% struct('type','normd') 
-%%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd','amp',0.5)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -65,7 +53,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {50,100,150};
+input.delays = {2,5,10,20};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -77,20 +65,20 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,2};
+input.measured = {1,2,[1 2]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% observables : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% kernel : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % {'identity'}
-% {'monomial', max. exponent}
+% {'polynomial', exponent}
 % {'rbf', bandwidth}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.kernel = {{'identity'},{'polynomial',3}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-dmdcinput = combineinputs(input,config);
+kedmdinput = combineinputs(input,config);
 
 %% IV. Run procedure
-dmdcresult = algprocedure(dmdcinput,config);
+edmdresult = algprocedure(kedmdinput,config);
 

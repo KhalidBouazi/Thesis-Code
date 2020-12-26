@@ -77,7 +77,7 @@ input.measured = {1};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-convcoordinput = combineinputs(input);
+convcoordinput = combineinputs(input,config);
 
 %% IV. Run procedure
 convcoordresult = algprocedure(convcoordinput,config);

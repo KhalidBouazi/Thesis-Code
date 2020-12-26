@@ -7,6 +7,11 @@ Yntrain = Yn(:,1:end-algdata.horizon);
 
 % Compute hankel matrices
 H = hankmat(Yntrain,algdata.delays,algdata.spacing);
+
+% Transform through observables
+H = observe(H,algdata.observables);
+
+% Split
 Hy = H(:,1:end-1);
 Hyp = H(:,2:end);
 
@@ -14,17 +19,20 @@ Hyp = H(:,2:end);
 [U_,S_,Sn,Sn_,V_] = truncsvd(Hy,algdata.rank);
 
 % Compute transition matrix and its modes
-Atilde = U_'*Hyp*V_/S_;
+Up_ = Hyp*V_/S_;
+Atilde = U_'*Up_;
 [W,D] = eig(Atilde);
-Phi = Hyp*V_/S_*W;
-Phi = Phi(1:size(Yntrain,1),:);
+Phi = Up_*W;
 omega = log(diag(D))/algdata.dt;
 b = (W*D)\(S_*V_(1,:)');
 
 %% Reconstruct states
+C = zeros(rows(Yntrain),rows(Phi));
+C(1:rows(Yntrain),1:rows(Yntrain)) = eye(rows(Yntrain));
 Lr = (1:length(algdata.tr));
 Lp = (1:length(algdata.tp)) + length(algdata.tr);
-Yi = dmdreconstruct(D,Phi,b,length(algdata.t)) .* normValsY;
+Zi = dmdreconstruct(Phi,D,Hy(:,1),length(algdata.t));
+Yi = (C*Zi) .* normValsY;
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
 

@@ -1,4 +1,4 @@
-function valid = checkinputvalidity(inputstruct)
+function [valid,inputstruct] = checkinputvalidity(inputstruct,config)
 
 valid = true;
 
@@ -14,7 +14,15 @@ if Hwidth < 1
     return;
 end
 
-%% ...
+%% Delete unnecessary struct fields
+algorithm = inputstruct.algorithm;
+inputfields = config.(lower(algorithm)).fieldnames.input;
+f = fieldnames(inputstruct);
 
+for i = 1:length(f)
+    if ~any(strcmp(inputfields,f{i}))
+        inputstruct = rmfield(inputstruct,f{i});
+    end
+end
 
 end

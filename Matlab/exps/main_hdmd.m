@@ -17,6 +17,7 @@ input.algorithm = {'HDMD'};
 % lorenz, vanderpol, duffing, 
 % pendulum, trippletank,
 % roessler, doubletank
+% examplesys
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,7 +54,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {50,100,150};
+input.delays = {20,40};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -65,7 +66,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {1,[1,2]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -77,7 +78,7 @@ input.measured = {1};
 input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-hdmdinput = combineinputs(input);
+hdmdinput = combineinputs(input,config);
 
 %% IV. Run procedure
 hdmdresult = algprocedure(hdmdinput,config);

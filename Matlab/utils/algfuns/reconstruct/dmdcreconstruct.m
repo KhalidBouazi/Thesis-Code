@@ -1,28 +1,14 @@
-function Y_ = dmdcreconstruct(D, Phi, b, B, U)
-
-%% Scale discrete eigenvalues to magnitude 1
-D_ = D; %D/abs(D);
+function Y_ = dmdcreconstruct(A,B,U,Y0)
 
 %% Compute A as Operator with modes as eigenvectors
-A = Phi*D_*pinv(Phi);
+Y_(:,1) = Y0;
 
 %% Reconstruct dynamics
 timesteps = size(U,2);
-tempU = B*zeros(size(U(:,1)));
-for i = 1:timesteps
-    Y_(:,i) = real(Phi*(D_^(i-1))*b + tempU);
-    tempU = A*tempU + B*U(:,i);
+for i = 2:timesteps
+    Y_(:,i) = A*Y_(:,i-1) + B*U(:,i-1);
 end
 
-%% Create index span
-% L = 1:size(U,2);
-
-%% Create system object and simulate
-% C = eye(size(A,1));
-% D = 0*B;
-% sys = ss(A,B,C,D,dt);
-% sys = d2c(sys);
-% [Y_,~] = lsim(sys,U,dt*(L-1),y0);
-% Y_ = real(Y_');
+Y_ = real(Y_);
 
 end

@@ -19,18 +19,18 @@ A = Us'*dU;
 % A = S_\(Vs'*dV)*S_;
 
 % Compute convolutional coordinates
-y1 = hankmat(algdata.Y(:,1:end-algdata.horizon),size(Us,1)-1);
+y1 = hankmat(algdata.Y(:,1:end-algdata.horizon),rows(Us)-1);
 Wtrain = Us'*y1;
 % W = U_'*H;
-% m = size(y,1)/2;
+% m = rows(y)/2;
 % W = W(:,m:end-m);
 
 % Extract train samples
-y2 = hankmat(algdata.Y(:,1:end-algdata.horizon),size(U2_,1)-1);
+y2 = hankmat(algdata.Y(:,1:end-algdata.horizon),rows(U2_)-1);
 Wtest = U2_'*y2;
 
 %% Reconstruct convolutional coordinates
-Lr = (1:size(Wtrain,2));
+Lr = (1:cols(Wtrain));
 Lp = (1:algdata.horizon) + length(Lr);
 w0 = Wtrain(:,1);
 Wi = convcoordreconstruct(A,w0,algdata.dt,length(Lr)+length(Lp));

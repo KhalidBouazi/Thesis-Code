@@ -4,7 +4,7 @@ function [W,D] = eigdec(A)
 [W,D] = eig(A);
 
 %% Sort eigenvalues and vectors in descending order
-[d,sortIdx] = sort(diag(D),'descend');
+[d,sortIdx] = sort(abs(diag(D)),'descend');
 W = W(:,sortIdx);
 D = diag(d);
 

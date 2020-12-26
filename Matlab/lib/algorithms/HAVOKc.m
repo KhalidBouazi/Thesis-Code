@@ -1,10 +1,6 @@
 function algdata = HAVOKc(algdata)
 
 %% Start algorithm
-% Norm input data matrix
-Un = normdata(algdata.U);
-Untrain = Un(:,1:end-algdata.horizon);
-
 % Compute hankel matrices
 H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
 Hu = hankmat(algdata.U,0,algdata.spacing);
@@ -22,17 +18,17 @@ Omega = [V, Hu(:,1:size(V,1))'];
 
 % Do regression and split into system and input matrix
 Z = (Omega\Vp)';
-A = Z(:,1:end-size(Hu,1));
-B = Z(:,end-size(Hu,1)+1:end);
+A = Z(:,1:size(V,2));
+B = Z(:,size(V,2)+1:end);
 
 % Eigen values of A
-[~,D] = eigdec(A);
+[~,D] = eig(A);
 omega = log(diag(D))/algdata.dt;
 
 %% Reconstruct delay state
 Lr = (1:size(Vtrain,1));
 Lp = (1:algdata.horizon) + size(Vtrain,1);
-Vi = havokcreconstruct(A,B,Un',V(1,:),algdata.dt);
+Vi = havokcreconstruct(A,B,Hu',V(1,:),algdata.dt);
 Vr = Vi(Lr,:);
 Vp = Vi(Lp,:);
 tr = algdata.dt*(Lr-1);
