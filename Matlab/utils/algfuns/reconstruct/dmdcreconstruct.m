@@ -1,13 +1,17 @@
 function Y_ = dmdcreconstruct(A,B,U,Y0)
 
-%% Compute A as Operator with modes as eigenvectors
+%% ...
 Y_(:,1) = Y0;
 
 %% Reconstruct dynamics
-timesteps = size(U,2);
+timesteps = cols(U);
 for i = 2:timesteps
     Y_(:,i) = A*Y_(:,i-1) + B*U(:,i-1);
 end
+
+% for i = 2:timesteps-rows(Y0)-1
+%     Y_(:,i) = A*Y_(:,i-1) + B*U(:,i+rows(Y0)-1);
+% end
 
 Y_ = real(Y_);
 

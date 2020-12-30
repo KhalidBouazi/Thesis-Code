@@ -33,13 +33,7 @@ if ~dataexists
         data = updatedata(data,result);
         m.([algorithm 'data']) = data;
     else
-        if isequal(algorithm,'DMD')
-            DMDdata(1,:) = result;
-            varstr = 'DMDdata';
-        elseif isequal(algorithm,'DMDc')
-            DMDcdata(1,:) = result;
-            varstr = 'DMDcdata';
-        elseif isequal(algorithm,'HDMD')
+        if isequal(algorithm,'HDMD')
             HDMDdata(1,:) = result;
             varstr = 'HDMDdata';
         elseif isequal(algorithm,'HDMDc')

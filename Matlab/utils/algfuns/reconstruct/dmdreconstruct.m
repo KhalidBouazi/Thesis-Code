@@ -1,7 +1,6 @@
-function Y_ = dmdreconstruct(Phi,D,Y0,timesteps)
+function Y_ = dmdreconstruct(A,Y0,timesteps)
 
 %% ...
-A = Phi*D*pinv(Phi);
 Y_(:,1) = Y0;
 
 %% Reconstruct dynamics

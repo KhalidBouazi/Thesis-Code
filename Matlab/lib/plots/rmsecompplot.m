@@ -67,7 +67,7 @@ for i = 1:length(data)
         yyaxis left;
         ylabel('$\mathrm{RMSE_{pred}}$');
         xlabel('Delays');
-        if max(data{i}.RMSEYp(j,:)) < 1
+        if max(data{i}.RMSEYp(j,:)) < 1 || isnan(max(data{i}.RMSEYp(j,:)))
             maxylimdelay = 1;
         else
             maxylimdelay = max(data{i}.RMSEYp(j,:))*3;

@@ -5,7 +5,7 @@ clear input;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set kEDMD parameters
+%% III. Set kDMD parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,7 +53,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {2,5,10,20};
+input.delays = {15};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -65,7 +65,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,2,[1 2]};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % kernel : double : optional
@@ -77,8 +77,8 @@ input.measured = {1,2,[1 2]};
 input.kernel = {{'identity'},{'polynomial',3}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-kedmdinput = combineinputs(input,config);
+kdmdinput = combineinputs(input,config);
 
 %% IV. Run procedure
-edmdresult = algprocedure(kedmdinput,config);
+kdmdresult = algprocedure(kdmdinput,config);
 

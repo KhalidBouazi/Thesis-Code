@@ -5,17 +5,18 @@ clear input;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set DMDc parameters
+%% III. Set kDMDc parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'DMDc'};
+input.algorithm = {'kDMDc'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% vanderpol, duffing, 
-% trippletank, doubletank
+% lorenz, vanderpol, duffing, 
+% pendulum, trippletank,
+% roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,10 +38,10 @@ input.x0 = {};
 % struct('type','sine','amp',...,'freq',...,'phi',...) 
 % struct('type','chirp','amp',...,'freqa',...,'freqb',...) 
 % freqb should be <= 1/20 * 1/dt
-% struct('type','prbs') 
-% struct('type','normd') 
+% struct('type','prbs','amp',...) 
+% struct('type','normd','amp',...) 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd','amp',0.5)}};
+input.input = {{struct('type','normd','amp',1)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -65,7 +66,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {50,100,150};
+input.delays = {15};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -77,20 +78,20 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,2};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% observables : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% kernel : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % {'identity'}
-% {'monomial', max. exponent}
+% {'polynomial', exponent}
 % {'rbf', bandwidth}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.kernel = {{'identity'},{'polynomial',3}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-dmdcinput = combineinputs(input,config);
+kdmdcinput = combineinputs(input,config);
 
 %% IV. Run procedure
-dmdcresult = algprocedure(dmdcinput,config);
+kdmdcresult = algprocedure(kdmdcinput,config);
 

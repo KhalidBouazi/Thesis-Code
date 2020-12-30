@@ -2,43 +2,48 @@ function algdata = HDMD(algdata)
 
 %% Start algorithm
 % Norm data matrix
-[Yn,normValsY] = normdata(algdata.Y);
-Yntrain = Yn(:,1:end-algdata.horizon);
+Y = algdata.Y;
+Ytrain = Y(:,1:end-algdata.horizon);
 
 % Compute hankel matrices
-H = hankmat(Yntrain,algdata.delays,algdata.spacing);
+H = hankmat(Ytrain,algdata.delays,algdata.spacing);
 
 % Transform through observables
 H = observe(H,algdata.observables);
 
+% Norm data
+[Hn,normValsH] = normdata(H);
+
 % Split
-Hy = H(:,1:end-1);
-Hyp = H(:,2:end);
+Hy = Hn(:,1:end-1);
+Hyp = Hn(:,2:end);
 
 % Compute svd of prior hankel matrix
 [U_,S_,Sn,Sn_,V_] = truncsvd(Hy,algdata.rank);
 
 % Compute transition matrix and its modes
-Up_ = Hyp*V_/S_;
-Atilde = U_'*Up_;
+A = normValsH\(Hyp*V_/S_*U_')*normValsH;
+Atilde = U_'*A*U_;
 [W,D] = eig(Atilde);
-Phi = Up_*W;
+Phi = (A*U_)*W;
 omega = log(diag(D))/algdata.dt;
 b = (W*D)\(S_*V_(1,:)');
 
 %% Reconstruct states
-C = zeros(rows(Yntrain),rows(Phi));
-C(1:rows(Yntrain),1:rows(Yntrain)) = eye(rows(Yntrain));
+C = zeros(rows(Ytrain),rows(Phi));
+C(1:rows(Ytrain),1:rows(Ytrain)) = eye(rows(Ytrain));
 Lr = (1:length(algdata.tr));
 Lp = (1:length(algdata.tp)) + length(algdata.tr);
-Zi = dmdreconstruct(Phi,D,Hy(:,1),length(algdata.t));
-Yi = (C*Zi) .* normValsY;
+% Zi = dmdreconstruct(A,H(:,1),length(algdata.t));
+% Yi = C*Zi;
+Zi = dmdreconstruct(Atilde,U_'*H(:,1),length(algdata.t));
+Yi = C*U_*Zi;
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
 
 %% Calculate RMSE
-Ytrain = algdata.Y(:,Lr);
-Ytest = algdata.Y(:,Lp);
+Ytrain = Y(:,Lr);
+Ytest = Y(:,Lp);
 [RMSEYr,rmseYr] = rmse(Ytrain,Yr);
 [RMSEYp,rmseYp] = rmse(Ytest,Yp);
 [RMSEY,rmseY] = rmse([Ytrain Ytest],[Yr Yp]);
@@ -57,6 +62,7 @@ algdata.d = diag(D);
 algdata.Phi = Phi;
 algdata.b = b;
 algdata.omega = omega;
+algdata.A = A;
 
 algdata.Ytrain = Ytrain;
 algdata.Yr = Yr;

@@ -1,31 +1,38 @@
 function algdata = HDMDc(algdata)
 
 %% Start algorithm
-% Norm data matrices
-[Yn,normValsY] = normdata(algdata.Y);
-Yntrain = Yn(:,1:end-algdata.horizon);
-Un = normdata(algdata.U);
-Untrain = Un(:,1:end-algdata.horizon);
+Y = algdata.Y;
+Ytrain = Y(:,1:end-algdata.horizon);
+U = algdata.U;
+Utrain = U(:,1:end-algdata.horizon);
 
-% % Compute hankel matrices
-H = hankmat(Yntrain,algdata.delays,algdata.spacing);
+% Compute hankel matrices
+H_ = hankmat(Y,algdata.delays,algdata.spacing);
+H = hankmat(Ytrain,algdata.delays,algdata.spacing);
 udelays = algdata.delays;
 if ~algdata.uhasdelays
     udelays = 0;
 end
-Hu_ = hankmat(Un,udelays,algdata.spacing);
-Hu = hankmat(Untrain,udelays,algdata.spacing);
+Hu_ = hankmat(U,udelays,algdata.spacing);
+Hu = hankmat(Utrain,udelays,algdata.spacing);
 
 % Transform through observables
 H = observe(H,algdata.observables);
 d = rows(H);
 
+% Norm data
+[Hn,normValsH] = normdata(H);
+[Hun,normValsHu] = normdata(Hu);
+Un = normValsHu(1:rows(U),1:rows(U))*U;
+
 % Split
-Hy = H(:,1:end-1);
-Hyp = H(:,2:end);
+% Hy = Hn(:,1:end-1);
+% Hyp = Hn(:,2:end);
+Hy = [Hn(:,1:end-1); Hun(1:end-1,1:cols(Hn)-1)];
+Hyp = [Hn(:,2:end); Hun(1:end-1,2:cols(Hn))];
 
 % Stack prior state and input hankel matrices
-Omega = [Hy; Hu(:,1:cols(Hy))];
+Omega = [Hy; Hun(end,1:cols(Hn)-1)];
 
 % Compute svd of Omega
 [U1_,S1_,~,~,V1_] = truncsvd(Omega,[]);
@@ -36,49 +43,51 @@ rank1 = length(S1_);
 rank2 = length(S2_);
 
 % Compute approximation of operators A and B
-Up_ = Hyp*V1_/S1_;
-G = Up_*U1_';
-Atilde_ = G(:,1:d);
-Btilde_ = G(:,d+1:end);
+G = Hyp*V1_/S1_*U1_';
+A = G(:,1:rows(G));%normValsH\G(:,1:d)*normValsH;
+B = G(:,rows(G)+1:end);%normValsH\G(:,d+1:end)*normValsHu;
 
 % Project matrices to output space
-Atilde = U2_'*Atilde_*U2_;
-Btilde = U2_'*Btilde_;
+Atilde = U2_'*A*U2_;
+Btilde = U2_'*B;
+rank(ctrb(Atilde,Btilde))
 
 % Compute modes of Atilde
 [W,D] = eig(Atilde);
-Phi = (Atilde_*U2_)*W;
+Phi = (A*U2_)*W;
 omega = log(diag(D))/algdata.dt;
 if rank1 > rank2
     b = (W*D)\(S1_(1:rank2,1:rank2)*V1_(1,1:rank2)');
 else
     b = (W*D)\(S2_*V2_(1,:)');
 end
-A = Phi*D*pinv(Phi);
-B = (Atilde_*U2_)*Btilde;
 
 %% Reconstruct states
-C = zeros(rows(Yntrain),rows(Phi));
-C(1:rows(Yntrain),1:rows(Yntrain)) = eye(rows(Yntrain));
-Lr = (1:cols(Hu));
+C = zeros(rows(Ytrain),rows(Phi));
+C(1:rows(Ytrain),1:rows(Ytrain)) = eye(rows(Ytrain));
+Lr = (1:cols(Hun));
 Lp = (1:length(algdata.tp)) + length(Lr);
-Zi = dmdcreconstruct(A,B,Hu_,H(:,1));
-Yi = (C*Zi) .* normValsY;
+% Zi = dmdcreconstruct(A,B,Hu_,H(:,1));
+% Yi = C*Zi;
+Zi = dmdcreconstruct(Atilde,Btilde,Un,U2_'*Hy(:,1));
+Yi = C*U2_*Zi / normValsH(1:rows(Y),1:rows(Y));
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
 tr = algdata.t(Lr);
 tp = algdata.t(Lp);
 
 %% Calculate RMSE
-Ytrain = algdata.Y(:,Lr);
-Ytest = algdata.Y(:,Lp);
+Ytrain = Y(:,Lr);
+Ytest = Y(:,Lp);
 [RMSEYr,rmseYr] = rmse(Ytrain,Yr);
 [RMSEYp,rmseYp] = rmse(Ytest,Yp);
 [RMSEY,rmseY] = rmse([Ytrain Ytest],[Yr Yp]);
 
 %% Save in algdata
 algdata.H = H; 
+algdata.H_ = H_; 
 algdata.Hu = Hu;
+algdata.Hu_ = Hu_;
 algdata.rank = length(S2_);
 algdata.U_ = U2_;
 algdata.s_ = diag(S2_);
