@@ -23,16 +23,13 @@ d = rows(H);
 % Norm data
 [Hn,normValsH] = normdata(H);
 [Hun,normValsHu] = normdata(Hu);
-Un = normValsHu(1:rows(U),1:rows(U))*U;
 
 % Split
-% Hy = Hn(:,1:end-1);
-% Hyp = Hn(:,2:end);
-Hy = [Hn(:,1:end-1); Hun(1:end-1,1:cols(Hn)-1)];
-Hyp = [Hn(:,2:end); Hun(1:end-1,2:cols(Hn))];
+Hy = Hn(:,1:end-1);
+Hyp = Hn(:,2:end);
 
 % Stack prior state and input hankel matrices
-Omega = [Hy; Hun(end,1:cols(Hn)-1)];
+Omega = [Hy; Hun(:,1:cols(Hy))];
 
 % Compute svd of Omega
 [U1_,S1_,~,~,V1_] = truncsvd(Omega,[]);
@@ -44,13 +41,12 @@ rank2 = length(S2_);
 
 % Compute approximation of operators A and B
 G = Hyp*V1_/S1_*U1_';
-A = G(:,1:rows(G));%normValsH\G(:,1:d)*normValsH;
-B = G(:,rows(G)+1:end);%normValsH\G(:,d+1:end)*normValsHu;
+A = normValsH\G(:,1:d)*normValsH;
+B = normValsH\G(:,d+1:end)*normValsHu;
 
 % Project matrices to output space
 Atilde = U2_'*A*U2_;
 Btilde = U2_'*B;
-rank(ctrb(Atilde,Btilde))
 
 % Compute modes of Atilde
 [W,D] = eig(Atilde);
@@ -69,8 +65,8 @@ Lr = (1:cols(Hun));
 Lp = (1:length(algdata.tp)) + length(Lr);
 % Zi = dmdcreconstruct(A,B,Hu_,H(:,1));
 % Yi = C*Zi;
-Zi = dmdcreconstruct(Atilde,Btilde,Un,U2_'*Hy(:,1));
-Yi = C*U2_*Zi / normValsH(1:rows(Y),1:rows(Y));
+Zi = dmdcreconstruct(Atilde,Btilde,Hu_,U2_'*H(:,1));
+Yi = C*U2_*Zi;
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
 tr = algdata.t(Lr);
