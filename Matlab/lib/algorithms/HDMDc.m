@@ -7,46 +7,61 @@ U = algdata.U;
 Utrain = U(:,1:end-algdata.horizon);
 
 % Compute hankel matrices
-H_ = hankmat(Y,algdata.delays,algdata.spacing);
-H = hankmat(Ytrain,algdata.delays,algdata.spacing);
-udelays = algdata.delays;
-if ~algdata.uhasdelays
-    udelays = 0;
-end
-Hu_ = hankmat(U,udelays,algdata.spacing);
-Hu = hankmat(Utrain,udelays,algdata.spacing);
+HY = hankmat(Y,algdata.delays,algdata.spacing);
+HYtrain = hankmat(Ytrain,algdata.delays,algdata.spacing);
+HU = hankmat(U,algdata.uhasdelays*algdata.delays,algdata.spacing);
+HUtrain = hankmat(Utrain,algdata.uhasdelays*algdata.delays,algdata.spacing);
 
 % Transform through observables
-H = observe(H,algdata.observables);
-d = rows(H);
+HY = observe(HY,algdata.observables);
+HYtrain = observe(HYtrain,algdata.observables);
 
 % Norm data
-[Hn,normValsH] = normdata(H);
-[Hun,normValsHu] = normdata(Hu);
+[HYntrain,normHYtrain] = normdata(HYtrain);
+[HUntrain,normHUtrain] = normdata(HUtrain);
+normHYtrain = diag(normHYtrain);
+normHUtrain = diag(normHUtrain);
 
 % Split
-Hy = Hn(:,1:end-1);
-Hyp = Hn(:,2:end);
-
-% Stack prior state and input hankel matrices
-Omega = [Hy; Hun(:,1:cols(Hy))];
+HYnk = HYntrain(:,1:end-1);
+HYnk_ = HYntrain(:,2:end);
+HUnk = HUntrain(:,1:cols(HYnk));
 
 % Compute svd of Omega
-[U1_,S1_,~,~,V1_] = truncsvd(Omega,[]);
+[U1_,S1_,~,~,V1_] = truncsvd([HYnk; HUnk],[]);
 rank1 = length(S1_);
 
 % Compute svd of Hyp
-[U2_,S2_,S2n,S2n_,V2_] = truncsvd(Hyp,algdata.rank);
+[U2_,S2_,S2n,S2n_,V2_] = truncsvd(HYnk_,algdata.rank);
 rank2 = length(S2_);
 
 % Compute approximation of operators A and B
-G = Hyp*V1_/S1_*U1_';
-A = normValsH\G(:,1:d)*normValsH;
-B = normValsH\G(:,d+1:end)*normValsHu;
+G = HYnk_*V1_/S1_*U1_';
+A = normHYtrain\G(:,1:rows(G))*normHYtrain;
+B = normHYtrain\G(:,rows(G)+1:end)*normHUtrain;
 
 % Project matrices to output space
 Atilde = U2_'*A*U2_;
 Btilde = U2_'*B;
+% isctrb = rank(ctrb(A,B)) == rows(B)
+
+% Change structure for one input
+if cols(Btilde) > 1
+    O_ = zeros(cols(Btilde)-2*rows(U),rows(U));
+    I_ = [O_, eye(rows(O_));
+          zeros(rows(U)), zeros(rows(U),rows(O_))];
+    B_ = Btilde(:,1:end-rows(U));
+    U_ = eye(rows(U),rows(U));
+else
+    I_ = [];
+    B_ = [];
+    O_ = [];
+    U_ = [];
+end
+Atilde_ = [Atilde, B_;
+           zeros(cols(Btilde)-rows(U),rows(Atilde)), I_];
+Btilde_ = [Btilde(:,end-rows(U)+1:end); O_; U_];
+% isctrb = rank(ctrb(Atilde_,Btilde_)) == rows(Btilde)
 
 % Compute modes of Atilde
 [W,D] = eig(Atilde);
@@ -59,13 +74,14 @@ else
 end
 
 %% Reconstruct states
-C = zeros(rows(Ytrain),rows(Phi));
-C(1:rows(Ytrain),1:rows(Ytrain)) = eye(rows(Ytrain));
-Lr = (1:cols(Hun));
+C = zeros(rows(Y),rows(Phi));
+C(1:rows(Y),1:rows(Y)) = eye(rows(Y));
+Lr = (1:cols(HUnk));
 Lp = (1:length(algdata.tp)) + length(Lr);
-% Zi = dmdcreconstruct(A,B,Hu_,H(:,1));
+% Zi = dmdcreconstruct(A,B,HU,HY(:,1));
 % Yi = C*Zi;
-Zi = dmdcreconstruct(Atilde,Btilde,Hu_,U2_'*H(:,1));
+HY0 = U2_'*HY(:,1);
+Zi = dmdcreconstruct(Atilde,Btilde,HU,HY0);
 Yi = C*U2_*Zi;
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
@@ -80,10 +96,8 @@ Ytest = Y(:,Lp);
 [RMSEY,rmseY] = rmse([Ytrain Ytest],[Yr Yp]);
 
 %% Save in algdata
-algdata.H = H; 
-algdata.H_ = H_; 
-algdata.Hu = Hu;
-algdata.Hu_ = Hu_;
+algdata.H = HY; 
+algdata.Hu = HU;
 algdata.rank = length(S2_);
 algdata.U_ = U2_;
 algdata.s_ = diag(S2_);
@@ -92,6 +106,8 @@ algdata.sn_ = diag(S2n_);
 algdata.V_ = V2_;
 algdata.Atilde = Atilde;
 algdata.Btilde = Btilde;
+algdata.Atilde_ = Atilde_;
+algdata.Btilde_ = Btilde_;
 algdata.W = W;
 algdata.d = diag(D);
 algdata.Phi = Phi;
@@ -100,6 +116,7 @@ algdata.omega = omega;
 algdata.A = A;
 algdata.B = B;
 
+algdata.HY0 = HY0;
 algdata.Ytrain = Ytrain;
 algdata.Yr = Yr;
 algdata.tr = tr;

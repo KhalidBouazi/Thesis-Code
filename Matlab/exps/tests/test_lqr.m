@@ -1,40 +1,46 @@
 %%
-n = 4;
+n = 35;
+res = hdmdcresult{1,n};
 
 %%
-Atilde = hdmdcresult{1,n}.Atilde;
-A = hdmdcresult{1,n}.A;
-Btilde = hdmdcresult{1,n}.Btilde;
-B = hdmdcresult{1,n}.B;
-U = hdmdcresult{1,n}.U_;
-y0 = hdmdcresult{1,n}.H(:,1);
-y0tilde = U'*y0;
+dt = res.dt;
+meas = res.measured;
+Atilde_ = res.Atilde_;
+Btilde_ = res.Btilde_;
+HY = res.H;
+U_ = res.U_;
+y0tilde = res.HY0;
 
 %%
-dt = 0.1;
 L = 1:100;
-u = zeros(length(L),cols(Btilde));
+u = zeros(length(L),cols(Btilde_));
+u0 = zeros(rows(Atilde_)-rows(y0tilde),1);
+y0tilde_ = [y0tilde; u0];
 
 %% LQR
-Q = eye(size(A));
-Q(1,1) = 1;
-Qtilde = U'*Q*U;
-R = 1*eye(cols(Btilde));
-r = rank(ctrb(Atilde,Btilde));
-K = lqr(Atilde,Btilde,Qtilde,R);
+Q = eye(rows(HY));
+for i = 1:length(meas)
+    Q(meas(i),meas(i)) = 10;
+end
+Qtilde = U_'*Q*U_;
+Qtilde_ = blkdiag(Qtilde,eye(rows(u0)));
+
+R = 1*eye(cols(Btilde_));
+r = rank(ctrb(Atilde_,Btilde_));
+K = lqr(Atilde_,Btilde_,Qtilde_,R);
 
 %% Create system object and simulate
 Atilde_ = Atilde - Btilde*K;
-C = eye(size(Atilde,1));
-D = 0*Btilde;
-sys = ss(Atilde_,Btilde,C,D);
-[Y_,~] = lsim(sys,u,dt*(L-1),y0tilde);
+C = eye(size(Atilde_,1));
+D = 0*Btilde_;
+sys = ss(Atilde_,Btilde_,C,D);
+[Y_,~] = lsim(sys,u,dt*(L-1),y0tilde_);
 u = -K*Y_';
 u_cost_t(1) = u(:,1)'*R*u(:,1);
 for i = 2:cols(u)
     u_cost_t(i) = u_cost_t(i-1) + u(:,i)'*R*u(:,i);
 end
-Y = U*Y_';
+Y = U_*Y_(:,1:rows(y0tilde))';
 Y = real(Y);
 %%
 n = rows(Y);

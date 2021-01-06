@@ -62,12 +62,12 @@ input.horizon = {300};
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {5};
+input.rank = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {2,5,10};
+input.delays = {10,20,30,40,50,60,70,80};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

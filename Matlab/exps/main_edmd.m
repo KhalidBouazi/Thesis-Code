@@ -53,7 +53,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100};
+input.delays = {5};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -74,7 +74,7 @@ input.measured = {};
 % {'monomial', max. exponent}
 % {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {{'monomial',1:3}};
+input.observables = {{'monomial',[1 2]}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 edmdinput = combineinputs(input,config);

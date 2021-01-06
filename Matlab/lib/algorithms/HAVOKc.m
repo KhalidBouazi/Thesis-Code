@@ -3,7 +3,7 @@ function algdata = HAVOKc(algdata)
 %% Start algorithm
 % Compute hankel matrices
 H = hankmat(algdata.Y,algdata.delays,algdata.spacing);
-Hu = hankmat(algdata.U,0,algdata.spacing);
+Hu = hankmat(algdata.U,algdata.delays,algdata.spacing);
 
 % Compute svd of H
 [U_,S_,Sn,Sn_,V_] = truncsvd(H,algdata.rank);
@@ -14,20 +14,20 @@ V = Vtrain(1:end-1,:);
 Vp = Vtrain(2:end,:);
 
 % Stack V and Hu horizontally
-Omega = [V, Hu(:,1:size(V,1))'];
+Omega = [V, Hu(:,1:rows(V))'];
 
 % Do regression and split into system and input matrix
-Z = (Omega\Vp)';
-A = Z(:,1:size(V,2));
-B = Z(:,size(V,2)+1:end);
+G = (Omega\Vp)';
+A = G(:,1:rows(G));
+B = G(:,rows(G)+1:end);
 
 % Eigen values of A
 [~,D] = eig(A);
 omega = log(diag(D))/algdata.dt;
 
 %% Reconstruct delay state
-Lr = (1:size(Vtrain,1));
-Lp = (1:algdata.horizon) + size(Vtrain,1);
+Lr = (1:rows(Vtrain));
+Lp = (1:algdata.horizon) + rows(Vtrain);
 Vi = havokcreconstruct(A,B,Hu',V(1,:),algdata.dt);
 Vr = Vi(Lr,:);
 Vp = Vi(Lp,:);

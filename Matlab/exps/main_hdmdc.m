@@ -42,7 +42,7 @@ input.x0 = {};
 % struct('type','prbs','amp',...) 
 % struct('type','normd','amp',...) 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd','amp',1)}};
+input.input = {{struct('type','normd','amp',0.5)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -57,17 +57,17 @@ input.timesteps = {1000};
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {300};
+input.horizon = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {50};
+input.rank = {30};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {20,200,300,400,500};
+input.delays = {50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % input delays: double: optional

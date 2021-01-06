@@ -24,7 +24,7 @@ if ~dataexists
     algfieldnames = config.(lower(algorithm)).fieldnames.order;
     
     % Order fields in result struct by algorithm fieldname order
-    result = orderfields(result,algfieldnames);
+%     result = orderfields(result,algfieldnames);
 
     % Save result in specific folder and matfile
     if isfile(filename)
