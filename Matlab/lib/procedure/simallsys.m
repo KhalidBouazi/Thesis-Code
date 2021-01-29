@@ -4,7 +4,7 @@ dispstep('sim');
 timer = tic;
 
 %% Define fields relevant for simulation
-fields = {'system','dt','timesteps','params','x0','horizon','input'};
+fields = {'system','dt','timesteps','delays','params','x0','horizon','input'};
 
 %% Extract combinations relevant for simulation
 simcombistruct = {};

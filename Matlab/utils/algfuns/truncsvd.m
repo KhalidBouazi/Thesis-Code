@@ -4,8 +4,8 @@ function [U_,S_,Sn,Sn_,V_] = truncsvd(X, rank)
 [U_,S_,V_] = svd(X,'econ');
 
 %% Normalize singular values
-% Sn_ = S_./sqrt(sum(diag(S_).^2));
-Sn_ = S_./sum(diag(S_));
+Sn_ = S_./sqrt(sum(diag(S_).^2));
+%Sn_ = S_./sum(diag(S_));
 Sn = Sn_;
 
 %% Find index of threshold

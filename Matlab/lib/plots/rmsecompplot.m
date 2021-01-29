@@ -31,16 +31,19 @@ for i = 1:m
             if isfield(data{i},'delays')
                 data{i}.delays(end+1) = results{j}.delays; 
                 data{i}.RMSEYp(:,end+1) = results{j}.RMSEYp; 
+                data{i}.RMSEYr(:,end+1) = results{j}.RMSEYr; 
                 data{i}.rank(end+1) = results{j}.rank; 
             else
                 data{i}.delays = results{j}.delays; 
                 data{i}.RMSEYp = results{j}.RMSEYp; 
+                data{i}.RMSEYr = results{j}.RMSEYr; 
                 data{i}.rank = results{j}.rank; 
             end
         end
     end
     [data{i}.delays,idx] = sort(data{i}.delays);
     data{i}.RMSEYp = data{i}.RMSEYp(:,idx);
+    data{i}.RMSEYr = data{i}.RMSEYr(:,idx);
     data{i}.rank = data{i}.rank(idx);
 end
 
@@ -71,6 +74,28 @@ for i = 1:length(data)
             maxylimdelay = 1;
         else
             maxylimdelay = max(data{i}.RMSEYp(j,:))*3;
+        end
+        ylim([0 maxylimdelay]);
+    end
+    figure;
+    m = size(data{i}.RMSEYr,1);
+    for j = 1:m
+        subplot(m,1,j);
+        title(sprintf('$y_%d$',j),'FontWeight','Normal','FontSize',TitleFontSize);
+        yyaxis left;
+        semilogy(data{i}.delays,data{i}.RMSEYr(j,:),'Marker',RMSEMarker,'LineStyle',LineStyle);
+        yyaxis right;
+        plot(data{i}.delays,data{i}.rank,'Marker',RankMarker,'LineStyle',LineStyle);
+        yyaxis right;
+        ylabel('SVD Rang'); 
+        ylim([0 floor(max(data{i}.rank)*1.3)]);
+        yyaxis left;
+        ylabel('$\mathrm{RMSE_{rek}}$');
+        xlabel('Delays');
+        if max(data{i}.RMSEYr(j,:)) < 1 || isnan(max(data{i}.RMSEYr(j,:)))
+            maxylimdelay = 1;
+        else
+            maxylimdelay = max(data{i}.RMSEYr(j,:))*3;
         end
         ylim([0 maxylimdelay]);
     end

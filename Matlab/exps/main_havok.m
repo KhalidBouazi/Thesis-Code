@@ -19,7 +19,7 @@ input.algorithm = {'HAVOK'};
 % roessler, doubletank
 % eindampfanlage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'lorenz'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -34,27 +34,27 @@ input.params = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.1};
+input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {300};
+input.timesteps = {2000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {300};
+input.horizon = {10000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {};
+input.rank = {5};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100};
+input.delays = {10};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

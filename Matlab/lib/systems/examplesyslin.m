@@ -1,26 +1,25 @@
-function [odefun,params,x0,Nu] = duffing(params, x0)
+function [odefun,params,x0,Nu] = examplesyslin(params, x0)
 
 %% Extract system parameters
 if isempty(params)
-    params = [1; 1; 0];
-elseif length(params) ~= 3
+    params = [-0.1 -1];
+elseif length(params) ~= 1
     error('System parameters: Check number of elements.'); 
 end
 
-alpha = params(1);
-beta = params(2);
-delta = params(3);
+gamma = params(1);
+delta = params(2);
 Nu = 1;
 
 %% Define initial state
 if isempty(x0)
-    x0 = [0; 0.5];
+    x0 = [2; 1];
 elseif length(x0) ~= 2
     error('Initial condition: Check number of elements.'); 
 end
 
 %% Define system function
-odefun = @(t,x,u) [x(2);
-                   -delta*x(2) + alpha*x(1) - beta*x(1)^3 + u{1}(t)];
+odefun = @(t,x,u) [gamma*x(1);
+                   delta*(x(2) - x(1)^2) + u{1}(t)];
 
 end

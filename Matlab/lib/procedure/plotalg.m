@@ -33,7 +33,9 @@ for k = 1:length(algdata)
 end
 
 % Plot on third figure
-rmsecompplot(algdata);
+if ~strcmp(algdata{1}.algorithm,'HAVOK')
+    rmsecompplot(algdata);
+end
 
 %% Link axes
 % for j = 1:size(ax,2)

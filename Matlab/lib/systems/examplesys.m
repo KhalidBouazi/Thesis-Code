@@ -2,7 +2,7 @@ function [odefun,params,x0,Nu] = examplesys(params, x0)
 
 %% Extract system parameters
 if isempty(params)
-    params = [-0.1 -0.5];
+    params = [-0.1 -1];
 elseif length(params) ~= 1
     error('System parameters: Check number of elements.'); 
 end
@@ -19,7 +19,7 @@ elseif length(x0) ~= 2
 end
 
 %% Define system function
-odefun = @(t,x,u) [gamma*x(2);
+odefun = @(t,x,u) [gamma*x(1);
                    delta*(x(2) - x(1)^2) + u{1}(t)];
 
 end

@@ -45,6 +45,7 @@ algdata.sn_ = diag(Sn_);
 algdata.V_ = V_;
 algdata.A = A;
 algdata.B = B;
+algdata.vr = u;
 
 algdata.Vtrain = Vtrain;
 algdata.Vr = Vr;

@@ -19,7 +19,7 @@ input.algorithm = {'HDMD'};
 % roessler, doubletank
 % examplesys
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'duffing'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -39,12 +39,12 @@ input.dt = {0.1};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {300};
+input.timesteps = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {300};
+input.horizon = {10};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
@@ -54,7 +54,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {10,50,100,150,200,250,290};
+input.delays = {30};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

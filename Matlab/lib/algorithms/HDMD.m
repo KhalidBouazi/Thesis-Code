@@ -4,11 +4,11 @@ function algdata = HDMD(algdata)
 Y = algdata.Y;
 Ytrain = Y(:,1:end-algdata.horizon);
 
-% Compute hankel matrices
-HYtrain = hankmat(Ytrain,algdata.delays,algdata.spacing);
-
 % Transform through observables
-HYtrain = observe(HYtrain,algdata.observables);
+HYtrain = observe(Ytrain,algdata.observables); %% getauscht
+
+% Compute hankel matrices
+HYtrain = hankmat(HYtrain,algdata.delays,algdata.spacing);
 
 % Norm data
 [HYntrain,normHYtrain] = normdata(HYtrain);
@@ -35,7 +35,7 @@ C = zeros(rows(Ytrain),rows(Phi));
 C(1:rows(Ytrain),1:rows(Ytrain)) = eye(rows(Ytrain));
 Lr = (1:length(algdata.tr));
 Lp = (1:length(algdata.tp)) + length(algdata.tr);
-% Zi = dmdreconstruct(A,H(:,1),length(algdata.t));
+% Zi = dmdreconstruct(A,HYk(:,1),length(algdata.t));
 % Yi = C*Zi;
 Zi = dmdreconstruct(Atilde,U_'*HYk(:,1),length(algdata.t));
 Yi = C*U_*Zi;

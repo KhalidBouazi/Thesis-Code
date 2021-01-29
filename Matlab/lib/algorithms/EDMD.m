@@ -4,11 +4,13 @@ function algdata = EDMD(algdata)
 Y = algdata.Y;
 Ytrain = Y(:,1:end-algdata.horizon);
 
-% Compute hankel matrices
-HYtrain = hankmat(Ytrain,algdata.delays,algdata.spacing);
-
 % Transform through observables
-HYtrain = observe(HYtrain,algdata.observables);
+HY = observe(Y,algdata.observables);
+HYtrain = observe(Ytrain,algdata.observables);
+
+% Compute hankel matrices
+HY = hankmat(HY,algdata.delays,algdata.spacing);
+HYtrain = hankmat(HYtrain,algdata.delays,algdata.spacing);
 
 % Norm data
 [HYntrain,normHYtrain] = normdata(HYtrain);
@@ -28,6 +30,7 @@ B = HYk*HYk_';
 A = V_/S_*U_'*B;
 [W,D,Z] = eig(A);
 Phi = HYk'*W;
+omega = log(diag(D))/algdata.dt;
 Km = Z;
 
 %% Reconstruct states
@@ -38,8 +41,8 @@ Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
 
 %% Calculate RMSE
-Ytrain = HYtrain(:,Lr);
-Ytest = HYtrain(:,Lp);
+Ytrain = HY(:,Lr);
+Ytest = HY(:,Lp);
 [RMSEYr,rmseYr] = rmse(Ytrain,Yr);
 [RMSEYp,rmseYp] = rmse(Ytest,Yp);
 [RMSEY,rmseY] = rmse([Ytrain Ytest],[Yr Yp]);
@@ -52,12 +55,12 @@ algdata.s_ = diag(S_);
 algdata.sn = diag(Sn);
 algdata.sn_ = diag(Sn_);
 algdata.V_ = V_;
-algdata.Atilde = Atilde;
 algdata.W = W;
+algdata.A = A;
 algdata.d = diag(D);
 algdata.Phi = Phi;
-algdata.b = b;
 algdata.omega = omega;
+algdata.Km = Km;
 
 algdata.Ytrain = Ytrain;
 algdata.Yr = Yr;

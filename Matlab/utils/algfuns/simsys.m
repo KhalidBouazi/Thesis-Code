@@ -10,12 +10,13 @@ else
 end
 
 %% Create timespan
-traintimesteps = (algdata.timesteps + 1);
-testtimesteps = algdata.horizon;
-timesteps = traintimesteps + testtimesteps; 
-tspan = (0:timesteps)*algdata.dt;
-algdata.tr = tspan(1:end-algdata.horizon);
-algdata.tp = tspan(end-algdata.horizon+1:end);
+% traintimesteps = (algdata.timesteps + 1);
+% testtimesteps = algdata.horizon;
+% timesteps = traintimesteps + testtimesteps;
+simsteps = algdata.timesteps + algdata.delays - 2 + algdata.horizon;
+tspan = (0:simsteps)*algdata.dt;
+algdata.tr = tspan(1:algdata.timesteps);
+algdata.tp = tspan(algdata.timesteps+1:algdata.timesteps + algdata.horizon);
 
 %% Create input signal
 if isfield(algdata,'input')

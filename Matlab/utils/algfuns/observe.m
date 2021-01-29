@@ -18,6 +18,8 @@ switch obstype
 %         for i = 1:100:size(Y,2)
 %             PsiY = [PsiY; rbf(Y,Y(:,i),obsparam)];
 %         end
+    case 'examplesys'
+        PsiY = [Y(1,:); Y(2,:); Y(1,:).^2];
     otherwise
         error(['Observables: no observable type ' obstype ' available.']);
 end

@@ -18,7 +18,7 @@ input.algorithm = {'EDMD'};
 % pendulum, trippletank,
 % roessler, doubletank
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'examplesys'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -53,7 +53,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {5};
+input.delays = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -74,7 +74,7 @@ input.measured = {};
 % {'monomial', max. exponent}
 % {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {{'monomial',[1 2]}};
+input.observables = {{'examplesys'}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 edmdinput = combineinputs(input,config);
