@@ -15,7 +15,7 @@ end
 RMSE = sqrt(sum((X - X_).^2,2)./sum(X.^2,2));
 rmse = zeros(size(X));
 for i = 1:size(X,2)
-    rmse(:,i) = sqrt(sum((X(:,1:i) - X_(:,1:i)).^2,2)./sum(X(:,1:i).^2,2));
+    %rmse(:,i) = sqrt(sum((X(:,1:i) - X_(:,1:i)).^2,2)./sum(X(:,1:i).^2,2));
 end
 
 end

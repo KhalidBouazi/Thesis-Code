@@ -6,15 +6,15 @@ Ytrain = Y(:,1:end-algdata.horizon);
 U = algdata.U;
 Utrain = U(:,1:end-algdata.horizon);
 
+% Transform through observables
+Y = observe(Y,algdata.observables);
+Ytrain = observe(Ytrain,algdata.observables);
+
 % Compute hankel matrices
 HY = hankmat(Y,algdata.delays,algdata.spacing);
 HYtrain = hankmat(Ytrain,algdata.delays,algdata.spacing);
 HU = hankmat(U,algdata.uhasdelays*algdata.delays,algdata.spacing);
 HUtrain = hankmat(Utrain,algdata.uhasdelays*algdata.delays,algdata.spacing);
-
-% Transform through observables
-HY = observe(HY,algdata.observables);
-HYtrain = observe(HYtrain,algdata.observables);
 
 % Norm data
 [HYntrain,normHYtrain] = normdata(HYtrain);

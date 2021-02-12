@@ -5,11 +5,11 @@ clear input;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set kDMD parameters
+%% III. Set HDMD parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'kDMD'};
+input.algorithm = {'HDMD'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
@@ -17,8 +17,9 @@ input.algorithm = {'kDMD'};
 % lorenz, vanderpol, duffing, 
 % pendulum, trippletank,
 % roessler, doubletank
+% examplesys
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'examplesys'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -30,6 +31,11 @@ input.params = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
 input.x0 = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
+
+% N : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%
+input.I = {[5,5,5]};
+%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -46,13 +52,13 @@ input.noise = {{struct('type','none')}};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {300};
+input.timesteps = {100,200};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% horizon : double : obligatory
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {300};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% horizon : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.horizon = {100,200};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,7 +67,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {2};
+input.delays = {10,20,30};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -73,20 +79,20 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% kernel : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % {'identity'}
-% {'polynomial', exponent}
+% {'monomial', max. exponent}
 % {'rbf', bandwidth}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.kernel = {{'identity'},{'polynomial',3}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-kdmdinput = combineinputs(input,config);
+hdmdinput = combineinputs(input,config);
 
 %% IV. Run procedure
-kdmdresult = algprocedure(kdmdinput,config);
+hdmdresult = algprocedure(hdmdinput,config);
 

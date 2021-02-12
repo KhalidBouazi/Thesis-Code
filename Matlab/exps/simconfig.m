@@ -25,7 +25,7 @@ config.general.folderacr = struct('algorithm','alg','system','sys','params','p',
 %% Define ALGORITHMS struct with function
 config.general.algorithms = struct('EDMD',@EDMD,'kDMD',@kDMD,'kDMDc',@kDMDc,...
     'HDMD',@HDMD,'HDMDc',@HDMDc,'BiHDMDc',@BiHDMDc,'HAVOK',@HAVOK,'HAVOKc',@HAVOKc,...
-    'CONVCOORD',@CONVCOORD);
+    'HAVOK_',@HAVOK_,'HAVOK__',@HAVOK__,'HAVOK___',@HAVOK___,'CONVCOORD',@CONVCOORD);
 
 %% Define SYSTEMS struct with acronym and function
 config.general.systems = ...
@@ -106,7 +106,7 @@ config.kdmdc.fieldnames.order = [config.kdmdc.fieldnames.input,config.kdmdc.fiel
 
 %% Define HDMD struct
 config.hdmd.plots = {'phaseY','disceig','sing','conteig','reconstructY','rmseY','phasebasisY'};
-config.hdmd.fieldnames.input = {'algorithm','system','params','x0',...
+config.hdmd.fieldnames.input = {'algorithm','system','params','x0','I',...
     'dt','timesteps','horizon','rank','delays','spacing','measured','observables'};
 config.hdmd.fieldnames.svd = {'U_','s_','sn','sn_','V_'};
 config.hdmd.fieldnames.hankel = {'H'};
@@ -149,16 +149,55 @@ config.bihdmdc.fieldnames.order = [config.bihdmdc.fieldnames.input,config.genera
     config.bihdmdc.fieldnames.model,config.general.fieldnames.metadata];
 
 %% Define HAVOK struct
-config.havok.plots = {'phaseY','phaseV','sing','reconstructV','rmseV','matrix'};
+config.havok.plots = {'phaseY','phaseV','sing','conteig','reconstructV','rmseV','matrix'};
 config.havok.fieldnames.input = {'algorithm','system','params','x0',...
     'dt','timesteps','horizon','rank','delays','spacing','measured','observables'};
 config.havok.fieldnames.svd = {'U_','s_','sn','sn_','V_'};
 config.havok.fieldnames.hankel = {'H'};
-config.havok.fieldnames.model = {'A','B','Vtrain','Vr','tr','RMSEVr','rmseVr','Vtest','Vp','tp','RMSEVp','rmseVp',...
+config.havok.fieldnames.model = {'A','B','omega','d','Vtrain','Vr','tr','RMSEVr','rmseVr','Vtest','Vp','tp','RMSEVp','rmseVp',...
     'RMSEV','rmseV'};
 
 config.havok.fieldnames.order = [config.havok.fieldnames.input,config.general.fieldnames.data,...
     config.havok.fieldnames.hankel,config.havok.fieldnames.svd,config.havok.fieldnames.model,...
+    config.general.fieldnames.metadata];
+
+%% Define HAVOK_ struct
+config.havok_.plots = {'phaseY','phaseV','sing','conteig','reconstructV','rmseV','matrix'};
+config.havok_.fieldnames.input = {'algorithm','system','params','x0',...
+    'dt','timesteps','horizon','rank','delays','spacing','measured','observables'};
+config.havok_.fieldnames.svd = {'U_','s_','sn','sn_','V_'};
+config.havok_.fieldnames.hankel = {'H'};
+config.havok_.fieldnames.model = {'A','B','omega','d','Vtrain','Vr','tr','RMSEVr','rmseVr','Vtest','Vp','tp','RMSEVp','rmseVp',...
+    'RMSEV','rmseV'};
+
+config.havok_.fieldnames.order = [config.havok_.fieldnames.input,config.general.fieldnames.data,...
+    config.havok_.fieldnames.hankel,config.havok_.fieldnames.svd,config.havok_.fieldnames.model,...
+    config.general.fieldnames.metadata];
+
+%% Define HAVOK__ struct
+config.havok__.plots = {'phaseY','phaseV','sing','conteig','reconstructV','rmseV','matrix'};
+config.havok__.fieldnames.input = {'algorithm','system','params','x0',...
+    'dt','timesteps','horizon','rank','delays','spacing','measured','observables'};
+config.havok__.fieldnames.svd = {'U_','s_','sn','sn_','V_'};
+config.havok__.fieldnames.hankel = {'H'};
+config.havok__.fieldnames.model = {'A','B','omega','d','Vtrain','Vr','tr','RMSEVr','rmseVr','Vtest','Vp','tp','RMSEVp','rmseVp',...
+    'RMSEV','rmseV'};
+
+config.havok__.fieldnames.order = [config.havok__.fieldnames.input,config.general.fieldnames.data,...
+    config.havok__.fieldnames.hankel,config.havok__.fieldnames.svd,config.havok__.fieldnames.model,...
+    config.general.fieldnames.metadata];
+
+%% Define HAVOK___ struct
+config.havok___.plots = {'phaseY','phaseV','sing','conteig','reconstructV','rmseV','matrix'};
+config.havok___.fieldnames.input = {'algorithm','system','params','x0',...
+    'dt','timesteps','horizon','rank','delays','spacing','measured','observables'};
+config.havok___.fieldnames.svd = {'U_','s_','sn','sn_','V_'};
+config.havok___.fieldnames.hankel = {'H'};
+config.havok___.fieldnames.model = {'A','B','omega','d','Vtrain','Vr','tr','RMSEVr','rmseVr','Vtest','Vp','tp','RMSEVp','rmseVp',...
+    'RMSEV','rmseV'};
+
+config.havok___.fieldnames.order = [config.havok___.fieldnames.input,config.general.fieldnames.data,...
+    config.havok___.fieldnames.hankel,config.havok___.fieldnames.svd,config.havok___.fieldnames.model,...
     config.general.fieldnames.metadata];
 
 %% Define HAVOKc struct % TODO

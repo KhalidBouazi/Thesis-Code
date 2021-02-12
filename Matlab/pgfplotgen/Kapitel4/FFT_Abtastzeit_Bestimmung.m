@@ -1,6 +1,7 @@
 %%
-Y = hdmdresult{1,1}.X(1,:);
-t = hdmdresult{1,1}.t;
+L = 1:96;
+Y = hdmdresult{1,1}.X(1,L);
+t = hdmdresult{1,1}.t(L);
 dt = hdmdresult{1,1}.dt;
 
 %%Time specifications:

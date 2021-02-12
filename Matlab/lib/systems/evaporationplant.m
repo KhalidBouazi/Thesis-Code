@@ -1,4 +1,4 @@
-function [odefun,params,x0,Nu] = evaporationplant(params, x0)
+function [odefun,params,x0,xmax,xmin,Nu] = evaporationplant(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -33,9 +33,13 @@ elseif length(x0) ~= 3
     error('Initial condition: Check number of elements.'); 
 end
 
+%% Define initial state interval
+xmax = [1; 1; 100e3];
+xmin = [0; 0; 0];
+
 %% Define system function
-odefun = @(t,x,u) [a1*x(1) + a2*x(2) - b1*u{1}(t) - b2*u{2}(t) - k1;
-                   -a3*x(2)*u{2}(t) + k2;
-                   -a4*x(3) - a5*x(2) + b3*u{1}(t) - (a6*x(3) + b4)/(b5*u{3}(t) + k3)*u{3}(t) + k4];
+odefun = @(t,x,n,u) [a1*x(1) + a2*x(2) - b1*u{1}(t) - b2*u{2}(t) - k1 + n{1}(t);
+                   -a3*x(2)*u{2}(t) + k2 + n{2}(t);
+                   -a4*x(3) - a5*x(2) + b3*u{1}(t) - (a6*x(3) + b4)/(b5*u{3}(t) + k3)*u{3}(t) + k4 + n{3}(t)];
 
 end

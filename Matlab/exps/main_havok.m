@@ -19,7 +19,7 @@ input.algorithm = {'HAVOK'};
 % roessler, doubletank
 % eindampfanlage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'massoscillator'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -37,24 +37,32 @@ input.params = {};
 input.dt = {0.01};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% noise : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% struct('type','none')
+% struct('type','normd','amp',...) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.noise = {{struct('type','none')}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {2000};
+input.timesteps = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {10000};
+input.horizon = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {5};
+input.rank = {3};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {10};
+input.delays = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional

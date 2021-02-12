@@ -29,27 +29,12 @@ end
 
 % combine states
 if length(algdata.xmax) == 2
-    [a, b] = ndgrid(i0(1,:), i0(2,:));
-    initcombs = [a(:), b(:)];
-elseif length(algdata.xmax) == 3
-    [a, b, c] = ndgrid(i0(1,:), i0(2,:), i0(3,:));
-    initcombs = [a(:), b(:), c(:)];
+    [ca, cb, cc] = ndgrid(i0(1,:), i0(2,:));
+    combs = [ca(:), cb(:), cc(:)]
+else length(algdata.xmax) == 3
+    
 end
 
-%% Trainingdata
-for i = 1:rows(initcombs)
-    x0 = initcombs(i,:);
-    
-    % tspan
-    if i == rows(initcombs)
-        trainsteps = algdata.timesteps + algdata.delays;
-    else
-        trainsteps = algdata.timesteps;
-    end
-    
-    
-    
-end
 
 %% Create timespan
 % traintimesteps = (algdata.timesteps + 1);

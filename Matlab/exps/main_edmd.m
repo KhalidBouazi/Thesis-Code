@@ -36,6 +36,14 @@ input.x0 = {};
 input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% noise : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% struct('type','none')
+% struct('type','normd','amp',...) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.noise = {{struct('type','none')}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.timesteps = {300};

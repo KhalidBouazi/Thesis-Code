@@ -1,4 +1,4 @@
-function [odefun,params,x0,Nu] = doubletank(params, x0)
+function [odefun,params,x0,xmax,xmin,Nu] = doubletank(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -22,8 +22,12 @@ elseif length(x0) ~= 2
     error('Initial condition: Check number of elements.'); 
 end
 
+%% Define initial state interval
+xmax = [1; 1];
+xmin = [0; 0];
+
 %% Define system function
-odefun = @(t,x,u) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u{1}(t));
-                 1/A2*(q1*sqrt(2*g*(x(1) - x(2))) - q2*sqrt(2*g*x(2)))];
+odefun = @(t,x,n,u) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u{1}(t)) + n{1}(t);
+                 1/A2*(q1*sqrt(2*g*(x(1) - x(2))) - q2*sqrt(2*g*x(2))) + n{2}(t)];
 
 end

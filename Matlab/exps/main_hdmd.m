@@ -19,7 +19,7 @@ input.algorithm = {'HDMD'};
 % roessler, doubletank
 % examplesys
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'examplesys'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -32,20 +32,33 @@ input.params = {};
 input.x0 = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+% N : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%
+input.I = {[5,5]};
+%%%%%%%%%%%%%%%%%%%%%%%
+
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% noise : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% struct('type','none')
+% struct('type','normd','amp',...) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.noise = {{struct('type','none')}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {100};
+input.timesteps = {100,200};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {10};
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.horizon = {100,200};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,7 +67,7 @@ input.rank = {};
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {30};
+input.delays = {10,20,30};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -66,7 +79,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional

@@ -24,7 +24,10 @@ HYnk_ = HYntrain(:,2:end);
 
 % Compute transition matrix and its modes
 A = normHYtrain\(HYnk_*V_/S_*U_')*normHYtrain;
+
 Atilde = U_'*A*U_;
+A_ = S_\Atilde*S_;
+
 [W,D] = eig(Atilde);
 Phi = (A*U_)*W;
 omega = log(diag(D))/algdata.dt;
@@ -37,7 +40,8 @@ Lr = (1:length(algdata.tr));
 Lp = (1:length(algdata.tp)) + length(algdata.tr);
 % Zi = dmdreconstruct(A,HYk(:,1),length(algdata.t));
 % Yi = C*Zi;
-Zi = dmdreconstruct(Atilde,U_'*HYk(:,1),length(algdata.t));
+y0 = U_'*HYk(:,1);
+Zi = dmdreconstruct(Atilde,y0,length(algdata.t));
 Yi = C*U_*Zi;
 Yr = Yi(:,Lr);
 Yp = Yi(:,Lp);
@@ -64,6 +68,7 @@ algdata.Phi = Phi;
 algdata.b = b;
 algdata.omega = omega;
 algdata.A = A;
+algdata.y0 = y0;
 
 algdata.Ytrain = Ytrain;
 algdata.Yr = Yr;

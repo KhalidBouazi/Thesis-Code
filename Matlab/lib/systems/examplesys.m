@@ -1,4 +1,4 @@
-function [odefun,params,x0,Nu] = examplesys(params, x0)
+function [odefun,params,x0,xmax,xmin,Nu] = examplesys(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -18,8 +18,12 @@ elseif length(x0) ~= 2
     error('Initial condition: Check number of elements.'); 
 end
 
+%% Define initial state interval
+xmax = [5; 5];
+xmin = [-5; -5];
+
 %% Define system function
-odefun = @(t,x,u) [gamma*x(1);
-                   delta*(x(2) - x(1)^2) + u{1}(t)];
+odefun = @(t,x,n,u) [gamma*x(1) + n{1}(t);
+                   delta*(x(2) - x(1)^2) + u{1}(t) + n{2}(t)];
 
 end

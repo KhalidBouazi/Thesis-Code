@@ -22,14 +22,8 @@ end
 %% Extract longest simulation
 % training: timesteps + delays
 
+
 % validation: horizon
-
-%% Simulate longest simulation
-% simsys(simstruct,config);
-
-%% Reproduce all other simulations
-% Xtrain(1:timesteps+delays,:)
-% Xtest(1:horizon,:)
 
 %% Simulate all sim combinations
 for i = 1:length(simcombistruct)

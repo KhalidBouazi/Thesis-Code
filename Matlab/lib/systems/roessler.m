@@ -1,4 +1,4 @@
-function [odefun,params,x0,Nu] = roessler(params, x0)
+function [odefun,params,x0,xmax,xmin,Nu] = roessler(params, x0)
 
 %% Extract system parameters
 if isempty(params)
@@ -19,9 +19,13 @@ elseif length(x0) ~= 3
     error('Initial condition: Check number of elements.'); 
 end
 
+%% Define initial state interval
+xmax = [10; 10; 10];
+xmin = [-10; -10; -10];
+
 %% Define system function
-odefun = @(t,x) [-x(2) - x(3);
-                 x(1) + a*x(2);
-                 b + x(3)*(x(1) - c)];
+odefun = @(t,x,n) [-x(2) - x(3) + n{1}(t);
+                 x(1) + a*x(2) + n{2}(t);
+                 b + x(3)*(x(1) - c) + n{3}(t)];
 
 end

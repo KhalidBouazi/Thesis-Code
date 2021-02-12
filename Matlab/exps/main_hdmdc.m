@@ -19,18 +19,26 @@ input.algorithm = {'HDMDc'};
 % massoscillator,
 % evaporationplant
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.params = {[1,1,1]};
+input.params = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.x0 = {[3,1]};
+input.x0 = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
+
+% noise : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% struct('type','none')
+% struct('type','normd','amp',...) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.noise = {{struct('type','none')}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % input : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,7 +50,7 @@ input.x0 = {[3,1]};
 % struct('type','prbs','amp',...) 
 % struct('type','normd','amp',...) 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd','amp',0.3)}};
+input.input = {{struct('type','normd','amp',1)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -52,7 +60,7 @@ input.dt = {0.1};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {500};
+input.timesteps = {400};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
@@ -62,12 +70,12 @@ input.horizon = {100};
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {60};
+input.rank = {40};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {300,350,400,450,500,600};
+input.delays = {200};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % input delays: double: optional
@@ -84,7 +92,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,[1,2]};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional

@@ -31,6 +31,14 @@ input.params = {};
 input.x0 = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+% noise : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% struct('type','none')
+% struct('type','normd','amp',...) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.noise = {{struct('type','none')}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % input : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
 % struct('type','none')

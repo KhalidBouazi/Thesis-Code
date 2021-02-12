@@ -2,8 +2,8 @@ function validalgdata = combineinputs(inputstruct,config)
 
 %% Check obligatory and optional function arguments
 oblgfunargs = {'system','dt','timesteps'};
-optfunargs = {'params','x0','horizon','delays','spacing','rank','observables','kernel'};
-optargvals = {{[]},{[]},{0},{1},{[1,1]},{[]},{{'identity'}},{{'identity'}}};
+optfunargs = {'params','x0','I','noise','horizon','delays','spacing','rank','observables','kernel'};
+optargvals = {{[]},{[]},{1},{struct('type','none')},{0},{1},{[1,1]},{[]},{{'identity'}},{{'identity'}}};
 inputstruct = checkandfillfunargs(inputstruct,oblgfunargs,optfunargs,optargvals);
 
 %% Combine inputs

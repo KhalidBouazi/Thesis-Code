@@ -5,11 +5,11 @@ clear input;
 %% II. Run simconfig to set working directory, archive path and consistent plot settings
 config = simconfig();
 
-%% III. Set kDMD parameters
+%% III. Set HAVOK_ parameters
 
 % algorithm : string : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.algorithm = {'kDMD'};
+input.algorithm = {'HAVOK_'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % system : char : obligatory
@@ -17,18 +17,19 @@ input.algorithm = {'kDMD'};
 % lorenz, vanderpol, duffing, 
 % pendulum, trippletank,
 % roessler, doubletank
+% eindampfanlage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.params = {};
+input.x0 = {[1,0],[3,2]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.x0 = {};
+input.params = {};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -46,22 +47,22 @@ input.noise = {{struct('type','none')}};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {300};
+input.timesteps = {200};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {300};
+input.horizon = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {};
+input.rank = {6,8,10,12,14};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {2};
+input.delays = {1000};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -76,17 +77,17 @@ input.spacing = {[1,1]};
 input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% kernel : double : optional
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% observables : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % {'identity'}
-% {'polynomial', exponent}
+% {'monomial', max. exponent}
 % {'rbf', bandwidth}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.kernel = {{'identity'},{'polynomial',3}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-kdmdinput = combineinputs(input,config);
+havok_input = combineinputs(input,config);
 
 %% IV. Run procedure
-kdmdresult = algprocedure(kdmdinput,config);
+havok_result = algprocedure(havok_input,config);
 

@@ -7,27 +7,24 @@ Htrain = H(:,1:end-algdata.horizon);
 Htest = H(:,end-algdata.horizon+1:end);
 
 % Compute svd
-[U1_,S1_,S1n,S1n_,V1_] = truncsvd(Htrain,algdata.rank);
-[U2_,S2_,S2n,S2n_,V2_] = truncsvd(Htest,algdata.rank);
+[U_,S_,Sn,Sn_,V_] = truncsvd(Htrain,algdata.rank);
 
 % Compute derivative of basis U
-[Us,dU] = cendiff4(U1_,algdata.dt);
-% [Vs,dV] = cendiff4(V_(1:end-algdata.horizon,:),algdata.dt);
+[Us,dU] = cendiff4(U_,algdata.dt);
 
 % Compute Koopman Operator
 A = Us'*dU;
-% A = S_\(Vs'*dV)*S_;
 
 % Compute convolutional coordinates
-y1 = hankmat(algdata.Y(:,1:end-algdata.horizon),rows(Us)-1);
+y1 = Htrain(1:rows(Us),:);
 Wtrain = Us'*y1;
 % W = U_'*H;
 % m = rows(y)/2;
 % W = W(:,m:end-m);
 
 % Extract train samples
-y2 = hankmat(algdata.Y(:,1:end-algdata.horizon),rows(U2_)-1);
-Wtest = U2_'*y2;
+y2 = Htest(1:rows(Us),:);
+Wtest = Us'*y2;
 
 %% Reconstruct convolutional coordinates
 Lr = (1:cols(Wtrain));
@@ -35,10 +32,6 @@ Lp = (1:algdata.horizon) + length(Lr);
 w0 = Wtrain(:,1);
 Wi = convcoordreconstruct(A,w0,algdata.dt,length(Lr)+length(Lp));
 Wr = Wi(:,Lr);
-plot(Wtrain(1,:));
-hold on;
-plot(Wr(1,:));
-
 Wp = Wi(:,Lp);
 tr = algdata.dt*(Lr-1);
 tp = algdata.dt*(Lp-1);
@@ -50,12 +43,12 @@ tp = algdata.dt*(Lp-1);
 
 %% Save in algstruct(i)
 algdata.H = H;
-algdata.rank = length(S1_);
-algdata.U_ = U1_;
-algdata.s_ = diag(S1_);
-algdata.sn = diag(S1n);
-algdata.sn_ = diag(S1n_);
-algdata.V_ = V1_;
+algdata.rank = length(S_);
+algdata.U_ = U_;
+algdata.s_ = diag(S_);
+algdata.sn = diag(Sn);
+algdata.sn_ = diag(Sn_);
+algdata.V_ = V_;
 algdata.A = A;
 
 algdata.Wtrain = Wtrain;
