@@ -1,7 +1,6 @@
 function [noise,N,n_fun] = gennoise(noise,tspan,Nn)
 
 dt = tspan(2) - tspan(1);
-n_fun = cell(Nn,1);
 N = zeros(Nn,length(tspan));
 
 if Nn == 0
@@ -25,7 +24,6 @@ for i = 1:Nn
         n = zeros(1,length(tspan));
     end
     
-    n_fun{i} = @(t) n(round(1 + t/dt));
     N(i,:) = n;
 end
     

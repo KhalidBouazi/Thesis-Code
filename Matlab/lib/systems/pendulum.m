@@ -22,7 +22,7 @@ xmax = [pi; 5];
 xmin = [-pi; -5];
 
 %% Define system function
-odefun = @(t,x,n,u) [x(2) + n{1}(t);
-                 -9.81/l*sin(x(1)) + u{1}(t) + n{2}(t)];
+odefun = @(t,x,n,u) [x(2) + n(1);
+                 -9.81/l*sin(x(1)) + u(1) + n(2)];
 
 end

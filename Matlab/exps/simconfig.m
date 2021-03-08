@@ -11,7 +11,7 @@ disp('#######################################');
 config.general.usage = 'new'; % archive
 
 %% Define path to access all functions
-addpath(genpath('C:\Users\bouaz\Desktop\Thesis-Code\Matlab'));
+addpath(genpath('C:\Users\bouaz\Desktop\Code\Matlab'));
 
 %% Define ARCHIVE path for storing and loading data
 config.general.archivepath = 'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\1_Daten\';
@@ -106,7 +106,7 @@ config.kdmdc.fieldnames.order = [config.kdmdc.fieldnames.input,config.kdmdc.fiel
 
 %% Define HDMD struct
 config.hdmd.plots = {'phaseY','disceig','sing','conteig','reconstructY','rmseY','phasebasisY'};
-config.hdmd.fieldnames.input = {'algorithm','system','params','x0','I',...
+config.hdmd.fieldnames.input = {'algorithm','system','params','x0',...
     'dt','timesteps','horizon','rank','delays','spacing','measured','observables'};
 config.hdmd.fieldnames.svd = {'U_','s_','sn','sn_','V_'};
 config.hdmd.fieldnames.hankel = {'H'};
@@ -232,9 +232,9 @@ set(groot,'defaultAxesTickLabelInterpreter','latex');
 set(groot,'defaultLegendInterpreter','latex');
 
 %% Set general plot config
-set(groot,'defaultAxesGridLineStyle','--');
-set(groot,'defaultAxesGridAlpha',0.2);
-set(groot,'defaultAxesGridColor',[0.1 0.1 0.1]);
+% set(groot,'defaultAxesGridLineStyle','--');
+% set(groot,'defaultAxesGridAlpha',0.2);
+% set(groot,'defaultAxesGridColor',[0.1 0.1 0.1]);
 set(groot,'defaultAxesFontSize',14);
 set(groot,'defaultLineLineWidth',1);
 

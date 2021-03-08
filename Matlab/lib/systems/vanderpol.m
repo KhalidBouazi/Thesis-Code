@@ -22,7 +22,7 @@ xmax = [5; 5];
 xmin = [-5; -5];
 
 %% Define system function
-odefun = @(t,x,n,u) [x(2) + n{1}(t);
-                   mu*(1 - x(1)^2)*x(2) - x(1) + u{1}(t) + n{2}(t)];
+odefun = @(t,x,n,u) [x(2) + n(1);
+                   mu*(1 - x(1)^2)*x(2) - x(1) + u(1) + n(2)];
 
 end

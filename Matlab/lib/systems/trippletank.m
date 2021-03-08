@@ -26,11 +26,11 @@ end
 
 %% Define initial state interval
 xmax = [1; 1; 1];
-xmin = [0; 0; 0];
+xmin = [0; 0.1; 0];
 
 %% Define system function
-odefun = @(t,x,n,u) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u{1}(t)) + n{1}(t);
-                   1/A2*(q1*sqrt(2*g*(x(1) - x(2))) + q3*sqrt(2*g*(x(3) - x(2))) - q2*sqrt(2*g*x(2))) + n{2}(t);
-                   1/A3*(-q3*sqrt(2*g*(x(3) - x(2))) + u{2}(t)) + n{3}(t)];
+odefun = @(t,x,n,u) [1/A1*(-q1*sqrt(2*g*(x(1) - x(2))) + u(1)) + n(1);
+                   1/A2*(q1*sqrt(2*g*(x(1) - x(2))) + q3*sqrt(2*g*(x(3) - x(2))) - q2*sqrt(2*g*x(2))) + n(2);
+                   1/A3*(-q3*sqrt(2*g*(x(3) - x(2))) + u(2)) + n(3)];
 
 end

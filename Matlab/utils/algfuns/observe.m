@@ -7,10 +7,14 @@ switch obstype
     case 'identity'
         PsiY = Y;
     case 'monomial'
-        combs = expcomb(size(Y,1),obsdata{2});
+%         combs = expcomb(size(Y,1),obsdata{2});
+%         PsiY = [];
+%         for i = 1:size(Y,2)
+%             PsiY(:,end+1) = prod(Y(:,i)'.^combs,2);
+%         end
         PsiY = [];
-        for i = 1:size(Y,2)
-            PsiY(:,end+1) = prod(Y(:,i)'.^combs,2);
+        for i = obsdata{2}
+            PsiY = [PsiY; Y.^i]; 
         end
     case 'rbf'
 %         PsiY = [];
@@ -20,6 +24,8 @@ switch obstype
 %         end
     case 'examplesys'
         PsiY = [Y(1,:); Y(2,:); Y(1,:).^2];
+    case 'vanderpol'
+        PsiY = [Y(1,:) + Y(2,:) + (Y(1,:).^2 + Y(2,:).^2).^(1/2)];
     otherwise
         error(['Observables: no observable type ' obstype ' available.']);
 end

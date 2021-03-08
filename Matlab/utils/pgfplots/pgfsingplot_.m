@@ -40,7 +40,7 @@ end
 
 % folder und filename abspalten
 [arguments, filename, fileext, folder] = pgf_separation(varargin);
-fileext
+
 % x- und y- Vektoren, sowie Linenames extrahieren
 [x,y, linenames] = pgf_getXY(arguments, filename);
 

@@ -19,13 +19,23 @@ input.algorithm = {'HAVOK__'};
 % roessler, doubletank
 % eindampfanlage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'lorenz'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.x0 = {};
+input.x0 = {[-2;6]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% nx0 : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.nx0 = {1};
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% nx0v : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.nx0v = {10};
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,7 +44,7 @@ input.params = {};
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.001};
+input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % noise : double : optional
@@ -47,22 +57,32 @@ input.noise = {{struct('type','none')}};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {20000};
+input.timesteps = {10000};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% pathtotraindata : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.pathtotraindata = {[]};%'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel4\HAVOK\Duffing.mat'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {};
+input.horizon = {100};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% pathtovaliddata : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.pathtovaliddata = {[]};%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {15};
+input.rank = {1,11,16,21,26,31,36,41,46,51};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100};
+input.delays = {131};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -74,7 +94,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {1,2,[1,2]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional

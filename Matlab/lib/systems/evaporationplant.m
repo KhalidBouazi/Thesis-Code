@@ -38,8 +38,8 @@ xmax = [1; 1; 100e3];
 xmin = [0; 0; 0];
 
 %% Define system function
-odefun = @(t,x,n,u) [a1*x(1) + a2*x(2) - b1*u{1}(t) - b2*u{2}(t) - k1 + n{1}(t);
-                   -a3*x(2)*u{2}(t) + k2 + n{2}(t);
-                   -a4*x(3) - a5*x(2) + b3*u{1}(t) - (a6*x(3) + b4)/(b5*u{3}(t) + k3)*u{3}(t) + k4 + n{3}(t)];
+odefun = @(t,x,n,u) [a1*x(1) + a2*x(2) - b1*u(1) - b2*u(2) - k1 + n(1);
+                   -a3*x(2)*u(2) + k2 + n(2);
+                   -a4*x(3) - a5*x(2) + b3*u(1) - (a6*x(3) + b4)/(b5*u(3) + k3)*u(3) + k4 + n(3)];
 
 end

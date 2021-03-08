@@ -1,7 +1,6 @@
 function [input,U,u_fun] = geninput(input,tspan,Nu)
 
 dt = tspan(2) - tspan(1);
-u_fun = cell(Nu,1);
 U = zeros(Nu,length(tspan));
 
 if Nu == 0
@@ -33,7 +32,6 @@ for i = 1:Nu
         u = zeros(1,length(tspan));
     end
     
-    u_fun{i} = @(t) u(round(1 + t/dt));
     U(i,:) = u;
 end
     

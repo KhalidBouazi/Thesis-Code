@@ -24,8 +24,18 @@ input.system = {'vanderpol'};
 
 % params : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.x0 = {};
+input.x0 = {[-2;6]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% nx0 : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.nx0 = {10};
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% nx0v : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%
+input.nx0v = {10};
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,19 +60,29 @@ input.noise = {{struct('type','none')}};
 input.timesteps = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% pathtotraindata : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.pathtotraindata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel4\HDMD\VanderPol.mat'};%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 input.horizon = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% pathtovaliddata : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.pathtovaliddata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel4\HDMD\VanderPol.mat'};%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {10};
+input.rank = {1,10,20,30,40,70,100,130,150,180};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100,200};
+input.delays = {200};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -74,7 +94,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {1,2,[1,2]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
