@@ -24,6 +24,8 @@ for i = 1:Nu
                 u = inputi.amp*randi([0 1],1,length(tspan));
             case 'normd'
                 u = inputi.amp*randn(1,length(tspan));
+            case 'normdc'
+                u = inputi.umin + sum(rand(length(tspan),3),2)'/3*(inputi.umax - inputi.umin);
             otherwise
                 error(['Input signal: No input signal `' inputi.type '` implemented yet.']); 
         end

@@ -19,7 +19,7 @@ input.algorithm = {'HAVOK'};
 % roessler, doubletank
 % eindampfanlage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'massoscillator'};
+input.system = {'lorenz'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -47,22 +47,32 @@ input.noise = {{struct('type','none')}};
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {1000};
+input.timesteps = {10000};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% pathtotraindata : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.pathtotraindata = {[]};%'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel4\HAVOK\Duffing.mat'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {1000};
+input.horizon = {100};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% pathtovaliddata : double : optional
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+input.pathtovaliddata = {[]};%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {3};
+input.rank = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {100};
+input.delays = {1,20,40,80,120,160,200,250,300,450};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -74,7 +84,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};
+input.measured = {1,2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional

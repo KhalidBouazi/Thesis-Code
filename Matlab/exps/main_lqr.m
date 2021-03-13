@@ -1,9 +1,11 @@
 % simconfig;
 
 %% Betrachtete Modelle
-n = [1];
+n = [4]% 5:6:36%18
 % n = [4,7,10,13,16];
-qy = {1,1,1,1,1,1,1};
+qy = {1e4,[1 1],1,1,1,1,1};
+% qy = {1e3,1e3,1e3,1e3,1e3,1e3,1e3};
+% qy = {1e6,1e6,1e6,1e6,1e6,1e6,1e6};
 qu = {1,1,1,1,1,1,1};
 s = {1,1,1,1,1,1,1};
 data = {};
@@ -11,8 +13,8 @@ for i = n
     data{1,end+1} = hdmdcresult{1,i}; 
 end
 params = hdmdcresult{1,1}.params;
-% x0 = [3;-3];
-x0 = [0.8;0.5;0.8];
+x0 = [3;-3];
+% x0 = [0.8;0.5;0.8];
 
 %% Zusätzliche Modelle
 controlresult = {};
@@ -23,7 +25,7 @@ controlresult = {};
 % data{1,end+1} = examplesyslin_lqr(x0,params);
 % data{1,end+1} = duffinglin_lqr(x0,params);
 % data{1,end+1} = vanderpollin_lqr(x0,params);
-data{1,end+1} = trippletanklin_lqr(x0);
+% data{1,end+1} = trippletanklin_lqr(x0);
 % qy{1,end+1} = [0 1];
 % qu{1,end+1} = [1];
 % s{1,end+1} = [1];

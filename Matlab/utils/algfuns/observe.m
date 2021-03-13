@@ -25,7 +25,13 @@ switch obstype
     case 'examplesys'
         PsiY = [Y(1,:); Y(2,:); Y(1,:).^2];
     case 'vanderpol'
-        PsiY = [Y(1,:) + Y(2,:) + (Y(1,:).^2 + Y(2,:).^2).^(1/2)];
+        PsiY = [Y; Y.^2 + Y.^3];
+    case 'duffing_x1'
+        PsiY = [Y(1,:); Y(1,:).^2/2 - Y(1,:).^4/4];
+    case 'duffing_x2'
+        PsiY = [Y(1,:); Y(1,:).^2];
+    case 'duffing_x'
+        PsiY = [Y; Y(2,:).^2 - Y(1,:).^2/2 + Y(1,:).^4/4];        
     otherwise
         error(['Observables: no observable type ' obstype ' available.']);
 end

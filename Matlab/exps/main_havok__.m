@@ -34,7 +34,7 @@ input.nx0 = {1};
 
 % nx0v : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.nx0v = {10};
+input.nx0v = {5};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % x0 : double : optional
@@ -77,12 +77,12 @@ input.pathtovaliddata = {[]};%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {1,11,16,21,26,31,36,41,46,51};
+input.rank = {7,9,11,13,15,17,19};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {131};
+input.delays = {80,85,90,95,100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -94,7 +94,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,2,[1,2]};
+input.measured = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional

@@ -1,13 +1,13 @@
 % rmse, delays, rank
-res = {hdmdresult{4:4:end}};
-% res = {hdmdcresult{5:5:end}};
+% res = {hdmdresult{1:3:end}};
+res = {hdmdcresult{1:1:end}};
 % res = havok__result;
 % res = havok___result;
 havok = 0;
 cha = '5_';
 alg = res{1}.algorithm;
-forrank = 0;
-name = 'ttank';
+forrank = 1;
+name = 'vdp';
 
 meas = {};
 algres = {};
@@ -107,7 +107,7 @@ end
 
 %% Eigenwerte
 % eigfromback = 2;
-eigfromstart = [1,1,1,1,1,2];
+eigfromstart = [3,2,3,3,3,3];
 figure;
 markers = {'x','o','*','^','v','s'};
 colors = {'green','red','blue','magenta','black','cyan'};
@@ -133,11 +133,11 @@ if ~forrank
             if length(meas{i}) == 2
                 pgfplot(delays{i},RMSEYp{i}(1,:),'1',...
                 delays{i},RMSEYp{i}(2,:),'2',...
-                [cha name '_rmsedelay' num2str(i)],'C:\Users\bouaz\Desktop\Thesis\pics');
+                [cha name '_rmsedelay_[1,3]_x_' num2str(i)],'C:\Users\bouaz\Desktop\Thesis\pics');
 
             else
                 pgfplot(delays{i},RMSEYp{i},'1',...
-                [cha name '_rmsedelay' num2str(i)],'C:\Users\bouaz\Desktop\Thesis\pics');
+                [cha name '_rmsedelay_[1,3]_x_' num2str(i)],'C:\Users\bouaz\Desktop\Thesis\pics');
             end
         else
             folder = ['C:\Users\bouaz\Desktop\Thesis\pics\TikZdata\' cha name '_rmsedelay_' alg num2str(i)];

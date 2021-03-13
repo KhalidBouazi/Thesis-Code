@@ -19,7 +19,7 @@ input.algorithm = {'HDMDc'};
 % massoscillator,
 % evaporationplant
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'duffing'};
+input.system = {'vanderpol'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -59,43 +59,44 @@ input.noise = {{struct('type','none')}};
 % freqb should be <= 1/20 * 1/dt
 % struct('type','prbs','amp',...) 
 % struct('type','normd','amp',...) 
+% struct('type','normdc','umin',...,'umax',...) 
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.input = {{struct('type','normd','amp',3)}};
+input.input = {{struct('type','normd','amp',1)}};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.dt = {0.05};
+input.dt = {0.1};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % timesteps : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.timesteps = {200};
+input.timesteps = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % pathtotraindata : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.pathtotraindata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel5\Duffing.mat'};
+input.pathtotraindata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel5\VanderPol.mat'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : obligatory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.horizon = {200};
+input.horizon = {100};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % pathtovaliddata : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.pathtovaliddata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel5\Duffing.mat'};
+input.pathtovaliddata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel5\VanderPol.mat'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {};
+input.rank = {1,10,11,12,13,14,15,16,17,18,19,20};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {1,50,100,150,200};
+input.delays = {80};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % input delays: double: optional
@@ -112,7 +113,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1,2,[1 2]};%,
+input.measured = {1,2,[1,2]};%,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -121,7 +122,7 @@ input.measured = {1,2,[1 2]};%,
 % {'monomial', [minexp. maxexp.]}
 % {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {{'identity'},{'monomial',[1 2]},{'monomial',[1 3]},{'monomial',[2 3]}};
+input.observables = {{'monomial',[1 3]}};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 hdmdcinput = combineinputs(input,config);

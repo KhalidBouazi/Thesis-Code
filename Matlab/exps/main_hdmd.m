@@ -19,7 +19,7 @@ input.algorithm = {'HDMD'};
 % roessler, doubletank
 % examplesys
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.system = {'vanderpol'};
+input.system = {'examplesys'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % params : double : optional
@@ -34,12 +34,12 @@ input.x0 = {};
 
 % nx0 : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.nx0 = {10};
+input.nx0 = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % nx0v : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%
-input.nx0v = {10};
+input.nx0v = {1};
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 % dt : double : obligatory
@@ -62,7 +62,7 @@ input.timesteps = {100};
 
 % pathtotraindata : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.pathtotraindata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel4\HDMD\VanderPol.mat'};
+input.pathtotraindata = {[]};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % horizon : double : optional
@@ -72,17 +72,17 @@ input.horizon = {100};
 
 % pathtovaliddata : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.pathtovaliddata = {'C:\Users\bouaz\Desktop\Thesis-Tex\Inhalt\2_Ergebnisse\_Resultate\Kapitel4\HDMD\VanderPol.mat'}; %
+input.pathtovaliddata = {[]}; %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % rank : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-input.rank = {};
+input.rank = {3};
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % delays : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.delays = {1,20,40,80,120,160,200,250,300,450};
+input.delays = {2};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % spacing : double : optional
@@ -94,7 +94,7 @@ input.spacing = {[1,1]};
 
 % measured : double : optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.measured = {1};%
+input.measured = {};%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % observables : double : optional
@@ -103,7 +103,7 @@ input.measured = {1};%
 % {'monomial', max. exponent}
 % {'rbf', bandwidth}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-input.observables = {{'monomial',[1]},{'monomial',[1 2]},{'monomial',[1 3]},{'monomial',[1 2 3]}};
+input.observables = {};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 hdmdinput = combineinputs(input,config);

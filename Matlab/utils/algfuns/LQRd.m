@@ -83,8 +83,9 @@ K = dlqr(A,B,Q,diag(s));
 
 %% Create closed loop system and simulate
 A_ = A - B*K;
-[~,Omega] = eig(A_);
-omega = diag(Omega);
+[~,lambda] = eig(A_);
+lambda = diag(lambda);
+omega = log(lambda)/dt;
 B_ = -A_ + eye(rows(A_)); 
 C_ = eye(rows(A_));
 D_ = 0*B_;
