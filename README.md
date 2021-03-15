@@ -3,7 +3,7 @@
 Unter dem Ordner Matlab sind alle Implementierungen mittels Matlab zu finden.
 
 ### exps
-Zur Simulation verschiedner Algorithmen können die Main-Skripte in diesem Ordner ausgeführt werden. Dabei sind unterschiedliche Parameter vorzugeben.
+Zur Simulation verschiedner Algorithmen können die main-Skripte in diesem Ordner ausgeführt werden. Dabei sind unterschiedliche Parameter vorzugeben.
 
 ### lib
 Algorithmen, Systemgleichungen und Plot-Funktionen sind unter diesem Ordner platziert.
