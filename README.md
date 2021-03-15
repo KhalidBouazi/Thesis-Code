@@ -1,4 +1,6 @@
 # Thesis-Code
+Dieses Framwork ist während meiner Abschlussarbeit "Koopman Identifikation und Regelung bei nicht vollständig messbarem Zustandsvektor" am RTM-Institut TU Darmstadt entstanden
+
 ## Matlab
 Unter dem Ordner Matlab sind alle Implementierungen mittels Matlab zu finden.
 
